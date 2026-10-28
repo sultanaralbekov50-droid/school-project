@@ -25,7 +25,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#hero">Главная</a></li>
                 <li class="nav-item"><a class="nav-link" href="#spaces">Пространства</a></li>
-                <li class="nav-item"><a class="nav-link" href="#register">Регистрация</a></li>
+                <li class="nav-item"><a class="nav-link" href="#booking">Забронировать</a></li>
                 <li class="nav-item"><a class="nav-link text-info" href="dashboard.html">🔑 Вход для школ</a></li>
                 <li class="nav-item"><a class="nav-link text-warning" href="admin.html">🔐 Админ</a></li>
             </ul>
@@ -46,7 +46,6 @@
 <section class="container mt-5" id="spaces">
     <h2 class="text-center mb-4">🏢 Наши пространства</h2>
     <div class="row">
-        <!-- Карточка 1 -->
         <div class="col-md-6 mb-4">
             <div class="card h-100 shadow-sm">
                 <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Актовый зал">
@@ -57,7 +56,6 @@
                 </div>
             </div>
         </div>
-        <!-- Карточка 2 -->
         <div class="col-md-6 mb-4">
             <div class="card h-100 shadow-sm">
                 <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Библиотека">
@@ -71,39 +69,78 @@
     </div>
 </section>
 
-<!-- Блок регистрации школы -->
+<!-- ФОРМА БРОНИРОВАНИЯ (Для клиентов) -->
+<section class="container mt-5 mb-5" id="booking">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-success">
+                <div class="card-header bg-success text-white"><h4 class="mb-0">📅 Забронировать время</h4></div>
+                <div class="card-body">
+                    <!-- Плашка, которая появляется, если клиент пришел по ссылке школы -->
+                    <div id="schoolNotice" class="alert alert-info d-none">
+                        Вы бронируете зал для школы: <b id="currentSchoolName"></b>
+                    </div>
+                    
+                    <form id="bookingForm">
+                        <div class="mb-3">
+                            <label class="form-label">Выберите пространство</label>
+                            <select class="form-select" id="space">
+                                <option value="Актовый зал">Актовый зал (500 сом/час)</option>
+                                <option value="Библиотека">Библиотека (200 сом/час)</option>
+                            </select>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col"><label class="form-label">Дата</label><input type="date" class="form-control" id="date" required></div>
+                            <div class="col"><label class="form-label">Время</label><input type="time" class="form-control" id="time" required></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Имя и телефон</label>
+                            <input type="text" class="form-control" id="contact" placeholder="Айбек, 0555 123 456" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Отправить заявку</button>
+                    </form>
+                    <div id="bookingSuccess" class="alert alert-success mt-3 d-none">
+                        ✅ <b>Успешно!</b> Заявка отправлена. (В будущем улетит в кабинет школы).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ФОРМА ЗАЯВКИ ДЛЯ ДИРЕКТОРА -->
 <section class="container mt-5 mb-5" id="register">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow border-info">
                 <div class="card-header bg-info text-white">
-                    <h4 class="mb-0">🏫 Регистрация школы (Для директоров)</h4>
+                    <h4 class="mb-0">🏫 Подключение школы к системе</h4>
                 </div>
                 <div class="card-body">
-                    <p class="text-muted">Заполните данные. После проверки главным администратором вы получите доступ в личный кабинет.</p>
+                    <p class="text-muted">Оставьте заявку. Главный администратор свяжется с вами и выдаст логин и пароль для входа в личный кабинет.</p>
                     <form id="registerForm">
                         <div class="mb-3">
                             <label class="form-label">Название школы</label>
-                            <input type="text" id="schoolName" class="form-control" placeholder="Например: Школа №1" required>
+                            <input type="text" class="form-control" placeholder="Например: Школа №1 им. Пушкина" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">ФИО Директора</label>
-                            <input type="text" id="directorName" class="form-control" placeholder="Иванов Иван" required>
+                            <input type="text" class="form-control" placeholder="Иванов Иван Иванович" required>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label class="form-label">Логин</label>
-                                <input type="text" id="login" class="form-control" placeholder="school1" required>
+                                <label class="form-label">Номер телефона</label>
+                                <input type="tel" class="form-control" placeholder="+996 555 123 456" required>
                             </div>
                             <div class="col">
-                                <label class="form-label">Пароль</label>
-                                <input type="password" id="password" class="form-control" placeholder="******" required>
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" placeholder="school@mail.com" required>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-info text-white w-100">Отправить заявку на регистрацию</button>
+                        <button type="submit" class="btn btn-info text-white w-100">Отправить заявку</button>
                     </form>
-                    <div id="successMsg" class="alert alert-success mt-3 d-none">
-                        ✅ <b>Заявка отправлена!</b> Ожидайте подтверждения от администратора.
+                    <div id="registerSuccess" class="alert alert-success mt-3 d-none">
+                        ✅ <b>Заявка отправлена!</b> Ожидайте звонка от администратора.
                     </div>
                 </div>
             </div>
@@ -121,15 +158,27 @@
 <!-- Скрипты -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Логика для формы регистрации (Пока просто имитация)
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-        e.preventDefault(); // Останавливаем перезагрузку страницы
-        
-        // Скрываем форму и показываем сообщение
+    // 1. ПРОВЕРКА ССЫЛКИ (Если клиент пришел по ссылке от школы)
+    const urlParams = new URLSearchParams(window.location.search);
+    const schoolFromUrl = urlParams.get('school');
+
+    if (schoolFromUrl) {
+        document.getElementById('schoolNotice').classList.remove('d-none');
+        document.getElementById('currentSchoolName').innerText = schoolFromUrl;
+    }
+
+    // 2. ЛОГИКА ФОРМЫ БРОНИРОВАНИЯ
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
         this.classList.add('d-none');
-        document.getElementById('successMsg').classList.remove('d-none');
-        
-        // В будущем здесь будет код отправки данных в Firebase
+        document.getElementById('bookingSuccess').classList.remove('d-none');
+    });
+
+    // 3. ЛОГИКА ФОРМЫ ЗАЯВКИ ДИРЕКТОРА
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        this.classList.add('d-none');
+        document.getElementById('registerSuccess').classList.remove('d-none');
     });
 </script>
 </body>
