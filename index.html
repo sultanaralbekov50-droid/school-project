@@ -18,14 +18,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container">
         <a class="navbar-brand" href="#">🏫 School Coworking</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#hero">Главная</a></li>
                 <li class="nav-item"><a class="nav-link" href="#spaces">Пространства</a></li>
-                <li class="nav-item"><a class="nav-link" href="#booking">Забронировать</a></li>
                 <li class="nav-item"><a class="nav-link text-info" href="dashboard.html">🔑 Вход для школ</a></li>
                 <li class="nav-item"><a class="nav-link text-warning" href="admin.html">🔐 Админ</a></li>
             </ul>
@@ -42,7 +38,7 @@
     </div>
 </section>
 
-<!-- Блок с картинками (Пространства) -->
+<!-- Блок с картинками -->
 <section class="container mt-5" id="spaces">
     <h2 class="text-center mb-4">🏢 Наши пространства</h2>
     <div class="row">
@@ -51,7 +47,7 @@
                 <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Актовый зал">
                 <div class="card-body">
                     <h5 class="card-title">Актовый зал</h5>
-                    <p class="card-text">Идеально для больших мероприятий, концертов и мастер-классов (до 50 человек).</p>
+                    <p class="card-text">Идеально для больших мероприятий (до 50 человек).</p>
                     <p class="price-badge">500 сом / час</p>
                 </div>
             </div>
@@ -61,7 +57,7 @@
                 <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Библиотека">
                 <div class="card-body">
                     <h5 class="card-title">Библиотека (Коворкинг)</h5>
-                    <p class="card-text">Тихое место для репетиторов, подготовки к экзаменам и встреч 1-на-1.</p>
+                    <p class="card-text">Тихое место для репетиторов и встреч 1-на-1.</p>
                     <p class="price-badge">200 сом / час</p>
                 </div>
             </div>
@@ -69,46 +65,7 @@
     </div>
 </section>
 
-<!-- ФОРМА БРОНИРОВАНИЯ (Для клиентов) -->
-<section class="container mt-5 mb-5" id="booking">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow border-success">
-                <div class="card-header bg-success text-white"><h4 class="mb-0">📅 Забронировать время</h4></div>
-                <div class="card-body">
-                    <!-- Плашка, которая появляется, если клиент пришел по ссылке школы -->
-                    <div id="schoolNotice" class="alert alert-info d-none">
-                        Вы бронируете зал для школы: <b id="currentSchoolName"></b>
-                    </div>
-                    
-                    <form id="bookingForm">
-                        <div class="mb-3">
-                            <label class="form-label">Выберите пространство</label>
-                            <select class="form-select" id="space">
-                                <option value="Актовый зал">Актовый зал (500 сом/час)</option>
-                                <option value="Библиотека">Библиотека (200 сом/час)</option>
-                            </select>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col"><label class="form-label">Дата</label><input type="date" class="form-control" id="date" required></div>
-                            <div class="col"><label class="form-label">Время</label><input type="time" class="form-control" id="time" required></div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Имя и телефон</label>
-                            <input type="text" class="form-control" id="contact" placeholder="Айбек, 0555 123 456" required>
-                        </div>
-                        <button type="submit" class="btn btn-success w-100">Отправить заявку</button>
-                    </form>
-                    <div id="bookingSuccess" class="alert alert-success mt-3 d-none">
-                        ✅ <b>Успешно!</b> Заявка отправлена. (В будущем улетит в кабинет школы).
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ФОРМА ЗАЯВКИ ДЛЯ ДИРЕКТОРА -->
+<!-- ЗАЯВКА ДЛЯ ДИРЕКТОРА (Всегда видна) -->
 <section class="container mt-5 mb-5" id="register">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -121,27 +78,44 @@
                     <form id="registerForm">
                         <div class="mb-3">
                             <label class="form-label">Название школы</label>
-                            <input type="text" class="form-control" placeholder="Например: Школа №1 им. Пушкина" required>
+                            <input type="text" class="form-control" placeholder="Школа №1 им. Пушкина" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">ФИО Директора</label>
                             <input type="text" class="form-control" placeholder="Иванов Иван Иванович" required>
                         </div>
                         <div class="row mb-3">
-                            <div class="col">
-                                <label class="form-label">Номер телефона</label>
-                                <input type="tel" class="form-control" placeholder="+996 555 123 456" required>
-                            </div>
-                            <div class="col">
-                                <label class="form-label">Email</label>
-                                <input type="email" class="form-control" placeholder="school@mail.com" required>
-                            </div>
+                            <div class="col"><label class="form-label">Телефон</label><input type="tel" class="form-control" placeholder="+996 555 123 456" required></div>
+                            <div class="col"><label class="form-label">Email</label><input type="email" class="form-control" placeholder="school@mail.com" required></div>
                         </div>
                         <button type="submit" class="btn btn-info text-white w-100">Отправить заявку</button>
                     </form>
                     <div id="registerSuccess" class="alert alert-success mt-3 d-none">
                         ✅ <b>Заявка отправлена!</b> Ожидайте звонка от администратора.
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ФОРМА БРОНИРОВАНИЯ (Скрыта по умолчанию, показывается только по ссылке ?school=...) -->
+<section class="container mt-5 mb-5 d-none" id="bookingSection">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-success">
+                <div class="card-header bg-success text-white"><h4 class="mb-0">📅 Забронировать время</h4></div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        Вы бронируете зал для школы: <b id="currentSchoolName"></b>
+                    </div>
+                    <form id="bookingForm">
+                        <div class="mb-3"><label class="form-label">Выберите пространство</label><select class="form-select" id="space"><option>Актовый зал (500 сом/час)</option><option>Библиотека (200 сом/час)</option></select></div>
+                        <div class="row mb-3"><div class="col"><label>Дата</label><input type="date" class="form-control" required></div><div class="col"><label>Время</label><input type="time" class="form-control" required></div></div>
+                        <div class="mb-3"><label>Имя и телефон</label><input type="text" class="form-control" placeholder="Айбек, 0555..." required></div>
+                        <button type="submit" class="btn btn-success w-100">Отправить заявку</button>
+                    </form>
+                    <div id="bookingSuccess" class="alert alert-success mt-3 d-none">✅ <b>Успешно!</b> Заявка отправлена.</div>
                 </div>
             </div>
         </div>
@@ -155,26 +129,29 @@
     </div>
 </div>
 
-<!-- Скрипты -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // 1. ПРОВЕРКА ССЫЛКИ (Если клиент пришел по ссылке от школы)
+    // ПРОВЕРКА ССЫЛКИ (Логика: если в ссылке есть ?school=..., показываем форму брони)
     const urlParams = new URLSearchParams(window.location.search);
     const schoolFromUrl = urlParams.get('school');
 
     if (schoolFromUrl) {
-        document.getElementById('schoolNotice').classList.remove('d-none');
+        // Показываем скрытую форму бронирования
+        document.getElementById('bookingSection').classList.remove('d-none');
+        // Вставляем название школы в предупреждение
         document.getElementById('currentSchoolName').innerText = schoolFromUrl;
+        // Скроллим страницу сразу к форме
+        document.getElementById('bookingSection').scrollIntoView();
     }
 
-    // 2. ЛОГИКА ФОРМЫ БРОНИРОВАНИЯ
+    // Логика отправки заявки на бронирование
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
         this.classList.add('d-none');
         document.getElementById('bookingSuccess').classList.remove('d-none');
     });
 
-    // 3. ЛОГИКА ФОРМЫ ЗАЯВКИ ДИРЕКТОРА
+    // Логика отправки заявки от директора
     document.getElementById('registerForm').addEventListener('submit', function(e) {
         e.preventDefault();
         this.classList.add('d-none');
