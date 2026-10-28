@@ -3,62 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кабинет директора</title>
+    <title>Кабинет директора | Школьный Коворкинг</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body>
 
+<!-- Вход -->
 <div id="loginScreen" class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow p-4" style="width: 350px;">
-        <h4 class="text-center mb-3">🏫 Вход для директора</h4>
-        <input type="text" id="loginInput" class="form-control mb-2" placeholder="Логин: school1">
-        <input type="password" id="passwordInput" class="form-control mb-3" placeholder="Пароль: 12345">
-        <button class="btn btn-primary w-100" onclick="login()">Войти</button>
-        <a href="index.html" class="btn btn-link w-100 mt-2">На главную</a>
+    <div class="panel shadow-sm" style="width: 360px;">
+        <h4 class="text-center mb-1">Вход для директора</h4>
+        <p class="text-muted text-center small mb-3">Логин и пароль выдаёт администратор.</p>
+        <div class="mb-3">
+            <label class="form-label" for="loginInput">Логин</label>
+            <input type="text" id="loginInput" class="form-control" autocomplete="username">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="passwordInput">Пароль</label>
+            <input type="password" id="passwordInput" class="form-control" autocomplete="current-password">
+        </div>
+        <div id="loginError" class="alert alert-danger py-2 small d-none" role="alert">Неверный логин или пароль.</div>
+        <button class="btn btn-ink w-100" id="loginBtn">Войти</button>
+        <a href="index.html" class="btn btn-link w-100 mt-2 text-decoration-none">← На главную</a>
+        <div class="text-muted small text-center mt-2">Демо-доступ: school1 / 12345</div>
     </div>
 </div>
 
-<div id="dashboardScreen" class="container mt-5 d-none">
-    <div class="d-flex justify-content-between mb-4">
-        <h2>📊 Кабинет школы №1</h2>
-        <button class="btn btn-outline-danger" onclick="location.reload()">Выйти</button>
+<!-- Кабинет -->
+<div id="dashboardScreen" class="container py-4 d-none">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 class="mb-0">Кабинет: <span id="schoolName"></span></h2>
+        <div class="d-flex gap-2">
+            <a href="index.html" class="btn btn-outline-dark">На сайт</a>
+            <button class="btn btn-outline-danger" id="logoutBtn">Выйти</button>
+        </div>
     </div>
-    
-    <div class="card shadow-sm mb-4">
-        <div class="card-body">
-            <h5>🔗 Ваша ссылка для клиентов</h5>
-            <div class="input-group mt-2">
-                <input type="text" class="form-control" value="https://sultanalbekov50-droid.github.io/school-project/?school=Школа_1" readonly id="schoolLink">
-                <button class="btn btn-primary" onclick="navigator.clipboard.writeText(document.getElementById('schoolLink').value); alert('Скопировано!')">Копировать</button>
+
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3"><div class="stat"><div class="v" id="stPending">0</div><div class="l">Ждут ответа</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat"><div class="v" id="stApproved">0</div><div class="l">Подтверждено</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat"><div class="v" id="stHours">0</div><div class="l">Часов аренды</div></div></div>
+        <div class="col-6 col-md-3"><div class="stat"><div class="v" id="stIncome">0</div><div class="l">Доход школы, сом</div></div></div>
+    </div>
+
+    <div class="panel mb-4">
+        <h5>Ваша ссылка для клиентов</h5>
+        <p class="text-muted small">Отправьте её клиентам: они увидят только залы вашей школы.</p>
+        <div class="link-box d-flex justify-content-between align-items-center gap-2 flex-wrap">
+            <code id="schoolLink"></code>
+            <button class="btn btn-sm btn-outline-dark" id="copyBtn">Копировать</button>
+        </div>
+        <div id="copyMsg" class="text-success small mt-2 d-none">Ссылка скопирована.</div>
+    </div>
+
+    <ul class="nav nav-tabs mb-3" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabReq" type="button" role="tab">Заявки</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabCal" type="button" role="tab">Календарь залов</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabSpaces" type="button" role="tab">Мои пространства</button></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="tabReq" role="tabpanel">
+            <div class="panel table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead><tr><th>Дата</th><th>Время</th><th>Зал</th><th>Клиент</th><th>Сумма</th><th>Статус</th><th></th></tr></thead>
+                    <tbody id="reqBody"></tbody>
+                </table>
+                <p id="reqEmpty" class="text-muted mb-0 d-none">Заявок пока нет. Отправьте клиентам ссылку выше, и они появятся здесь.</p>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="tabCal" role="tabpanel">
+            <div class="panel">
+                <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+                    <select id="calSpace" class="form-select" style="max-width:260px" aria-label="Пространство"></select>
+                    <button class="btn btn-outline-dark" id="calPrev" aria-label="Предыдущая неделя">←</button>
+                    <span id="calRange" class="fw-semibold"></span>
+                    <button class="btn btn-outline-dark" id="calNext" aria-label="Следующая неделя">→</button>
+                </div>
+                <div class="cal-scroll" id="calBox"></div>
+                <div class="legend">
+                    <span><i style="background:var(--free-bg);border:1px solid var(--free)"></i>свободно</span>
+                    <span><i style="background:var(--wait)"></i>ожидает подтверждения</span>
+                    <span><i style="background:var(--busy)"></i>подтверждено</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="tabSpaces" role="tabpanel">
+            <div class="panel table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead><tr><th>Пространство</th><th>Тип</th><th>Вместимость</th><th>Цена за час</th></tr></thead>
+                    <tbody id="spacesBody"></tbody>
+                </table>
             </div>
         </div>
     </div>
-
-    <div class="card shadow">
-        <div class="card-header bg-dark text-white">Заявки</div>
-        <div class="card-body">
-            <table class="table">
-                <thead><tr><th>Дата</th><th>Время</th><th>Зал</th><th>Клиент</th></tr></thead>
-                <tbody>
-                    <tr><td>20.11.2026</td><td>14:00</td><td>Актовый зал</td><td>Айбек (0555...)</td></tr>
-                    <tr><td>21.11.2026</td><td>10:00</td><td>Библиотека</td><td>Мария (0700...)</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="data.js"></script>
 <script>
+    const $ = id => document.getElementById(id);
+    let school = null;
+    let weekStart = DB.today();
+
     function login() {
-        const log = document.getElementById('loginInput').value;
-        const pass = document.getElementById('passwordInput').value;
-        if (log === 'school1' && pass === '12345') {
-            document.getElementById('loginScreen').classList.add('d-none');
-            document.getElementById('dashboardScreen').classList.remove('d-none');
-        } else {
-            alert('Неверно! Логин: school1, Пароль: 12345');
-        }
+        const log = $('loginInput').value.trim();
+        const pass = $('passwordInput').value;
+        const found = DB.schools().find(s => s.login === log && s.pass === pass);
+        if (!found) { $('loginError').classList.remove('d-none'); return; }
+        try { sessionStorage.setItem('sc_school', found.id); } catch (e) { /* ignore */ }
+        school = found;
+        showDashboard();
     }
+
+    function logout() {
+        try { sessionStorage.removeItem('sc_school'); } catch (e) { /* ignore */ }
+        location.reload();
+    }
+
+    function showDashboard() {
+        $('loginScreen').classList.add('d-none');
+        $('dashboardScreen').classList.remove('d-none');
+        $('schoolName').textContent = school.name;
+        $('schoolLink').textContent = new URL('index.html?school=' + school.id, location.href).href;
+        $('calSpace').innerHTML = school.spaces.map(s => `<option value="${s.id}">${DB.esc(s.name)}</option>`).join('');
+        $('spacesBody').innerHTML = school.spaces.map(s =>
+            `<tr><td>${DB.esc(s.name)}</td><td>${DB.typeLabel(s.type)}</td><td>${s.capacity} чел.</td><td>${s.price} сом</td></tr>`).join('');
+        refresh();
+    }
+
+    function spaceOf(id) { return school.spaces.find(s => s.id === id) || { name: '—', price: 0 }; }
+
+    function refresh() {
+        school = DB.school(school.id) || school;
+        const list = DB.bookings({ schoolId: school.id });
+
+        // Статистика
+        const approved = list.filter(b => b.status === 'approved');
+        const hours = approved.reduce((n, b) => n + b.hours, 0);
+        const income = approved.reduce((n, b) => n + b.hours * spaceOf(b.spaceId).price, 0) * (1 - DB.COMMISSION);
+        $('stPending').textContent = list.filter(b => b.status === 'pending').length;
+        $('stApproved').textContent = approved.length;
+        $('stHours').textContent = hours;
+        $('stIncome').textContent = Math.round(income).toLocaleString('ru-RU');
+
+        // Заявки
+        $('reqEmpty').classList.toggle('d-none', list.length > 0);
+        $('reqBody').innerHTML = list.map(b => {
+            const sp = spaceOf(b.spaceId);
+            const actions = b.status === 'pending'
+                ? `<button class="btn btn-sm btn-success me-1" data-act="approved" data-id="${b.id}">Подтвердить</button><button class="btn btn-sm btn-outline-danger" data-act="rejected" data-id="${b.id}">Отклонить</button>`
+                : b.status === 'approved'
+                    ? `<button class="btn btn-sm btn-outline-secondary" data-act="rejected" data-id="${b.id}">Отменить</button>`
+                    : '';
+            return `<tr>
+                <td>${DB.fmtDate(b.date)}</td>
+                <td>${b.start}:00–${b.start + b.hours}:00</td>
+                <td>${DB.esc(sp.name)}</td>
+                <td>${DB.esc(b.client)}<div class="text-muted small">${DB.esc(b.phone)} · ${DB.esc(b.purpose)}</div></td>
+                <td>${b.hours * sp.price} сом</td>
+                <td><span class="badge badge-${b.status}">${DB.statusLabel(b.status)}</span></td>
+                <td class="text-nowrap">${actions}</td></tr>`;
+        }).join('');
+        $('reqBody').querySelectorAll('[data-act]').forEach(btn => btn.onclick = () => {
+            DB.setStatus(btn.dataset.id, btn.dataset.act);
+            refresh();
+        });
+
+        renderCal();
+    }
+
+    function renderCal() {
+        const spaceId = $('calSpace').value;
+        if (!spaceId) return;
+        DB.renderWeek($('calBox'), spaceId, weekStart, { details: true });
+        $('calRange').textContent = DB.fmtDate(weekStart) + ' – ' + DB.fmtDate(DB.addDays(6, weekStart));
+    }
+
+    $('loginBtn').addEventListener('click', login);
+    $('passwordInput').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+    $('logoutBtn').addEventListener('click', logout);
+    $('calSpace').addEventListener('change', renderCal);
+    $('calPrev').addEventListener('click', () => { weekStart = DB.addDays(-7, weekStart); renderCal(); });
+    $('calNext').addEventListener('click', () => { weekStart = DB.addDays(7, weekStart); renderCal(); });
+    $('copyBtn').addEventListener('click', () => {
+        const done = () => { $('copyMsg').classList.remove('d-none'); setTimeout(() => $('copyMsg').classList.add('d-none'), 3000); };
+        if (navigator.clipboard) navigator.clipboard.writeText($('schoolLink').textContent).then(done);
+        else done();
+    });
+
+    // Если уже входили в этой вкладке — не просим пароль заново
+    try {
+        const saved = sessionStorage.getItem('sc_school');
+        if (saved && DB.school(saved)) { school = DB.school(saved); showDashboard(); }
+    } catch (e) { /* ignore */ }
 </script>
 </body>
 </html>

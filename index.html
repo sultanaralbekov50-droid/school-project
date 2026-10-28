@@ -3,342 +3,470 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Школьный Коворкинг | Премиум-платформа</title>
+    <title>Школьный Коворкинг | Пустые залы — в дело</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <style>
-        .hero { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 100px 0; }
-        .hero h1 { font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-        .card-img-top { height: 220px; object-fit: cover; }
-        .price-badge { font-size: 1.3rem; font-weight: bold; color: #198754; }
-        .icon-box { font-size: 2.5rem; color: #0d6efd; margin-bottom: 15px; }
-        .step-circle { width: 50px; height: 50px; background: #0d6efd; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 15px; }
-        .review-card { background: #fff; border-radius: 15px; padding: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); height: 100%; }
-        .tech-card { background: #f8f9fa; border-radius: 15px; padding: 20px; transition: 0.3s; height: 100%; border: 1px solid #e9ecef;}
-        .tech-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .footer { background-color: #212529; color: #adb5bd; padding: 40px 0 20px; margin-top: 70px; }
-        .footer a { color: #adb5bd; text-decoration: none; }
-        .footer a:hover { color: white; }
-    </style>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
 
-<!-- Меню сайта -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-sc sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="#"><i class="bi bi-building"></i> School Coworking</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <a class="navbar-brand" href="#hero">🏫 School Coworking</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Открыть меню">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#hero">Главная</a></li>
-                <li class="nav-item"><a class="nav-link" href="#features">Преимущества</a></li>
-                <li class="nav-item"><a class="nav-link" href="#spaces">Пространства</a></li>
-                <li class="nav-item"><a class="nav-link" href="#tech">Технологии</a></li>
-                <li class="nav-item"><a class="nav-link" href="#reviews">Отзывы</a></li>
-                <li class="nav-item"><a class="nav-link text-info fw-bold" href="dashboard.html"><i class="bi bi-person-lock"></i> Вход для школ</a></li>
-                <li class="nav-item"><a class="nav-link text-warning fw-bold" href="admin.html"><i class="bi bi-shield-lock"></i> Админ</a></li>
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                <li class="nav-item"><a class="nav-link" href="#how">Как это работает</a></li>
+                <li class="nav-item"><a class="nav-link" href="#spaces">Каталог</a></li>
+                <li class="nav-item"><a class="nav-link" href="#profit">Выгода школам</a></li>
+                <li class="nav-item"><a class="nav-link" href="#register">Подключить школу</a></li>
+                <li class="nav-item"><a class="nav-link" href="dashboard.html">Вход для школ</a></li>
+                <li class="nav-item"><a class="nav-link" href="admin.html">Админ</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- Главный баннер -->
-<section class="hero text-center" id="hero">
+<!-- Первый экран: живой календарь актового зала -->
+<section class="hero" id="hero">
     <div class="container">
-        <h1 class="display-3 fw-bold mb-4">Монетизируйте пространство вашей школы</h1>
-        <p class="lead mb-4 fs-4">Сдавайте актовые залы, библиотеки и спортзалы в аренду. Получайте дополнительный доход без лишних хлопот.</p>
-        <div class="d-flex justify-content-center gap-3">
-            <a href="#spaces" class="btn btn-warning btn-lg px-4 fw-bold">Арендовать зал</a>
-            <a href="#register" class="btn btn-outline-light btn-lg px-4 fw-bold">Подключить школу</a>
-        </div>
-    </div>
-</section>
-
-<!-- Блок преимуществ -->
-<section class="container mt-5 pt-4" id="features">
-    <h2 class="text-center mb-5 fw-bold">Почему выбирают нас?</h2>
-    <div class="row text-center">
-        <div class="col-md-4 mb-4">
-            <div class="icon-box"><i class="bi bi-cash-coin"></i></div>
-            <h4>Дополнительный доход</h4>
-            <p class="text-muted">Школа получает до 36 000 сомов в месяц чистой прибыли за счет аренды пустующих помещений.</p>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="icon-box"><i class="bi bi-robot"></i></div>
-            <h4>ИИ-Администратор</h4>
-            <p class="text-muted">Умный помощник подберет идеальный зал для вашего мероприятия и рассчитает стоимость за секунды.</p>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="icon-box"><i class="bi bi-shield-check"></i></div>
-            <h4>Безопасность</h4>
-            <p class="text-muted">Все заявки распределяются строго по школам. Никакой путаницы и потерянных бронирований.</p>
-        </div>
-    </div>
-</section>
-
-<!-- Блок с картинками (Теперь 4 пространства) -->
-<section class="container mt-5 pt-4 bg-light pb-5 rounded" id="spaces">
-    <h2 class="text-center mb-4 pt-4 fw-bold">Наши пространства</h2>
-    <div class="row px-4">
-        <!-- Зал 1 -->
-        <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow border-0">
-                <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Актовый зал">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h5 class="card-title m-0">Актовый зал</h5>
-                        <span class="badge bg-primary">До 50 чел.</span>
-                    </div>
-                    <p class="card-text text-muted">Идеально для концертов, больших мастер-классов и собраний.</p>
-                    <p class="price-badge">500 сом / час</p>
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <h1>После уроков залы пустуют. Пусть зарабатывают.</h1>
+                <p class="lead mt-3">Школы сдают актовый зал, библиотеку и кабинеты репетиторам, студиям и организаторам мероприятий. Деньги идут на нужды школы.</p>
+                <div class="mt-4 d-flex flex-wrap gap-2">
+                    <a href="#spaces" class="btn btn-mark btn-lg">Найти свободное время</a>
+                    <a href="#register" class="btn btn-outline-light btn-lg">Подключить школу</a>
                 </div>
             </div>
-        </div>
-        <!-- Зал 2 -->
-        <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow border-0">
-                <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Библиотека">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h5 class="card-title m-0">Библиотека</h5>
-                        <span class="badge bg-info text-dark">До 10 чел.</span>
+            <div class="col-lg-6">
+                <div class="week-card">
+                    <div class="d-flex justify-content-between align-items-baseline mb-2">
+                        <span class="title">Актовый зал · эта неделя</span>
+                        <span class="text-muted small" id="heroSchool"></span>
                     </div>
-                    <p class="card-text text-muted">Тихое место для репетиторов и подготовки к экзаменам.</p>
-                    <p class="price-badge">200 сом / час</p>
-                </div>
-            </div>
-        </div>
-        <!-- Зал 3 (НОВЫЙ) -->
-        <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow border-0">
-                <img src="https://images.unsplash.com/photo-1577412647305-991150c7d163?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Спортзал">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h5 class="card-title m-0">Спортивный зал</h5>
-                        <span class="badge bg-success">До 30 чел.</span>
+                    <div id="heroWeek"></div>
+                    <div class="legend">
+                        <span><i style="background:var(--free-bg);border:1px solid var(--free)"></i>свободно</span>
+                        <span><i style="background:var(--wait)"></i>ожидает подтверждения</span>
+                        <span><i style="background:var(--busy)"></i>занято</span>
                     </div>
-                    <p class="card-text text-muted">Для секций, тренировок и спортивных мероприятий.</p>
-                    <p class="price-badge">400 сом / час</p>
                 </div>
-            </div>
-        </div>
-        <!-- Зал 4 (НОВЫЙ) -->
-        <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow border-0">
-                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Компьютерный класс">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h5 class="card-title m-0">Компьютерный класс</h5>
-                        <span class="badge bg-warning text-dark">До 15 чел.</span>
-                    </div>
-                    <p class="card-text text-muted">Для IT-курсов, программирования и вебинаров.</p>
-                    <p class="price-badge">600 сом / час</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Блок технологий (НОВЫЙ) -->
-<section class="container mt-5 pt-4" id="tech">
-    <h2 class="text-center mb-5 fw-bold">Наши технологии</h2>
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="tech-card text-center">
-                <i class="bi bi-cpu fs-1 text-primary mb-3"></i>
-                <h5>Искусственный интеллект</h5>
-                <p class="text-muted small">Чат-бот на базе ИИ консультирует клиентов и помогает подобрать зал 24/7.</p>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="tech-card text-center">
-                <i class="bi bi-graph-up-arrow fs-1 text-success mb-3"></i>
-                <h5>Аналитика данных</h5>
-                <p class="text-muted small">Администратор школы видит графики загрузки залов и может прогнозировать доход.</p>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="tech-card text-center">
-                <i class="bi bi-lock-fill fs-1 text-danger mb-3"></i>
-                <h5>Защита данных</h5>
-                <p class="text-muted small">Каждая школа имеет свой защищенный кабинет. Данные клиентов не пересекаются.</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Как это работает -->
-<section class="container mt-5 pt-4" id="how-it-works">
-    <h2 class="text-center mb-5 fw-bold">Как это работает</h2>
-    <div class="row text-center">
-        <div class="col-md-4 mb-4">
-            <div class="step-circle">1</div>
-            <h5>Оставьте заявку</h5>
-            <p class="text-muted">Директор школы оставляет заявку на подключение к платформе.</p>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="step-circle">2</div>
-            <h5>Получите доступ</h5>
-            <p class="text-muted">Администратор проверяет данные и выдает логин и пароль.</p>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="step-circle">3</div>
-            <h5>Зарабатывайте</h5>
-            <p class="text-muted">Разошлите клиентам свою уникальную ссылку и получайте оплату.</p>
-        </div>
-    </div>
-</section>
-
-<!-- Отзывы -->
-<section class="container mt-5 pt-4" id="reviews">
-    <h2 class="text-center mb-5 fw-bold">Отзывы наших партнеров</h2>
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="review-card">
-                <div class="text-warning mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                <p class="fst-italic">"Благодаря платформе мы смогли отремонтировать спортзал за счет аренды актового зала. Очень удобно!"</p>
-                <div class="d-flex align-items-center mt-3">
-                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">А</div>
-                    <div><h6 class="m-0 fw-bold">Айгуль К.</h6><small class="text-muted">Директор школы №12</small></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="review-card">
-                <div class="text-warning mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                <p class="fst-italic">"ИИ-помощник просто супер! Клиенты сами бронируют залы, а я вижу только готовые заявки в кабинете."</p>
-                <div class="d-flex align-items-center mt-3">
-                    <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">Б</div>
-                    <div><h6 class="m-0 fw-bold">Бакыт Т.</h6><small class="text-muted">Директор лицея №5</small></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="review-card">
-                <div class="text-warning mb-2"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></div>
-                <p class="fst-italic">"Отличный сервис. Снимаем библиотеку для репетиторства. Всегда чисто, есть Wi-Fi и проектор."</p>
-                <div class="d-flex align-items-center mt-3">
-                    <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">М</div>
-                    <div><h6 class="m-0 fw-bold">Мария И.</h6><small class="text-muted">Репетитор</small></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ЗАЯВКА ДЛЯ ДИРЕКТОРА -->
-<section class="container mt-5 mb-5 pt-4" id="register">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-lg border-0">
-                <div class="card-header bg-primary text-white text-center py-3">
-                    <h4 class="mb-0 fw-bold">Подключение школы к системе</h4>
-                </div>
-                <div class="card-body p-4">
-                    <p class="text-muted text-center mb-4">Оставьте заявку. Главный администратор свяжется с вами и выдаст логин и пароль.</p>
-                    <form id="registerForm">
-                        <div class="mb-3"><label class="form-label fw-bold">Название школы</label><input type="text" class="form-control form-control-lg" placeholder="Школа №1 им. Пушкина" required></div>
-                        <div class="mb-3"><label class="form-label fw-bold">ФИО Директора</label><input type="text" class="form-control form-control-lg" placeholder="Иванов Иван" required></div>
-                        <div class="row mb-4">
-                            <div class="col-md-6 mb-3 mb-md-0"><label class="form-label fw-bold">Телефон</label><input type="tel" class="form-control form-control-lg" placeholder="+996 555 123 456" required></div>
-                            <div class="col-md-6"><label class="form-label fw-bold">Email</label><input type="email" class="form-control form-control-lg" placeholder="school@mail.com" required></div>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold">Отправить заявку</button>
-                    </form>
-                    <div id="registerSuccess" class="alert alert-success mt-4 d-none text-center">
-                        <i class="bi bi-check-circle-fill fs-3 d-block mb-2"></i><b>Заявка успешно отправлена!</b><br>Ожидайте звонка.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ФОРМА БРОНИРОВАНИЯ (Скрыта) -->
-<section class="container mt-5 mb-5" id="bookingSection" style="display: none;">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-lg border-success">
-                <div class="card-header bg-success text-white text-center py-3">
-                    <h4 class="mb-0 fw-bold">Забронировать время</h4>
-                </div>
-                <div class="card-body p-4">
-                    <div class="alert alert-info text-center fw-bold">Вы бронируете зал для школы: <span id="currentSchoolName"></span></div>
-                    <form id="bookingForm">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Выберите пространство</label>
-                            <select class="form-select form-select-lg">
-                                <option>Актовый зал (500 сом/час)</option>
-                                <option>Библиотека (200 сом/час)</option>
-                                <option>Спортивный зал (400 сом/час)</option>
-                                <option>Компьютерный класс (600 сом/час)</option>
-                            </select>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6 mb-3 mb-md-0"><label class="form-label fw-bold">Дата</label><input type="date" class="form-control form-control-lg" required></div>
-                            <div class="col-md-6"><label class="form-label fw-bold">Время</label><input type="time" class="form-control form-control-lg" required></div>
-                        </div>
-                        <div class="mb-4"><label class="form-label fw-bold">Имя и телефон</label><input type="text" class="form-control form-control-lg" placeholder="Айбек, 0555..." required></div>
-                        <button type="submit" class="btn btn-success btn-lg w-100 fw-bold">Отправить заявку</button>
-                    </form>
-                    <div id="bookingSuccess" class="alert alert-success mt-4 d-none text-center">
-                        <i class="bi bi-check-circle-fill fs-3 d-block mb-2"></i><b>Успешно!</b> Заявка отправлена.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Подвал (Footer) -->
-<footer class="footer">
+<section class="section" id="how">
     <div class="container">
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <h5 class="text-white fw-bold"><i class="bi bi-building"></i> School Coworking</h5>
-                <p class="small mt-3">Платформа для монетизации школьных пространств. Разработано в рамках хакатона AI-Стартап.</p>
+        <h2>Как это работает</h2>
+        <p class="sub">Три шага от пустого зала до первой аренды. Школе не нужно искать клиентов, а клиенту — договариваться по телефону.</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="step">
+                    <div class="n">1</div>
+                    <h5>Школа подключается</h5>
+                    <p>Директор оставляет заявку, администратор выдаёт логин и пароль. Школа указывает, какие залы сдаёт, на какие часы и по какой цене.</p>
+                </div>
             </div>
-            <div class="col-md-4 mb-3">
-                <h5 class="text-white fw-bold">Навигация</h5>
-                <ul class="list-unstyled small">
-                    <li><a href="#hero">Главная</a></li>
-                    <li><a href="#spaces">Пространства</a></li>
-                    <li><a href="#register">Подключить школу</a></li>
-                </ul>
+            <div class="col-md-4">
+                <div class="step">
+                    <div class="n">2</div>
+                    <h5>Клиент выбирает время</h5>
+                    <p>Репетитор, студия или организатор видит календарь, выбирает свободный час и отправляет заявку онлайн, без звонков и переписок.</p>
+                </div>
             </div>
-            <div class="col-md-4 mb-3">
-                <h5 class="text-white fw-bold">Контакты</h5>
-                <ul class="list-unstyled small">
-                    <li><i class="bi bi-telephone me-2"></i> +996 555 123 456</li>
-                    <li><i class="bi bi-envelope me-2"></i> info@schoolcoworking.kg</li>
-                </ul>
+            <div class="col-md-4">
+                <div class="step">
+                    <div class="n">3</div>
+                    <h5>Директор подтверждает</h5>
+                    <p>Заявка приходит в личный кабинет. Директор подтверждает её одним нажатием, а школа получает доход от аренды.</p>
+                </div>
             </div>
         </div>
-        <hr class="border-secondary">
-        <div class="text-center small pt-2">&copy; 2026 School Coworking.</div>
     </div>
-</footer>
+</section>
+
+<!-- Каталог -->
+<section class="section section-alt" id="spaces">
+    <div class="container">
+        <h2>Каталог школ и залов</h2>
+        <p class="sub">Выберите пространство и сразу посмотрите, какие часы свободны.</p>
+
+        <div id="schoolBanner" class="alert alert-info d-none d-flex justify-content-between align-items-center">
+            <span>Вы смотрите пространства школы: <b id="schoolBannerName"></b></span>
+            <a href="index.html#spaces" class="btn btn-sm btn-outline-dark">Показать все школы</a>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2 mb-4" id="filters">
+            <button class="chip on" data-type="all">Все</button>
+            <button class="chip" data-type="hall">Актовые залы</button>
+            <button class="chip" data-type="library">Библиотеки</button>
+            <button class="chip" data-type="classroom">Классы</button>
+        </div>
+
+        <div class="row g-4" id="catalog"></div>
+        <p id="catalogEmpty" class="text-muted d-none">В этой категории пока нет пространств.</p>
+    </div>
+</section>
+
+<!-- Выгода для школ -->
+<section class="section" id="profit">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <h2>Сколько школа может заработать</h2>
+                <p class="sub">Подвигайте ползунки: цена за час и сколько часов в неделю зал занят арендаторами. Расчёт примерный, чтобы оценить масштаб.</p>
+                <ul class="list-unstyled text-muted mb-0">
+                    <li class="mb-2">✔ Зал, который пустует после уроков, начинает приносить деньги.</li>
+                    <li class="mb-2">✔ Директор сам решает, какие часы открыть для аренды.</li>
+                    <li class="mb-2">✔ Деньги можно потратить на ремонт, технику и кружки.</li>
+                    <li>✔ Ученики и район получают место для занятий рядом с домом.</li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <div class="calc">
+                    <label for="calcPrice"><span>Цена за час</span><b><span id="vPrice">500</span> сом</b></label>
+                    <input type="range" id="calcPrice" min="100" max="1000" step="50" value="500">
+                    <label for="calcHours"><span>Часов аренды в неделю</span><b><span id="vHours">10</span> ч</b></label>
+                    <input type="range" id="calcHours" min="2" max="40" step="1" value="10">
+                    <div class="small-note">Доход школы в месяц</div>
+                    <div class="big"><span id="outMonth">0</span> сом</div>
+                    <div class="mt-3">За учебный год (9 месяцев): <b id="outYear">0</b> сом</div>
+                    <div class="small-note mt-3">Пример модели: платформа берёт 15% с аренды, школа получает 85%. В месяце считаем 4 недели.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ЦУР ООН -->
+<section class="section section-alt" id="sdg">
+    <div class="container">
+        <h2>Зачем это городу</h2>
+        <p class="sub">Проект работает на цели устойчивого развития ООН: использует то, что уже построено, и направляет деньги в образование.</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="sdg">
+                    <span class="tag" style="background:#c5192d">ЦУР 4</span>
+                    <h5>Качественное образование</h5>
+                    <p class="text-muted mb-0">Доход от аренды идёт на оборудование, ремонт и кружки. Репетиторы и студии получают доступное место для занятий.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="sdg">
+                    <span class="tag" style="background:#fd9d24">ЦУР 11</span>
+                    <h5>Устойчивые города</h5>
+                    <p class="text-muted mb-0">Школьные здания становятся общественными пространствами района, а не пустуют по вечерам и выходным.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="sdg">
+                    <span class="tag" style="background:#bf8b2e">ЦУР 12</span>
+                    <h5>Разумное использование ресурсов</h5>
+                    <p class="text-muted mb-0">Не нужно строить новые помещения: мы загружаем те, что уже есть.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Заявка от директора -->
+<section class="section" id="register">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="panel">
+                    <h3 class="mb-1">Подключить школу</h3>
+                    <p class="text-muted">Оставьте заявку. Администратор свяжется с вами и выдаст логин и пароль для личного кабинета.</p>
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label class="form-label" for="rSchool">Название школы</label>
+                            <input type="text" id="rSchool" class="form-control" placeholder="Школа №1 им. Пушкина" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="rDirector">ФИО директора</label>
+                            <input type="text" id="rDirector" class="form-control" placeholder="Иванов Иван Иванович" required>
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6"><label class="form-label" for="rPhone">Телефон</label><input type="tel" id="rPhone" class="form-control" placeholder="+996 555 123 456" required></div>
+                            <div class="col-md-6"><label class="form-label" for="rEmail">Email</label><input type="email" id="rEmail" class="form-control" placeholder="school@mail.com" required></div>
+                        </div>
+                        <button type="submit" class="btn btn-ink w-100">Отправить заявку</button>
+                    </form>
+                    <div id="registerSuccess" class="alert alert-success mt-3 d-none" role="status">
+                        <b>Заявка отправлена.</b> Администратор позвонит вам в ближайшее время.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="footer text-center">
+    <div class="container">
+        <p class="mb-1">Проект хакатона «AI – Стартап»</p>
+        <p class="mb-0 small">Демо-версия: данные хранятся в браузере.</p>
+    </div>
+</div>
+
+<!-- Окно бронирования -->
+<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookTitle">Забронировать</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div id="bookForm">
+                    <p class="text-muted mb-3" id="bookInfo"></p>
+                    <div class="mb-3">
+                        <label class="form-label" for="bkDate">Дата</label>
+                        <input type="date" id="bkDate" class="form-control" style="max-width:220px">
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">Время начала <span class="text-muted small">(серые часы заняты)</span></div>
+                        <div class="slots" id="slots"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="bkDur">Сколько часов</label>
+                        <select id="bkDur" class="form-select" style="max-width:220px"></select>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6"><label class="form-label" for="bkName">Ваше имя</label><input type="text" id="bkName" class="form-control" placeholder="Айбек"></div>
+                        <div class="col-md-6"><label class="form-label" for="bkPhone">Телефон</label><input type="tel" id="bkPhone" class="form-control" placeholder="0555 123 456"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="bkPurpose">Что будете проводить</label>
+                        <input type="text" id="bkPurpose" class="form-control" placeholder="Мастер-класс, занятие, встреча">
+                    </div>
+                    <div id="bkError" class="alert alert-danger d-none" role="alert"></div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>Итого: <b id="bkTotal">—</b></div>
+                        <button type="button" class="btn btn-ink" id="bkSend">Отправить заявку</button>
+                    </div>
+                </div>
+                <div id="bookDone" class="d-none text-center py-4">
+                    <h4>Заявка отправлена</h4>
+                    <p class="text-muted mb-1" id="bookDoneText"></p>
+                    <p class="text-muted">Директор школы подтвердит её в личном кабинете. Пока заявка подтверждается, это время показано как «ожидает».</p>
+                    <button type="button" class="btn btn-ink" data-bs-dismiss="modal">Готово</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="data.js"></script>
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const schoolFromUrl = urlParams.get('school');
-    if (schoolFromUrl) {
-        document.getElementById('bookingSection').style.display = 'block'; 
-        document.getElementById('currentSchoolName').innerText = schoolFromUrl;
+    const $ = id => document.getElementById(id);
+    const IMG = {
+        hall: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80',
+        library: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80',
+        classroom: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80'
+    };
+
+    let typeFilter = 'all';
+    let schoolFilter = null;
+
+    /* ---- Ссылка школы: ?school=school1 или старый вид ?school=Школа_1 ---- */
+    function resolveSchool(param) {
+        if (!param) return null;
+        const list = DB.schools();
+        const p = param.toLowerCase();
+        let found = list.find(s => s.id.toLowerCase() === p);
+        if (found) return found;
+        const num = param.match(/\d+/);
+        if (num) found = list.find(s => s.id === 'school' + num[0]);
+        return found || null;
     }
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        this.classList.add('d-none');
-        document.getElementById('registerSuccess').classList.remove('d-none');
+
+    /* ---- Первый экран: живой календарь ---- */
+    function renderHero() {
+        const first = DB.findSpace('s1-hall') || (DB.schools()[0] && { school: DB.schools()[0], space: DB.schools()[0].spaces[0] });
+        if (!first) return;
+        $('heroSchool').textContent = first.school.name;
+        DB.renderWeek($('heroWeek'), first.space.id, DB.today(), { compact: true });
+    }
+
+    /* ---- Каталог ---- */
+    function freeToday(spaceId) {
+        const t = DB.today();
+        const now = new Date().getHours();
+        let n = 0;
+        for (let h = Math.max(DB.OPEN, now + 1); h < DB.CLOSE; h++) if (DB.isFree(spaceId, t, h, 1)) n++;
+        return n;
+    }
+
+    function renderCatalog() {
+        const items = [];
+        DB.schools().forEach(school => {
+            if (schoolFilter && school.id !== schoolFilter.id) return;
+            school.spaces.forEach(space => {
+                if (typeFilter === 'all' || space.type === typeFilter) items.push({ school, space });
+            });
+        });
+        $('catalogEmpty').classList.toggle('d-none', items.length > 0);
+        $('catalog').innerHTML = items.map(({ school, space }) => `
+            <div class="col-md-6 col-lg-4">
+                <div class="space-card">
+                    <div class="ph"><img src="${IMG[space.type] || IMG.hall}" alt="${DB.esc(space.name)}" loading="lazy" onerror="this.remove()"></div>
+                    <div class="body">
+                        <div class="school">${DB.esc(school.name)} · ${DB.esc(school.district)}</div>
+                        <h5 class="mb-0">${DB.esc(space.name)}</h5>
+                        <div class="text-muted small">До ${space.capacity} человек</div>
+                        <div class="price">${space.price} сом / час</div>
+                        <div class="free-now">Сегодня свободно: <b>${freeToday(space.id)} ч</b></div>
+                        <button class="btn btn-ink mt-auto" data-book="${space.id}">Выбрать время</button>
+                    </div>
+                </div>
+            </div>`).join('');
+        document.querySelectorAll('[data-book]').forEach(b => b.onclick = () => openBooking(b.dataset.book));
+    }
+
+    $('filters').addEventListener('click', e => {
+        const btn = e.target.closest('.chip');
+        if (!btn) return;
+        typeFilter = btn.dataset.type;
+        document.querySelectorAll('#filters .chip').forEach(c => c.classList.toggle('on', c === btn));
+        renderCatalog();
     });
-    document.getElementById('bookingForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        this.classList.add('d-none');
-        document.getElementById('bookingSuccess').classList.remove('d-none');
+
+    /* ---- Бронирование ---- */
+    let cur = null;
+    let modal = null;
+
+    function isPast(date, hour) {
+        return date === DB.today() && hour <= new Date().getHours();
+    }
+
+    function openBooking(spaceId) {
+        const found = DB.findSpace(spaceId);
+        if (!found) return;
+        cur = { school: found.school, space: found.space, start: null };
+        $('bookTitle').textContent = found.space.name + ' — ' + found.school.name;
+        $('bookInfo').textContent = 'До ' + found.space.capacity + ' человек · ' + found.space.price + ' сом/час';
+        $('bkDate').min = DB.today();
+        $('bkDate').value = DB.today();
+        ['bkName', 'bkPhone', 'bkPurpose'].forEach(id => $(id).value = '');
+        $('bkError').classList.add('d-none');
+        $('bookForm').classList.remove('d-none');
+        $('bookDone').classList.add('d-none');
+        renderSlots();
+        modal = modal || new bootstrap.Modal($('bookModal'));
+        modal.show();
+    }
+
+    function renderSlots() {
+        const date = $('bkDate').value;
+        if (cur.start !== null && (!DB.isFree(cur.space.id, date, cur.start, 1) || isPast(date, cur.start))) cur.start = null;
+        let html = '';
+        for (let h = DB.OPEN; h < DB.CLOSE; h++) {
+            const free = DB.isFree(cur.space.id, date, h, 1) && !isPast(date, h);
+            html += `<button type="button" class="slot${cur.start === h ? ' on' : ''}" data-h="${h}" ${free ? '' : 'disabled'}>${h}:00</button>`;
+        }
+        $('slots').innerHTML = html;
+        $('slots').querySelectorAll('.slot').forEach(b => b.onclick = () => { cur.start = +b.dataset.h; renderSlots(); });
+        updateDuration();
+    }
+
+    function updateDuration() {
+        const sel = $('bkDur');
+        const prev = +sel.value || 1;
+        if (cur.start === null) {
+            sel.innerHTML = '<option value="1">Сначала выберите время</option>';
+            sel.disabled = true;
+            $('bkTotal').textContent = '—';
+            return;
+        }
+        const date = $('bkDate').value;
+        let opts = '';
+        let max = 0;
+        for (let d = 1; d <= 4; d++) {
+            if (!DB.isFree(cur.space.id, date, cur.start, d)) break;
+            max = d;
+            opts += `<option value="${d}">${d} ч (${cur.start}:00–${cur.start + d}:00)</option>`;
+        }
+        sel.innerHTML = opts;
+        sel.disabled = false;
+        sel.value = String(Math.min(prev, max));
+        updateTotal();
+    }
+
+    function updateTotal() {
+        if (cur.start === null) return;
+        $('bkTotal').textContent = (cur.space.price * (+$('bkDur').value)) + ' сом';
+    }
+
+    $('bkDate').addEventListener('change', renderSlots);
+    $('bkDur').addEventListener('change', updateTotal);
+
+    $('bkSend').addEventListener('click', () => {
+        const err = $('bkError');
+        const name = $('bkName').value.trim();
+        const phone = $('bkPhone').value.trim();
+        const purpose = $('bkPurpose').value.trim() || 'Без описания';
+        const showErr = msg => { err.textContent = msg; err.classList.remove('d-none'); };
+        if (cur.start === null) return showErr('Выберите время начала.');
+        if (!name || !phone) return showErr('Укажите имя и телефон, чтобы директор мог связаться с вами.');
+        const hours = +$('bkDur').value;
+        const date = $('bkDate').value;
+        const res = DB.addBooking({ spaceId: cur.space.id, date, start: cur.start, hours, client: name, phone, purpose });
+        if (!res.ok) { showErr(res.error); renderSlots(); return; }
+        $('bookDoneText').textContent = cur.space.name + ', ' + DB.fmtDate(date) + ', ' + cur.start + ':00–' + (cur.start + hours) + ':00';
+        $('bookForm').classList.add('d-none');
+        $('bookDone').classList.remove('d-none');
+        renderHero();
+        renderCatalog();
     });
+
+    /* ---- Калькулятор ---- */
+    function calc() {
+        const price = +$('calcPrice').value;
+        const hours = +$('calcHours').value;
+        const month = Math.round(price * hours * 4 * (1 - DB.COMMISSION));
+        $('vPrice').textContent = price;
+        $('vHours').textContent = hours;
+        $('outMonth').textContent = month.toLocaleString('ru-RU');
+        $('outYear').textContent = (month * 9).toLocaleString('ru-RU');
+    }
+    $('calcPrice').addEventListener('input', calc);
+    $('calcHours').addEventListener('input', calc);
+
+    /* ---- Заявка школы ---- */
+    $('registerForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        DB.addApplication({
+            school: $('rSchool').value.trim(),
+            director: $('rDirector').value.trim(),
+            phone: $('rPhone').value.trim(),
+            email: $('rEmail').value.trim()
+        });
+        this.classList.add('d-none');
+        $('registerSuccess').classList.remove('d-none');
+    });
+
+    /* ---- Старт ---- */
+    const param = new URLSearchParams(location.search).get('school');
+    schoolFilter = resolveSchool(param);
+    if (schoolFilter) {
+        $('schoolBanner').classList.remove('d-none');
+        $('schoolBannerName').textContent = schoolFilter.name;
+    }
+    renderHero();
+    renderCatalog();
+    calc();
+    if (schoolFilter) $('spaces').scrollIntoView();
+
+    // Обновляем данные, если заявку подтвердили в другой вкладке
+    window.addEventListener('storage', () => { renderHero(); renderCatalog(); });
 </script>
 </body>
 </html>
