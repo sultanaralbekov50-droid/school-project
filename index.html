@@ -173,14 +173,41 @@
 <!-- Скрипты -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Логика для формы
+    // --- 1. ЛОГИКА ДЛЯ ФОРМЫ (ОТПРАВКА В GOOGLE ТАБЛИЦУ) ---
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        this.classList.add('d-none');
-        document.getElementById('successMessage').classList.remove('d-none');
+        
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.innerText = "Отправка...";
+        submitBtn.disabled = true;
+
+        // Собираем данные
+        const data = {
+            space: document.getElementById('space').options[document.getElementById('space').selectedIndex].text,
+            date: document.getElementById('date').value,
+            time: document.getElementById('time').value,
+            contact: document.getElementById('contact').value
+        };
+
+        // ВСТАВЬ СЮДА СВОЮ ССЫЛКУ ИЗ GOOGLE APPS SCRIPT!
+        const url = "https://script.google.com/macros/s/AKfycbxNR6316GTaxzWb3dJt3QLnqvdFHabIuOqz401PF7WnWLBEZU92INwKYeqbluP6n7anTg/exec";
+
+        fetch(url, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).then(() => {
+            document.getElementById('bookingForm').classList.add('d-none');
+            document.getElementById('successMessage').classList.remove('d-none');
+        }).catch(() => {
+            alert("Ошибка отправки. Проверьте интернет.");
+            submitBtn.innerText = "Отправить заявку";
+            submitBtn.disabled = false;
+        });
     });
 
-    // Логика для ИИ-чата (Демо-режим)
+    // --- 2. ЛОГИКА ДЛЯ ИИ-ЧАТА (ДЕМО) ---
     function sendMessage() {
         const input = document.getElementById('userInput');
         const chatBox = document.getElementById('chatBox');
@@ -188,12 +215,10 @@
         
         if (text === "") return;
 
-        // Сообщение пользователя
         chatBox.innerHTML += `<div class="msg-user"><span>${text}</span></div>`;
         input.value = '';
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // Ответ ИИ через 1 секунду
         setTimeout(() => {
             let aiResponse = "";
             const lowerText = text.toLowerCase();
@@ -213,7 +238,6 @@
         }, 1000);
     }
 
-    // Отправка по Enter
     document.getElementById('userInput').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') sendMessage();
     });
