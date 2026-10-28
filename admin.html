@@ -1,86 +1,61 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Админ-панель | Школьный Коворкинг</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-
-<!-- Экран входа -->
-<div id="loginScreen" class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow p-4" style="width: 300px;">
-        <h4 class="text-center mb-3">🔐 Вход</h4>
-        <input type="password" id="pass" class="form-control mb-3" placeholder="Введите пароль (admin)">
-        <button class="btn btn-primary w-100" onclick="login()">Войти</button>
-    </div>
-</div>
-
-<!-- Панель управления (скрыта) -->
-<div id="adminPanel" class="container mt-5 d-none">
-    <h2 class="mb-4">👨‍💼 Панель администратора</h2>
-    <p class="text-muted">Здесь отображаются заявки. Данные подгружаются из базы автоматически.</p>
-    
-    <button class="btn btn-success mb-3" onclick="loadData()">🔄 Обновить данные</button>
-    <a href="index.html" class="btn btn-secondary mb-3">← На главную</a>
-    
-    <div class="card shadow">
-        <div class="card-body">
-            <table class="table table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Школа</th>
-                        <th>Дата</th>
-                        <th>Время</th>
-                        <th>Зал</th>
-                        <th>Клиент</th>
-                    </tr>
-                </thead>
-                <tbody id="adminTableBody">
-                    <tr><td colspan="5" class="text-center">Загрузка...</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<script>
     // --- СКРИПТ АДМИНКИ ---
 
     // 1. Авторизация
     function login() {
         const password = document.getElementById('pass').value;
-        if (password === 'admin') { // Пароль для демо
+        if (password === 'ara') { 
             document.getElementById('loginScreen').classList.add('d-none');
             document.getElementById('adminPanel').classList.remove('d-none');
-            loadData(); // Загружаем данные при входе
+            loadData(); 
         } else {
-            alert('Неверный пароль! (Подсказка: admin)');
+            alert('Неверный пароль!');
         }
     }
 
-    // 2. Загрузка данных из Google Sheets (Чтение)
+    // 2. Форматирование даты (чтобы было красиво)
+    function formatDate(dateString) {
+        if (!dateString) return "";
+        // Если дата пришла в формате ISO (2026-02-28T...)
+        if (dateString.includes("T")) {
+            const d = new Date(dateString);
+            return d.toLocaleDateString('ru-RU'); // Вернет 28.02.2026
+        }
+        return dateString;
+    }
+
+    // 3. Загрузка данных из Google Sheets
     function loadData() {
         const tableBody = document.getElementById('adminTableBody');
         tableBody.innerHTML = '<tr><td colspan="5" class="text-center">Загрузка данных...</td></tr>';
         
-        // ТВОЯ ССЫЛКА ИЗ GOOGLE APPS SCRIPT
-        const url = "https://script.google.com/macros/s/AKfycbwOHbNcSKZ4R_G1iGJ510IuqL9gt6fBYM5EZeJBXcrc14UEuS2ZadU7eaS3zTT_zbKeTw/exec";
+        const url = "https://script.google.com/macros/s/AKfycbwOHbNcSKZ4R_G1iGJ510IuqL9gt6fBYM5EZeJBXcrc14UEuS2ZadU7eaS3zTT_zbKeTw/exec"; // Твоя ссылка
 
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                tableBody.innerHTML = ''; // Очищаем таблицу
+                tableBody.innerHTML = ''; 
                 // Пропускаем первую строку (заголовки)
                 for (let i = 1; i < data.length; i++) {
                     let row = data[i];
-                    // row[0] = Дата, row[1] = Время, row[2] = Зал, row[3] = Клиент, row[4] = Школа
+                    
+                    // Красиво оформляем школу
+                    let schoolName = row[4] ? row[4] : "Общая школа";
+                    let schoolBadge = row[4] ? `<span class="badge bg-primary">${row[4]}</span>` : `<span class="badge bg-secondary">Не указана</span>`;
+                    
+                    // Форматируем дату
+                    let dateFormatted = formatDate(row[0]);
+                    // Время (если оно пришло как 1899-12-30T...)
+                    let timeFormatted = row[1];
+                    if (timeFormatted && timeFormatted.includes("T")) {
+                        let timeParts = timeFormatted.split("T")[1].split(":");
+                        timeFormatted = timeParts[0] + ":" + timeParts[1];
+                    }
+
                     tableBody.innerHTML += `
                         <tr>
-                            <td><span class="badge bg-primary">${row[4] || 'Не указана'}</span></td>
-                            <td>${row[0]}</td>
-                            <td>${row[1]}</td>
+                            <td>${schoolBadge}</td>
+                            <td>${dateFormatted}</td>
+                            <td>${timeFormatted}</td>
                             <td>${row[2]}</td>
                             <td>${row[3]}</td>
                         </tr>
@@ -91,9 +66,6 @@
                 }
             })
             .catch(() => {
-                tableBody.innerHTML = '<tr><td colspan="5" class="text-center text-danger">Ошибка загрузки данных. Проверьте ссылку.</td></tr>';
+                tableBody.innerHTML = '<tr><td colspan="5" class="text-center text-danger">Ошибка загрузки данных.</td></tr>';
             });
     }
-</script>
-</body>
-</html>
