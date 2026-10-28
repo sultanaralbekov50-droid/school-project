@@ -6,82 +6,131 @@
     <title>Школьный Коворкинг | AI-Стартап</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .hero { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 60px 0; }
-        .card-img-top { height: 200px; object-fit: cover; }
+        .hero { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 80px 0; }
+        .card-img-top { height: 250px; object-fit: cover; }
         .price-badge { font-size: 1.2rem; font-weight: bold; color: #198754; }
         .footer { background-color: #f8f9fa; padding: 20px 0; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-<!-- Меню -->
+<!-- Меню сайта -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container">
         <a class="navbar-brand" href="#">🏫 School Coworking</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#hero">Главная</a></li>
+                <li class="nav-item"><a class="nav-link" href="#spaces">Пространства</a></li>
                 <li class="nav-item"><a class="nav-link" href="#register">Регистрация</a></li>
-                <li class="nav-item"><a class="nav-link" href="#booking">Забронировать</a></li>
-                <li class="nav-item"><a class="nav-link" href="dashboard.html">🔑 Вход для школ</a></li>
+                <li class="nav-item"><a class="nav-link text-info" href="dashboard.html">🔑 Вход для школ</a></li>
                 <li class="nav-item"><a class="nav-link text-warning" href="admin.html">🔐 Админ</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- Главный экран -->
+<!-- Главный баннер -->
 <section class="hero text-center" id="hero">
     <div class="container">
         <h1 class="display-4 fw-bold">Превращаем пустые залы в прибыль</h1>
-        <p class="lead mt-3">Арендуйте актовый зал или библиотеку для мастер-классов и мероприятий.</p>
-        <a href="#booking" class="btn btn-warning btn-lg mt-4">Забронировать</a>
+        <p class="lead mt-3">Арендуйте актовый зал или библиотеку для мастер-классов, репетиторства и мероприятий.</p>
+        <a href="#spaces" class="btn btn-warning btn-lg mt-4">Выбрать пространство</a>
     </div>
 </section>
 
-<!-- Регистрация школы -->
-<section class="container mt-5" id="register">
+<!-- Блок с картинками (Пространства) -->
+<section class="container mt-5" id="spaces">
+    <h2 class="text-center mb-4">🏢 Наши пространства</h2>
+    <div class="row">
+        <!-- Карточка 1 -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Актовый зал">
+                <div class="card-body">
+                    <h5 class="card-title">Актовый зал</h5>
+                    <p class="card-text">Идеально для больших мероприятий, концертов и мастер-классов (до 50 человек).</p>
+                    <p class="price-badge">500 сом / час</p>
+                </div>
+            </div>
+        </div>
+        <!-- Карточка 2 -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Библиотека">
+                <div class="card-body">
+                    <h5 class="card-title">Библиотека (Коворкинг)</h5>
+                    <p class="card-text">Тихое место для репетиторов, подготовки к экзаменам и встреч 1-на-1.</p>
+                    <p class="price-badge">200 сом / час</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Блок регистрации школы -->
+<section class="container mt-5 mb-5" id="register">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow border-info">
-                <div class="card-header bg-info text-white"><h4 class="mb-0">🏫 Регистрация школы</h4></div>
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">🏫 Регистрация школы (Для директоров)</h4>
+                </div>
                 <div class="card-body">
-                    <p class="text-muted">Заполните данные, чтобы получить доступ к панели управления. После проверки администратором вы сможете войти.</p>
-                    <form>
-                        <div class="mb-3"><label>Название школы</label><input type="text" class="form-control" required></div>
-                        <div class="mb-3"><label>ФИО Директора</label><input type="text" class="form-control" required></div>
-                        <div class="row mb-3">
-                            <div class="col"><label>Логин</label><input type="text" class="form-control" required></div>
-                            <div class="col"><label>Пароль</label><input type="password" class="form-control" required></div>
+                    <p class="text-muted">Заполните данные. После проверки главным администратором вы получите доступ в личный кабинет.</p>
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label class="form-label">Название школы</label>
+                            <input type="text" id="schoolName" class="form-control" placeholder="Например: Школа №1" required>
                         </div>
-                        <button type="button" class="btn btn-info text-white w-100" onclick="alert('Здесь будет отправка заявки в базу данных!')">Отправить заявку</button>
+                        <div class="mb-3">
+                            <label class="form-label">ФИО Директора</label>
+                            <input type="text" id="directorName" class="form-control" placeholder="Иванов Иван" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Логин</label>
+                                <input type="text" id="login" class="form-control" placeholder="school1" required>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Пароль</label>
+                                <input type="password" id="password" class="form-control" placeholder="******" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-info text-white w-100">Отправить заявку на регистрацию</button>
                     </form>
+                    <div id="successMsg" class="alert alert-success mt-3 d-none">
+                        ✅ <b>Заявка отправлена!</b> Ожидайте подтверждения от администратора.
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Форма бронирования -->
-<section class="container mt-5 mb-5" id="booking">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow border-success">
-                <div class="card-header bg-success text-white"><h4>📅 Забронировать время</h4></div>
-                <div class="card-body">
-                    <form>
-                        <div class="mb-3"><label>Выберите пространство</label><select class="form-select"><option>Актовый зал (500 сом/час)</option><option>Коворкинг (200 сом/час)</option></select></div>
-                        <div class="row mb-3"><div class="col"><label>Дата</label><input type="date" class="form-control"></div><div class="col"><label>Время</label><input type="time" class="form-control"></div></div>
-                        <div class="mb-3"><label>Имя и телефон</label><input type="text" class="form-control" placeholder="Айбек, 0555..."></div>
-                        <button type="button" class="btn btn-success w-100" onclick="alert('Здесь будет отправка заявки!')">Отправить заявку</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+<!-- Футер -->
+<div class="footer text-center">
+    <div class="container">
+        <p>Проект хакатона «AI – Стартап».</p>
     </div>
-</section>
+</div>
 
-<div class="footer text-center"><div class="container"><p>Проект хакатона «AI – Стартап».</p></div></div>
+<!-- Скрипты -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Логика для формы регистрации (Пока просто имитация)
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Останавливаем перезагрузку страницы
+        
+        // Скрываем форму и показываем сообщение
+        this.classList.add('d-none');
+        document.getElementById('successMsg').classList.remove('d-none');
+        
+        // В будущем здесь будет код отправки данных в Firebase
+    });
+</script>
 </body>
 </html>
