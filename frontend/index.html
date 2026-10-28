@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Школьный Коворкинг | AI-Стартап</title>
+    <!-- Подключаем Bootstrap для красивого дизайна -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hero { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 60px 0; }
+        .card-img-top { height: 200px; object-fit: cover; }
+        .price-badge { font-size: 1.2rem; font-weight: bold; color: #198754; }
+        .footer { background-color: #f8f9fa; padding: 20px 0; margin-top: 50px; }
+        /* Стили для ИИ-чата */
+        .chat-container { max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 15px; border-radius: 10px; background: #f9f9f9; }
+        .msg-user { text-align: right; margin-bottom: 10px; }
+        .msg-user span { background: #0d6efd; color: white; padding: 8px 12px; border-radius: 15px 15px 0 15px; display: inline-block; max-width: 80%; }
+        .msg-ai { text-align: left; margin-bottom: 10px; }
+        .msg-ai span { background: #e9ecef; color: #333; padding: 8px 12px; border-radius: 15px 15px 15px 0; display: inline-block; max-width: 80%; }
+    </style>
+</head>
+<body>
+
+<!-- Шапка -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">🏫 Школьный Коворкинг</a>
+        <div class="ms-auto">
+            <a href="#prices" class="btn btn-outline-light me-2">Пространства</a>
+            <a href="#booking" class="btn btn-success">Забронировать</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Главный экран -->
+<section class="hero text-center">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Превращаем пустые залы в прибыль</h1>
+        <p class="lead mt-3">Арендуйте актовый зал или библиотеку для мастер-классов, репетиторства и мероприятий.</p>
+        <a href="#booking" class="btn btn-warning btn-lg mt-4">Выбрать пространство</a>
+    </div>
+</section>
+
+<!-- Экономика (Твоя роль) -->
+<section class="container mt-5">
+    <h2 class="text-center mb-4">💰 Экономика проекта</h2>
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm h-100">
+                <h5>Стартовые инвестиции</h5>
+                <p class="display-6">38 000 сом</p>
+                <small class="text-muted">Мебель, проектор и Wi-Fi</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm h-100">
+                <h5>Прогноз дохода</h5>
+                <p class="display-6 text-success">36 000 сом/мес</p>
+                <small class="text-muted">При загрузке 30 часов в неделю</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm h-100">
+                <h5>Окупаемость</h5>
+                <p class="display-6 text-primary">~ 1-2 месяца</p>
+                <small class="text-muted">Дальше — чистая прибыль школе</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Пространства -->
+<section class="container mt-5" id="prices">
+    <h2 class="text-center mb-4">🏢 Наши пространства</h2>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Актовый зал">
+                <div class="card-body">
+                    <h5 class="card-title">Актовый зал</h5>
+                    <p class="card-text">Идеально для больших мероприятий (до 50 человек).</p>
+                    <p class="price-badge">500 сом / час</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Библиотека">
+                <div class="card-body">
+                    <h5 class="card-title">Библиотека (Коворкинг)</h5>
+                    <p class="card-text">Тихое место для репетиторов и встреч 1-на-1.</p>
+                    <p class="price-badge">200 сом / час</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ИИ-ПОМОЩНИК -->
+<section class="container mt-5">
+    <h2 class="text-center mb-4">🤖 ИИ-Администратор</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-primary">
+                <div class="card-body">
+                    <p class="text-muted small">Спросите ИИ, какой зал выбрать (например: "Хочу мастер-класс на 20 человек").</p>
+                    <div class="chat-container mb-3" id="chatBox">
+                        <div class="msg-ai"><span>Здравствуйте! Я ИИ-помощник. Помогу подобрать зал. Что планируете проводить?</span></div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="userInput" class="form-control" placeholder="Напишите сообщение...">
+                        <button class="btn btn-primary" onclick="sendMessage()">Отправить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Форма бронирования -->
+<section class="container mt-5 mb-5" id="booking">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-success">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">📅 Забронировать время</h4>
+                </div>
+                <div class="card-body">
+                    <form id="bookingForm">
+                        <div class="mb-3">
+                            <label class="form-label">Выберите пространство</label>
+                            <select class="form-select" id="space" required>
+                                <option value="">-- Выберите --</option>
+                                <option value="hall">Актовый зал (500 сом/час)</option>
+                                <option value="library">Коворкинг (200 сом/час)</option>
+                            </select>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label class="form-label">Дата</label>
+                                <input type="date" class="form-control" id="date" required>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Время</label>
+                                <input type="time" class="form-control" id="time" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Имя и телефон</label>
+                            <input type="text" class="form-control" id="contact" placeholder="Айбек, 0555 123 456" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Отправить заявку</button>
+                    </form>
+                    <div id="successMessage" class="alert alert-success mt-3 d-none">
+                        ✅ <b>Успешно!</b> Заявка принята. Администратор свяжется с вами.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Футер -->
+<div class="footer text-center">
+    <div class="container">
+        <p>Проект хакатона «AI – Стартап». Безопасность данных обеспечена.</p>
+        <a href="https://github.com/sultanalbekov50-droid/school-project" target="_blank" class="btn btn-dark btn-sm">
+            💻 Исходный код (Open Source)
+        </a>
+    </div>
+</div>
+
+<!-- Скрипты -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Логика для формы
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        this.classList.add('d-none');
+        document.getElementById('successMessage').classList.remove('d-none');
+    });
+
+    // Логика для ИИ-чата (Демо-режим)
+    function sendMessage() {
+        const input = document.getElementById('userInput');
+        const chatBox = document.getElementById('chatBox');
+        const text = input.value.trim();
+        
+        if (text === "") return;
+
+        // Сообщение пользователя
+        chatBox.innerHTML += `<div class="msg-user"><span>${text}</span></div>`;
+        input.value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Ответ ИИ через 1 секунду
+        setTimeout(() => {
+            let aiResponse = "";
+            const lowerText = text.toLowerCase();
+
+            if (lowerText.includes("мастер-класс") || lowerText.includes("20") || lowerText.includes("10")) {
+                aiResponse = "Для мастер-класса отлично подойдет Актовый зал. Стоимость 2 часов — 1000 сомов.";
+            } else if (lowerText.includes("репетитор") || lowerText.includes("1") || lowerText.includes("один")) {
+                aiResponse = "Для репетиторства лучше подойдет Библиотека. Тихо и есть Wi-Fi. Стоимость 200 сомов в час.";
+            } else if (lowerText.includes("цена") || lowerText.includes("стоимость")) {
+                aiResponse = "Цены: Актовый зал — 500 сом/час. Библиотека — 200 сом/час.";
+            } else {
+                aiResponse = "Уточните, пожалуйста, сколько человек и на сколько часов вам нужно помещение?";
+            }
+
+            chatBox.innerHTML += `<div class="msg-ai"><span>${aiResponse}</span></div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 1000);
+    }
+
+    // Отправка по Enter
+    document.getElementById('userInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') sendMessage();
+    });
+</script>
+</body>
+</html>
