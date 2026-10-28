@@ -2,43 +2,91 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Админ-панель</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кабинет директора | Школьный Коворкинг</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .link-box { background-color: #f8f9fa; border: 1px dashed #0d6efd; padding: 15px; border-radius: 8px; }
+    </style>
 </head>
 <body class="bg-light">
 
-<!-- Экран входа -->
+<!-- ЭКРАН ВХОДА -->
 <div id="loginScreen" class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow p-4" style="width: 300px;">
-        <h4 class="text-center mb-3">🔐 Вход</h4>
-        <input type="password" id="pass" class="form-control mb-3" placeholder="Пароль (admin)">
+    <div class="card shadow p-4" style="width: 350px;">
+        <h4 class="text-center mb-3">🏫 Вход для директора (ТЕСТ)</h4>
+        <p class="text-muted text-center small">Введите логин и пароль.</p>
+        <div class="mb-3">
+            <label class="form-label">Логин</label>
+            <input type="text" id="loginInput" class="form-control" placeholder="school1">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Пароль</label>
+            <input type="password" id="passwordInput" class="form-control" placeholder="******">
+        </div>
         <button class="btn btn-primary w-100" onclick="login()">Войти</button>
+        <a href="index.html" class="btn btn-link w-100 mt-2 text-decoration-none">← На главную</a>
     </div>
 </div>
 
-<!-- Панель -->
-<div id="adminPanel" class="container mt-5 d-none">
+<!-- ЛИЧНЫЙ КАБИНЕТ -->
+<div id="dashboardScreen" class="container mt-5 d-none">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>👨‍💼 Админ-панель</h2>
-        <a href="index.html" class="btn btn-outline-secondary">← На главную</a>
+        <h2>📊 Кабинет школы: <span class="text-primary">Школа №1</span></h2>
+        <button class="btn btn-outline-danger" onclick="logout()">Выйти</button>
     </div>
-    
-    <button class="btn btn-warning mb-3" onclick="alert('Здесь будет таблица заявок на регистрацию')">🏫 Заявки на регистрацию школ</button>
-    <button class="btn btn-success mb-3" onclick="alert('Здесь будет таблица бронирований')">📊 Заявки на брони</button>
-    
-    <div class="card shadow mt-3"><div class="card-body">
-        <p class="text-muted text-center py-5">Здесь будет отображаться таблица с данными из Google Таблиц (когда мы их подключим).</p>
-    </div></div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title">🔗 Ваша ссылка для клиентов</h5>
+            <p class="text-muted small">Отправьте эту ссылку клиентам.</p>
+            <div class="link-box d-flex justify-content-between align-items-center">
+                <code id="schoolLinkText">https://sultanalbekov50-droid.github.io/school-project/?school=Школа_1</code>
+                <button class="btn btn-sm btn-outline-primary" onclick="copyLink()">Копировать</button>
+            </div>
+            <div id="copyMsg" class="text-success small mt-2 d-none">✅ Ссылка скопирована!</div>
+        </div>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">📋 Заявки на бронирование</div>
+        <div class="card-body table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr><th>Дата</th><th>Время</th><th>Пространство</th><th>Клиент</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>20.11.2026</td><td>14:00</td><td>Актовый зал</td><td>Айбек (0555...)</td></tr>
+                    <tr><td>21.11.2026</td><td>10:00</td><td>Библиотека</td><td>Мария (0700...)</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script>
     function login() {
-        if (document.getElementById('pass').value === 'ara') {
+        const log = document.getElementById('loginInput').value;
+        const pass = document.getElementById('passwordInput').value;
+        
+        if (log === 'school1' && pass === '12345') {
             document.getElementById('loginScreen').classList.add('d-none');
-            document.getElementById('adminPanel').classList.remove('d-none');
+            document.getElementById('dashboardScreen').classList.remove('d-none');
         } else {
-            alert('Неверный пароль!');
+            alert('Неверный логин или пароль!\nПопробуйте: school1 / 12345');
         }
+    }
+
+    function logout() {
+        location.reload(); 
+    }
+
+    function copyLink() {
+        const linkText = document.getElementById('schoolLinkText').innerText;
+        navigator.clipboard.writeText(linkText).then(() => {
+            document.getElementById('copyMsg').classList.remove('d-none');
+            setTimeout(() => { document.getElementById('copyMsg').classList.add('d-none'); }, 3000);
+        });
     }
 </script>
 </body>
