@@ -15,112 +15,78 @@
 <div id="loginScreen" class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card shadow p-4" style="width: 350px;">
         <h4 class="text-center mb-3">🏫 Вход для директора</h4>
-        <p class="text-muted text-center small">Введите логин и пароль, которые выдал администратор.</p>
+        <p class="text-muted text-center small">Введите логин и пароль.</p>
         <div class="mb-3">
             <label class="form-label">Логин</label>
-            <input type="text" id="loginInput" class="form-control" placeholder="Введите логин">
+            <input type="text" id="loginInput" class="form-control" placeholder="school1">
         </div>
         <div class="mb-3">
             <label class="form-label">Пароль</label>
-            <input type="password" id="passwordInput" class="form-control" placeholder="Введите пароль">
+            <input type="password" id="passwordInput" class="form-control" placeholder="******">
         </div>
         <button class="btn btn-primary w-100" onclick="login()">Войти</button>
         <a href="index.html" class="btn btn-link w-100 mt-2 text-decoration-none">← На главную</a>
     </div>
 </div>
 
-<!-- ЛИЧНЫЙ КАБИНЕТ (скрыт по умолчанию) -->
+<!-- ЛИЧНЫЙ КАБИНЕТ -->
 <div id="dashboardScreen" class="container mt-5 d-none">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>📊 Кабинет школы: <span class="text-primary">Школа №1 им. Пушкина</span></h2>
+        <h2>📊 Кабинет школы: <span class="text-primary">Школа №1</span></h2>
         <button class="btn btn-outline-danger" onclick="logout()">Выйти</button>
     </div>
 
-    <!-- Блок с персональной ссылкой -->
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h5 class="card-title">🔗 Ваша ссылка для клиентов</h5>
-            <p class="text-muted small">Отправьте эту ссылку ученикам или родителям. Заявки от них будут приходить только вам.</p>
+            <p class="text-muted small">Отправьте эту ссылку клиентам.</p>
             <div class="link-box d-flex justify-content-between align-items-center">
                 <code id="schoolLinkText">https://sultanalbekov50-droid.github.io/school-project/?school=Школа_1</code>
                 <button class="btn btn-sm btn-outline-primary" onclick="copyLink()">Копировать</button>
             </div>
-            <div id="copyMsg" class="text-success small mt-2 d-none">✅ Ссылка скопирована в буфер обмена!</div>
+            <div id="copyMsg" class="text-success small mt-2 d-none">✅ Ссылка скопирована!</div>
         </div>
     </div>
 
-    <!-- Таблица заявок -->
     <div class="card shadow">
         <div class="card-header bg-dark text-white">📋 Заявки на бронирование</div>
         <div class="card-body table-responsive">
             <table class="table table-hover align-middle">
                 <thead class="table-light">
-                    <tr>
-                        <th>Дата</th>
-                        <th>Время</th>
-                        <th>Пространство</th>
-                        <th>Клиент</th>
-                        <th>Статус</th>
-                    </tr>
+                    <tr><th>Дата</th><th>Время</th><th>Пространство</th><th>Клиент</th></tr>
                 </thead>
                 <tbody>
-                    <!-- Тестовые данные (в будущем будут браться из базы) -->
-                    <tr>
-                        <td>20.11.2026</td>
-                        <td>14:00</td>
-                        <td>Актовый зал</td>
-                        <td>Айбек (0555 123 456)</td>
-                        <td><span class="badge bg-warning text-dark">Новая</span></td>
-                    </tr>
-                    <tr>
-                        <td>21.11.2026</td>
-                        <td>10:00</td>
-                        <td>Библиотека</td>
-                        <td>Мария (0700 987 654)</td>
-                        <td><span class="badge bg-success">Одобрена</span></td>
-                    </tr>
+                    <tr><td>20.11.2026</td><td>14:00</td><td>Актовый зал</td><td>Айбек (0555...)</td></tr>
+                    <tr><td>21.11.2026</td><td>10:00</td><td>Библиотека</td><td>Мария (0700...)</td></tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // 1. СТРОГАЯ ПРОВЕРКА ЛОГИНА И ПАРОЛЯ (Имитация базы данных)
     function login() {
         const log = document.getElementById('loginInput').value;
         const pass = document.getElementById('passwordInput').value;
         
-        // Устанавливаем логин и пароль
+        // ПРОВЕРКА: логин school1 и пароль 12345
         if (log === 'school1' && pass === '12345') {
-            // Если ввели верно — пускаем
             document.getElementById('loginScreen').classList.add('d-none');
             document.getElementById('dashboardScreen').classList.remove('d-none');
         } else {
-            // Если ошиблись — выдаем ошибку
-            alert('Неверный логин или пароль!\n\nПодсказка для демо:\nЛогин: school1\nПароль: 12345');
+            alert('Неверный логин или пароль!\nПопробуйте: school1 / 12345');
         }
     }
 
-    // 2. ВЫХОД ИЗ КАБИНЕТА
     function logout() {
-        // Очищаем поля и перезагружаем страницу, чтобы вернуться на экран входа
-        document.getElementById('loginInput').value = '';
-        document.getElementById('passwordInput').value = '';
         location.reload(); 
     }
 
-    // 3. КОПИРОВАНИЕ ССЫЛКИ
     function copyLink() {
         const linkText = document.getElementById('schoolLinkText').innerText;
         navigator.clipboard.writeText(linkText).then(() => {
             document.getElementById('copyMsg').classList.remove('d-none');
-            setTimeout(() => {
-                document.getElementById('copyMsg').classList.add('d-none');
-            }, 3000);
-        }).catch(err => {
-            alert('Не удалось скопировать ссылку. Выделите её вручную.');
+            setTimeout(() => { document.getElementById('copyMsg').classList.add('d-none'); }, 3000);
         });
     }
 </script>
