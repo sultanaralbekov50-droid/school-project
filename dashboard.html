@@ -3,58 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кабинет директора | Школьный Коворкинг</title>
+    <title>Кабинет директора</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .link-box { background-color: #f8f9fa; border: 1px dashed #0d6efd; padding: 15px; border-radius: 8px; }
-    </style>
 </head>
 <body class="bg-light">
 
-<!-- ЭКРАН ВХОДА -->
 <div id="loginScreen" class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card shadow p-4" style="width: 350px;">
         <h4 class="text-center mb-3">🏫 Вход для директора</h4>
-        <p class="text-muted text-center small">Введите логин и пароль.</p>
-        <div class="mb-3">
-            <label class="form-label">Логин</label>
-            <input type="text" id="loginInput" class="form-control" placeholder="school1">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Пароль</label>
-            <input type="password" id="passwordInput" class="form-control" placeholder="******">
-        </div>
+        <input type="text" id="loginInput" class="form-control mb-2" placeholder="Логин: school1">
+        <input type="password" id="passwordInput" class="form-control mb-3" placeholder="Пароль: 12345">
         <button class="btn btn-primary w-100" onclick="login()">Войти</button>
-        <a href="index.html" class="btn btn-link w-100 mt-2 text-decoration-none">← На главную</a>
+        <a href="index.html" class="btn btn-link w-100 mt-2">На главную</a>
     </div>
 </div>
 
-<!-- ЛИЧНЫЙ КАБИНЕТ -->
 <div id="dashboardScreen" class="container mt-5 d-none">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>📊 Кабинет школы: <span class="text-primary">Школа №1</span></h2>
-        <button class="btn btn-outline-danger" onclick="logout()">Выйти</button>
+    <div class="d-flex justify-content-between mb-4">
+        <h2>📊 Кабинет школы №1</h2>
+        <button class="btn btn-outline-danger" onclick="location.reload()">Выйти</button>
     </div>
-
+    
     <div class="card shadow-sm mb-4">
         <div class="card-body">
-            <h5 class="card-title">🔗 Ваша ссылка для клиентов</h5>
-            <p class="text-muted small">Отправьте эту ссылку клиентам.</p>
-            <div class="link-box d-flex justify-content-between align-items-center">
-                <code id="schoolLinkText">https://sultanalbekov50-droid.github.io/school-project/?school=Школа_1</code>
-                <button class="btn btn-sm btn-outline-primary" onclick="copyLink()">Копировать</button>
+            <h5>🔗 Ваша ссылка для клиентов</h5>
+            <div class="input-group mt-2">
+                <input type="text" class="form-control" value="https://sultanalbekov50-droid.github.io/school-project/?school=Школа_1" readonly id="schoolLink">
+                <button class="btn btn-primary" onclick="navigator.clipboard.writeText(document.getElementById('schoolLink').value); alert('Скопировано!')">Копировать</button>
             </div>
-            <div id="copyMsg" class="text-success small mt-2 d-none">✅ Ссылка скопирована!</div>
         </div>
     </div>
 
     <div class="card shadow">
-        <div class="card-header bg-dark text-white">📋 Заявки на бронирование</div>
-        <div class="card-body table-responsive">
-            <table class="table table-hover align-middle">
-                <thead class="table-light">
-                    <tr><th>Дата</th><th>Время</th><th>Пространство</th><th>Клиент</th></tr>
-                </thead>
+        <div class="card-header bg-dark text-white">Заявки</div>
+        <div class="card-body">
+            <table class="table">
+                <thead><tr><th>Дата</th><th>Время</th><th>Зал</th><th>Клиент</th></tr></thead>
                 <tbody>
                     <tr><td>20.11.2026</td><td>14:00</td><td>Актовый зал</td><td>Айбек (0555...)</td></tr>
                     <tr><td>21.11.2026</td><td>10:00</td><td>Библиотека</td><td>Мария (0700...)</td></tr>
@@ -68,26 +52,12 @@
     function login() {
         const log = document.getElementById('loginInput').value;
         const pass = document.getElementById('passwordInput').value;
-        
-        // ПРОВЕРКА: логин school1 и пароль 12345
         if (log === 'school1' && pass === '12345') {
             document.getElementById('loginScreen').classList.add('d-none');
             document.getElementById('dashboardScreen').classList.remove('d-none');
         } else {
-            alert('Неверный логин или пароль!\nПопробуйте: school1 / 12345');
+            alert('Неверно! Логин: school1, Пароль: 12345');
         }
-    }
-
-    function logout() {
-        location.reload(); 
-    }
-
-    function copyLink() {
-        const linkText = document.getElementById('schoolLinkText').innerText;
-        navigator.clipboard.writeText(linkText).then(() => {
-            document.getElementById('copyMsg').classList.remove('d-none');
-            setTimeout(() => { document.getElementById('copyMsg').classList.add('d-none'); }, 3000);
-        });
     }
 </script>
 </body>
