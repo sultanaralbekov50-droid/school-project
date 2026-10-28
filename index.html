@@ -247,13 +247,31 @@
     const urlParams = new URLSearchParams(window.location.search);
     const schoolNameFromUrl = urlParams.get('school');
 
-    function registerSchool() {
+        function registerSchool() {
         const name = document.getElementById('schoolNameInput').value.trim();
         if (!name) { alert("Введите название!"); return; }
+        
+        // 1. Генерируем ссылку
         const link = window.location.origin + window.location.pathname + '?school=' + encodeURIComponent(name);
         document.getElementById('schoolLink').href = link;
         document.getElementById('schoolLink').innerText = link;
         document.getElementById('schoolResult').classList.remove('d-none');
+        
+        // 2. Отправляем в базу "скрытую" заявку о регистрации школы (чтобы она появилась в админке)
+        const registerData = {
+            space: "Регистрация школы",
+            date: new Date().toLocaleDateString('ru-RU'),
+            time: new Date().toLocaleTimeString('ru-RU'),
+            contact: "Директор",
+            schoolName: name 
+        };
+        
+        const url = "https://script.google.com/macros/s/AKfycbwOHbNcSKZ4R_G1iGJ510IuqL9gt6fBYM5EZeJBXcrc14UEuS2ZadU7eaS3zTT_zbKeTw/exec"; // Твоя ссылка
+        fetch(url, {
+            method: 'POST', mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(registerData)
+        });
     }
 
     document.getElementById('bookingForm').addEventListener('submit', function(e) {
