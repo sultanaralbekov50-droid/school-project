@@ -10,33 +10,21 @@
         .card-img-top { height: 200px; object-fit: cover; }
         .price-badge { font-size: 1.2rem; font-weight: bold; color: #198754; }
         .footer { background-color: #f8f9fa; padding: 20px 0; margin-top: 50px; }
-        .chat-container { max-height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 15px; border-radius: 10px; background: #f9f9f9; }
-        .msg-user { text-align: right; margin-bottom: 10px; }
-        .msg-user span { background: #0d6efd; color: white; padding: 8px 12px; border-radius: 15px 15px 0 15px; display: inline-block; max-width: 80%; }
-        .msg-ai { text-align: left; margin-bottom: 10px; }
-        .msg-ai span { background: #e9ecef; color: #333; padding: 8px 12px; border-radius: 15px 15px 15px 0; display: inline-block; max-width: 80%; }
-        /* Стили для отзывов */
-        .review-card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .review-avatar { width: 50px; height: 50px; background: #0d6efd; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px; }
     </style>
 </head>
 <body>
 
-<!-- Меню сайта -->
+<!-- Меню -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container">
         <a class="navbar-brand" href="#">🏫 School Coworking</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#hero">Главная</a></li>
                 <li class="nav-item"><a class="nav-link" href="#register">Регистрация</a></li>
-                <li class="nav-item"><a class="nav-link" href="#prices">Пространства</a></li>
-                <li class="nav-item"><a class="nav-link" href="#reviews">Отзывы</a></li>
-                <li class="nav-item"><a class="nav-link" href="#help">Помощь</a></li>
-                <li class="nav-item"><a class="nav-link" href="admin.html" target="_blank">🔐 Админ</a></li>
+                <li class="nav-item"><a class="nav-link" href="#booking">Забронировать</a></li>
+                <li class="nav-item"><a class="nav-link" href="dashboard.html">🔑 Вход для школ</a></li>
+                <li class="nav-item"><a class="nav-link text-warning" href="admin.html">🔐 Админ</a></li>
             </ul>
         </div>
     </div>
@@ -46,85 +34,28 @@
 <section class="hero text-center" id="hero">
     <div class="container">
         <h1 class="display-4 fw-bold">Превращаем пустые залы в прибыль</h1>
-        <p class="lead mt-3">Арендуйте актовый зал или библиотеку для мастер-классов, репетиторства и мероприятий.</p>
-        <a href="#booking" class="btn btn-warning btn-lg mt-4">Забронировать сейчас</a>
+        <p class="lead mt-3">Арендуйте актовый зал или библиотеку для мастер-классов и мероприятий.</p>
+        <a href="#booking" class="btn btn-warning btn-lg mt-4">Забронировать</a>
     </div>
 </section>
 
-<!-- Блок регистрации школы -->
+<!-- Регистрация школы -->
 <section class="container mt-5" id="register">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow border-info">
-                <div class="card-header bg-info text-white">
-                    <h4 class="mb-0">🏫 Регистрация школы (Для администраторов)</h4>
-                </div>
+                <div class="card-header bg-info text-white"><h4 class="mb-0">🏫 Регистрация школы</h4></div>
                 <div class="card-body">
-                    <p class="text-muted">Введите название вашей школы, чтобы получить персональную ссылку. Заявки будут приходить только вам.</p>
-                    <div class="input-group mb-3">
-                        <input type="text" id="schoolNameInput" class="form-control" placeholder="Например: Школа №1 им. Пушкина">
-                        <button class="btn btn-info text-white" onclick="registerSchool()">Получить ссылку</button>
-                    </div>
-                    <div id="schoolResult" class="alert alert-info d-none">
-                        <b>Ваша персональная ссылка:</b> <br>
-                        <a id="schoolLink" href="#" target="_blank"></a>
-                        <p class="small mt-2 mb-0">Отправьте эту ссылку клиентам, чтобы они бронировали залы именно вашей школы.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Экономика -->
-<section class="container mt-5">
-    <h2 class="text-center mb-4">💰 Экономика проекта</h2>
-    <div class="row text-center">
-        <div class="col-md-4">
-            <div class="card p-3 shadow-sm h-100">
-                <h5>Стартовые инвестиции</h5>
-                <p class="display-6">38 000 сом</p>
-                <small class="text-muted">Мебель, проектор и Wi-Fi</small>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card p-3 shadow-sm h-100">
-                <h5>Прогноз дохода</h5>
-                <p class="display-6 text-success">36 000 сом/мес</p>
-                <small class="text-muted">При загрузке 30 часов в неделю</small>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card p-3 shadow-sm h-100">
-                <h5>Окупаемость</h5>
-                <p class="display-6 text-primary">~ 1-2 месяца</p>
-                <small class="text-muted">Дальше — чистая прибыль</small>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Пространства -->
-<section class="container mt-5" id="prices">
-    <h2 class="text-center mb-4">🏢 Наши пространства</h2>
-    <div class="row">
-        <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow-sm">
-                <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Актовый зал">
-                <div class="card-body">
-                    <h5 class="card-title">Актовый зал</h5>
-                    <p class="card-text">Идеально для больших мероприятий (до 50 человек).</p>
-                    <p class="price-badge">500 сом / час</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow-sm">
-                <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Библиотека">
-                <div class="card-body">
-                    <h5 class="card-title">Библиотека (Коворкинг)</h5>
-                    <p class="card-text">Тихое место для репетиторов и встреч 1-на-1.</p>
-                    <p class="price-badge">200 сом / час</p>
+                    <p class="text-muted">Заполните данные, чтобы получить доступ к панели управления. После проверки администратором вы сможете войти.</p>
+                    <form>
+                        <div class="mb-3"><label>Название школы</label><input type="text" class="form-control" required></div>
+                        <div class="mb-3"><label>ФИО Директора</label><input type="text" class="form-control" required></div>
+                        <div class="row mb-3">
+                            <div class="col"><label>Логин</label><input type="text" class="form-control" required></div>
+                            <div class="col"><label>Пароль</label><input type="password" class="form-control" required></div>
+                        </div>
+                        <button type="button" class="btn btn-info text-white w-100" onclick="alert('Здесь будет отправка заявки в базу данных!')">Отправить заявку</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -136,198 +67,21 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow border-success">
-                <div class="card-header bg-success text-white">
-                    <h4 class="mb-0">📅 Забронировать время</h4>
-                </div>
+                <div class="card-header bg-success text-white"><h4>📅 Забронировать время</h4></div>
                 <div class="card-body">
-                    <form id="bookingForm">
-                        <div class="mb-3">
-                            <label class="form-label">Выберите пространство</label>
-                            <select class="form-select" id="space" required>
-                                <option value="">-- Выберите --</option>
-                                <option value="hall">Актовый зал (500 сом/час)</option>
-                                <option value="library">Коворкинг (200 сом/час)</option>
-                            </select>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label class="form-label">Дата</label>
-                                <input type="date" class="form-control" id="date" required>
-                            </div>
-                            <div class="col">
-                                <label class="form-label">Время</label>
-                                <input type="time" class="form-control" id="time" required>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Имя и телефон</label>
-                            <input type="text" class="form-control" id="contact" placeholder="Айбек, 0555 123 456" required>
-                        </div>
-                        <button type="submit" class="btn btn-success w-100">Отправить заявку</button>
+                    <form>
+                        <div class="mb-3"><label>Выберите пространство</label><select class="form-select"><option>Актовый зал (500 сом/час)</option><option>Коворкинг (200 сом/час)</option></select></div>
+                        <div class="row mb-3"><div class="col"><label>Дата</label><input type="date" class="form-control"></div><div class="col"><label>Время</label><input type="time" class="form-control"></div></div>
+                        <div class="mb-3"><label>Имя и телефон</label><input type="text" class="form-control" placeholder="Айбек, 0555..."></div>
+                        <button type="button" class="btn btn-success w-100" onclick="alert('Здесь будет отправка заявки!')">Отправить заявку</button>
                     </form>
-                    <div id="successMessage" class="alert alert-success mt-3 d-none">
-                        ✅ <b>Успешно!</b> Заявка принята. Администратор свяжется с вами.
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ИИ-ПОМОЩНИК -->
-<section class="container mt-5">
-    <h2 class="text-center mb-4">🤖 ИИ-Администратор</h2>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow border-primary">
-                <div class="card-body">
-                    <p class="text-muted small">Спросите ИИ, какой зал выбрать (например: "Хочу мастер-класс на 20 человек").</p>
-                    <div class="chat-container mb-3" id="chatBox">
-                        <div class="msg-ai"><span>Здравствуйте! Я ИИ-помощник. Помогу подобрать зал. Что планируете проводить?</span></div>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" id="userInput" class="form-control" placeholder="Напишите сообщение...">
-                        <button class="btn btn-primary" onclick="sendMessage()">Отправить</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Отзывы -->
-<section class="container mt-5" id="reviews">
-    <h2 class="text-center mb-4">💬 Отзывы наших клиентов</h2>
-    <div class="row">
-        <div class="col-md-6 mb-3">
-            <div class="review-card d-flex align-items-center">
-                <div class="review-avatar">А</div>
-                <div>
-                    <h6 class="mb-1">Айбек (Репетитор)</h6>
-                    <p class="mb-0 small">«Отличное место! Снял библиотеку на 3 часа, провел занятия. Тихо, есть Wi-Fi. Бронировал через сайт за 2 минуты».</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 mb-3">
-            <div class="review-card d-flex align-items-center">
-                <div class="review-avatar" style="background:#198754;">М</div>
-                <div>
-                    <h6 class="mb-1">Мария (Организатор)</h6>
-                    <p class="mb-0 small">«Проводили детский мастер-класс в актовом зале. Очень удобно, что есть ИИ-помощник, который сразу подсказал цену и зал».</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Помощь -->
-<section class="container mt-5 mb-5" id="help">
-    <h2 class="text-center mb-4">❓ Помощь</h2>
-    <div class="row justify-content-center">
-        <div class="col-md-8 text-center">
-            <p>Если у вас возникли вопросы по бронированию, свяжитесь с нами:</p>
-            <p><b>Телефон:</b> +996 555 123 456<br><b>Email:</b> help@schoolcoworking.kg</p>
-        </div>
-    </div>
-</section>
-
-<!-- Футер -->
-<div class="footer text-center">
-    <div class="container">
-        <p>Проект хакатона «AI – Стартап».</p>
-        <a href="https://github.com/sultanalbekov50-droid/school-project" target="_blank" class="btn btn-dark btn-sm">
-            💻 Исходный код
-        </a>
-    </div>
-</div>
-
+<div class="footer text-center"><div class="container"><p>Проект хакатона «AI – Стартап».</p></div></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // 1. Логика для формы
-    const urlParams = new URLSearchParams(window.location.search);
-    const schoolNameFromUrl = urlParams.get('school');
-
-        function registerSchool() {
-        const name = document.getElementById('schoolNameInput').value.trim();
-        if (!name) { alert("Введите название!"); return; }
-        
-        // 1. Генерируем ссылку
-        const link = window.location.origin + window.location.pathname + '?school=' + encodeURIComponent(name);
-        document.getElementById('schoolLink').href = link;
-        document.getElementById('schoolLink').innerText = link;
-        document.getElementById('schoolResult').classList.remove('d-none');
-        
-        // 2. Отправляем в базу "скрытую" заявку о регистрации школы (чтобы она появилась в админке)
-        const registerData = {
-            space: "Регистрация школы",
-            date: new Date().toLocaleDateString('ru-RU'),
-            time: new Date().toLocaleTimeString('ru-RU'),
-            contact: "Директор",
-            schoolName: name 
-        };
-        
-        const url = "https://script.google.com/macros/s/AKfycbwOHbNcSKZ4R_G1iGJ510IuqL9gt6fBYM5EZeJBXcrc14UEuS2ZadU7eaS3zTT_zbKeTw/exec"; // Твоя ссылка
-        fetch(url, {
-            method: 'POST', mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(registerData)
-        });
-    }
-
-    document.getElementById('bookingForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const submitBtn = this.querySelector('button[type="submit"]');
-        submitBtn.innerText = "Отправка...";
-        
-        const data = {
-            space: document.getElementById('space').options[document.getElementById('space').selectedIndex].text,
-            date: document.getElementById('date').value,
-            time: document.getElementById('time').value,
-            contact: document.getElementById('contact').value,
-            schoolName: schoolNameFromUrl || "Общая школа"
-        };
-
-        const url = "https://script.google.com/macros/s/AKfycbwOHbNcSKZ4R_G1iGJ510IuqL9gt6fBYM5EZeJBXcrc14UEuS2ZadU7eaS3zTT_zbKeTw/exec"; // ТВОЯ ССЫЛКА
-
-        fetch(url, {
-            method: 'POST', mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        }).then(() => {
-            document.getElementById('bookingForm').classList.add('d-none');
-            document.getElementById('successMessage').classList.remove('d-none');
-        }).catch(() => {
-            alert("Ошибка отправки.");
-            submitBtn.innerText = "Отправить заявку";
-        });
-    });
-
-    // 2. ИИ-чат
-    function sendMessage() {
-        const input = document.getElementById('userInput');
-        const chatBox = document.getElementById('chatBox');
-        const text = input.value.trim();
-        if (text === "") return;
-        chatBox.innerHTML += `<div class="msg-user"><span>${text}</span></div>`;
-        input.value = '';
-        chatBox.scrollTop = chatBox.scrollHeight;
-        setTimeout(() => {
-            let aiResponse = "";
-            const lowerText = text.toLowerCase();
-            if (lowerText.includes("мастер-класс") || lowerText.includes("20")) {
-                aiResponse = "Для мастер-класса отлично подойдет Актовый зал. Стоимость 2 часов — 1000 сомов.";
-            } else if (lowerText.includes("репетитор") || lowerText.includes("1")) {
-                aiResponse = "Для репетиторства лучше подойдет Библиотека. Стоимость 200 сомов в час.";
-            } else {
-                aiResponse = "Уточните, сколько человек и на сколько часов вам нужно помещение?";
-            }
-            chatBox.innerHTML += `<div class="msg-ai"><span>${aiResponse}</span></div>`;
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }, 1000);
-    }
-    document.getElementById('userInput').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') sendMessage();
-    });
-</script>
 </body>
 </html>
