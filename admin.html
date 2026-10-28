@@ -52,7 +52,7 @@
     // --- 1. АВТОРИЗАЦИЯ ---
     function login() {
         const password = document.getElementById('pass').value;
-        if (password === 'ara') { 
+        if (password === 'admin') { 
             document.getElementById('loginScreen').classList.add('d-none');
             document.getElementById('adminPanel').classList.remove('d-none');
             loadData(); // Автоматически загружаем данные при входе
@@ -85,8 +85,8 @@
         const tableBody = document.getElementById('adminTableBody');
         tableBody.innerHTML = '<tr><td colspan="5" class="text-center py-3">Загрузка данных...</td></tr>';
         
-        // ТВОЯ ССЫЛКА ИЗ GOOGLE APPS SCRIPT
-        const url = "https://script.google.com/macros/s/AKfycbwOHbNcSKZ4R_G1iGJ510IuqL9gt6fBYM5EZeJBXcrc14UEuS2ZadU7eaS3zTT_zbKeTw/exec";
+        // ВСТАВЬ СЮДА СВОЮ ССЫЛКУ ИЗ GOOGLE APPS SCRIPT
+        const url = "https://script.google.com/macros/s/AKfyc.../exec";
 
         fetch(url)
             .then(response => response.json())
