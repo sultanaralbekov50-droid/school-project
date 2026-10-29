@@ -1,0 +1,119 @@
+:root {
+  --ink: #12263a;
+  --ink-2: #1d3b57;
+  --paper: #f3f6f9;
+  --mark: #ffc233;
+  --free: #2fa77a;
+  --free-bg: #e4f5ee;
+  --busy: #e5645c;
+  --wait: #f0b44c;
+  --line: #d9e2ea;
+  --muted: #5b6f82;
+}
+
+body {
+  font-family: 'Onest', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+}
+h1, h2, h3, h4, h5 { font-weight: 700; letter-spacing: -0.01em; }
+.text-muted { color: var(--muted) !important; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--mark); outline-offset: 2px;
+}
+
+/* Навигация */
+.navbar-sc { background: var(--ink); }
+.navbar-sc .navbar-brand { font-weight: 700; color: #fff; }
+.navbar-sc .nav-link { color: #c9d6e2; }
+.navbar-sc .nav-link:hover { color: #fff; }
+
+/* Кнопки */
+.btn-mark { background: var(--mark); color: var(--ink); border: 0; font-weight: 600; }
+.btn-mark:hover, .btn-mark:focus { background: #ffd05c; color: var(--ink); }
+.btn-ink { background: var(--ink); color: #fff; border: 0; font-weight: 600; }
+.btn-ink:hover { background: var(--ink-2); color: #fff; }
+
+/* Первый экран */
+.hero { background: var(--ink); color: #fff; padding: 72px 0 64px; }
+.hero h1 { font-size: clamp(2rem, 4.6vw, 3.3rem); line-height: 1.1; max-width: 14em; }
+.hero .lead { max-width: 33em; color: #c9d6e2; }
+.week-card { background: #fff; color: var(--ink); border-radius: 14px; padding: 18px 18px 14px; box-shadow: 0 20px 40px rgba(0,0,0,.25); }
+.week-card .title { font-weight: 600; }
+.legend { display: flex; gap: 14px; font-size: .8rem; color: var(--muted); margin-top: 10px; flex-wrap: wrap; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+
+/* Недельный календарь */
+.wk { border-collapse: separate; border-spacing: 3px; width: 100%; table-layout: fixed; font-size: .78rem; }
+.wk th { font-weight: 600; text-align: center; color: var(--muted); padding: 2px; white-space: nowrap; }
+.wk td.h { text-align: right; color: var(--muted); width: 46px; padding-right: 6px; }
+.wk td.c { height: 28px; border-radius: 5px; background: var(--free-bg); font-size: .68rem; color: #fff; padding: 0 4px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.wk td.c.busy { background: var(--busy); }
+.wk td.c.pending { background: var(--wait); color: var(--ink); }
+.wk.compact td.c { height: 13px; padding: 0; }
+.wk.compact th, .wk.compact td.h { font-size: .68rem; }
+.wk.compact td.h { width: 38px; }
+.cal-scroll { overflow-x: auto; }
+.cal-scroll .wk { min-width: 560px; }
+
+/* Секции */
+.section { padding: 64px 0; }
+.section-alt { background: #fff; }
+.section h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); margin-bottom: 8px; }
+.section .sub { color: var(--muted); max-width: 40em; margin-bottom: 32px; }
+
+/* Как это работает */
+.step { border-left: 4px solid var(--mark); padding: 4px 0 4px 18px; height: 100%; }
+.step .n { font-size: 2.2rem; font-weight: 800; color: var(--mark); line-height: 1; -webkit-text-stroke: 1px var(--ink); }
+.step h5 { margin: 8px 0 6px; }
+.step p { color: var(--muted); margin: 0; }
+
+/* Каталог */
+.chip { border: 1.5px solid var(--line); background: #fff; color: var(--ink); border-radius: 999px; padding: 6px 16px; font-weight: 500; }
+.chip.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+.space-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; height: 100%; display: flex; flex-direction: column; }
+.space-card .ph { height: 170px; background: linear-gradient(135deg, var(--ink-2), var(--ink)); position: relative; }
+.space-card .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.space-card .body { padding: 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.space-card .school { font-size: .85rem; color: var(--muted); }
+.space-card .price { font-weight: 700; color: var(--free); font-size: 1.1rem; }
+.free-now { font-size: .85rem; color: var(--muted); }
+.free-now b { color: var(--free); }
+
+.eq-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 2px; }
+.eq { font-size: .75rem; background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; color: var(--ink-2); }
+.eq b { color: var(--free); font-weight: 600; }
+
+/* Выгода */
+.calc { background: var(--ink); color: #fff; border-radius: 16px; padding: 28px; }
+.calc label { display: flex; justify-content: space-between; font-weight: 500; margin-bottom: 4px; }
+.calc input[type=range] { width: 100%; accent-color: var(--mark); margin-bottom: 18px; }
+.calc .big { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; color: var(--mark); line-height: 1.1; }
+.calc .small-note { color: #a9bccd; font-size: .85rem; }
+
+/* ЦУР */
+.sdg { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px; height: 100%; }
+.sdg .tag { display: inline-block; font-weight: 700; color: #fff; padding: 3px 10px; border-radius: 6px; margin-bottom: 10px; }
+
+/* Выбор слотов */
+.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+.slot { border: 1.5px solid var(--free); background: var(--free-bg); color: var(--ink); border-radius: 8px; padding: 8px 0; font-weight: 600; }
+.slot:hover:not(:disabled) { background: #c9ecdd; }
+.slot.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.slot:disabled { border-color: var(--line); background: #eef1f4; color: #9aa9b7; text-decoration: line-through; }
+
+/* Кабинеты */
+.stat { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px; height: 100%; }
+.stat .v { font-size: 1.8rem; font-weight: 800; }
+.stat .l { color: var(--muted); font-size: .9rem; }
+.panel { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+.nav-tabs .nav-link { color: var(--muted); font-weight: 500; }
+.nav-tabs .nav-link.active { color: var(--ink); font-weight: 700; }
+.badge-pending { background: var(--wait); color: var(--ink); }
+.badge-approved { background: var(--free); }
+.badge-rejected { background: #8e9aa6; }
+.link-box { background: var(--paper); border: 1px dashed var(--ink-2); padding: 12px; border-radius: 8px; word-break: break-all; }
+
+.footer { background: var(--ink); color: #a9bccd; padding: 28px 0; }
+
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
