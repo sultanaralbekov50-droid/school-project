@@ -10,6 +10,6 @@
  * Ключ service_role сюда вставлять НЕЛЬЗЯ.
  */
 window.SUPABASE_CONFIG = {
-  url: '',      // например: 'https://abcdxyz.supabase.co'
-  anonKey: ''   // длинный ключ, начинается с 'eyJ...'
+  url: 'https://rnlnstyfvtexpghwytno.supabase.co/',
+  anonKey: 'sb_publishable_NPp6-ZKAVawZq5-VMydJOw_qrKZtclt'   // длинный ключ, начинается с 'eyJ...'
 };
