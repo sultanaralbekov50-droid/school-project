@@ -7,7 +7,7 @@
  * setStatus, addApplication...) — страницы менять не придётся.
  */
 (function () {
-  const KEY = 'school_coworking_v1';
+  const KEY = 'school_coworking_v2';
   const OPEN = 9;          // зал открыт с 9:00
   const CLOSE = 21;        // до 21:00
   const COMMISSION = 0.15; // пример: платформа берёт 15%, школа получает 85%
@@ -28,24 +28,31 @@
   /* ---------- Стартовые демо-данные ---------- */
   function seed() {
     let n = 0;
+    const E = (name, price) => ({ name, price: price || 0 }); // price — доплата за час, 0 = входит в цену
     const b = (schoolId, spaceId, off, start, hours, client, phone, purpose, status) =>
       ({ id: 'b' + (++n), schoolId, spaceId, date: addDays(off), start, hours, client, phone, purpose, status, created: Date.now() });
     return {
       schools: [
         { id: 'school1', name: 'Школа №1 им. Пушкина', district: 'Первомайский район', login: 'school1', pass: '12345',
           spaces: [
-            { id: 's1-hall', type: 'hall', name: 'Актовый зал', capacity: 50, price: 500 },
-            { id: 's1-lib', type: 'library', name: 'Библиотека', capacity: 15, price: 200 }
+            { id: 's1-hall', type: 'hall', name: 'Актовый зал', capacity: 50, price: 500,
+              equipment: [E('Проектор и экран'), E('Звуковая система с 2 микрофонами', 100), E('Пианино', 150), E('Сцена и свет', 100), E('Wi-Fi')] },
+            { id: 's1-lib', type: 'library', name: 'Библиотека', capacity: 15, price: 200,
+              equipment: [E('Wi-Fi'), E('Флипчарт'), E('Проектор', 50), E('Кулер с водой')] }
           ] },
         { id: 'school2', name: 'Гимназия №5', district: 'Ленинский район', login: 'school2', pass: '12345',
           spaces: [
-            { id: 's2-hall', type: 'hall', name: 'Актовый зал', capacity: 80, price: 600 },
-            { id: 's2-class', type: 'classroom', name: 'Кабинет информатики', capacity: 20, price: 300 }
+            { id: 's2-hall', type: 'hall', name: 'Актовый зал', capacity: 80, price: 600,
+              equipment: [E('Проектор и экран'), E('Звуковая система', 120), E('Сцена и свет', 150), E('Wi-Fi')] },
+            { id: 's2-class', type: 'classroom', name: 'Кабинет информатики', capacity: 20, price: 300,
+              equipment: [E('Интерактивная доска'), E('15 компьютеров'), E('Проектор'), E('Wi-Fi')] }
           ] },
         { id: 'school3', name: 'Лицей №61', district: 'Октябрьский район', login: 'school3', pass: '12345',
           spaces: [
-            { id: 's3-hall', type: 'hall', name: 'Большой зал', capacity: 120, price: 700 },
-            { id: 's3-lib', type: 'library', name: 'Читальный зал', capacity: 20, price: 250 }
+            { id: 's3-hall', type: 'hall', name: 'Большой зал', capacity: 120, price: 700,
+              equipment: [E('Проектор и экран'), E('Музыкальная аппаратура (усилители, синтезатор)', 200), E('Сцена и свет', 150), E('Кондиционер')] },
+            { id: 's3-lib', type: 'library', name: 'Читальный зал', capacity: 20, price: 250,
+              equipment: [E('Wi-Fi'), E('Интерактивная доска', 80), E('Флипчарт')] }
           ] }
       ],
       bookings: [
@@ -108,6 +115,13 @@
       return list.sort((a, b) => (a.date + pad(a.start)).localeCompare(b.date + pad(b.start)));
     },
 
+    equipmentPrice: extras => (extras || []).reduce((n, x) => n + (x.price || 0), 0),
+    bookingTotal(b) {
+      const f = DB.findSpace(b.spaceId);
+      return f ? b.hours * (f.space.price + DB.equipmentPrice(b.extras)) : 0;
+    },
+    equipText: space => (space.equipment || []).map(x => esc(x.name) + (x.price ? ' (+' + x.price + ')' : '')).join(', ') || '—',
+
     isFree(spaceId, date, start, hours) {
       if (start < OPEN || start + hours > CLOSE) return false;
       return !data().bookings.some(x =>
@@ -149,8 +163,10 @@
         id: sid, name: app.school, district: 'Бишкек', login: sid,
         pass: String(Math.floor(10000 + Math.random() * 90000)),
         spaces: [
-          { id: sid + '-hall', type: 'hall', name: 'Актовый зал', capacity: 50, price: 500 },
-          { id: sid + '-lib', type: 'library', name: 'Библиотека', capacity: 15, price: 200 }
+          { id: sid + '-hall', type: 'hall', name: 'Актовый зал', capacity: 50, price: 500,
+            equipment: [{ name: 'Проектор и экран', price: 0 }, { name: 'Wi-Fi', price: 0 }] },
+          { id: sid + '-lib', type: 'library', name: 'Библиотека', capacity: 15, price: 200,
+            equipment: [{ name: 'Wi-Fi', price: 0 }] }
         ]
       };
       d.schools.push(school);

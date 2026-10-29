@@ -118,8 +118,7 @@
     }
 
     function priceOf(b) {
-        const f = DB.findSpace(b.spaceId);
-        return f ? f.space.price * b.hours : 0;
+        return DB.bookingTotal(b);
     }
 
     function refresh() {
@@ -179,7 +178,7 @@
                 <td>${DB.fmtDate(b.date)}</td>
                 <td>${b.start}:00–${b.start + b.hours}:00</td>
                 <td>${f ? DB.esc(f.space.name) : '—'}</td>
-                <td>${DB.esc(b.client)}<div class="text-muted small">${DB.esc(b.phone)}</div></td>
+                <td>${DB.esc(b.client)}<div class="text-muted small">${DB.esc(b.phone)}</div>${b.extras && b.extras.length ? '<div class="text-muted small">Оборудование: ' + b.extras.map(x => DB.esc(x.name)).join(', ') + '</div>' : ''}</td>
                 <td>${priceOf(b)} сом</td>
                 <td><span class="badge badge-${b.status}">${DB.statusLabel(b.status)}</span></td></tr>`;
         }).join('');

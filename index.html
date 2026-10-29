@@ -71,7 +71,7 @@
                 <div class="step">
                     <div class="n">1</div>
                     <h5>Школа подключается</h5>
-                    <p>Директор оставляет заявку, администратор выдаёт логин и пароль. Школа указывает, какие залы сдаёт, на какие часы и по какой цене.</p>
+                    <p>Директор оставляет заявку, администратор выдаёт логин и пароль. Школа указывает, какие залы сдаёт, какое в них оборудование (проектор, звук, интерактивная доска), на какие часы и по какой цене.</p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -125,6 +125,7 @@
                 <ul class="list-unstyled text-muted mb-0">
                     <li class="mb-2">✔ Зал, который пустует после уроков, начинает приносить деньги.</li>
                     <li class="mb-2">✔ Директор сам решает, какие часы открыть для аренды.</li>
+                    <li class="mb-2">✔ Проектор, звук и интерактивная доска приносят дополнительный доход: за них можно брать доплату.</li>
                     <li class="mb-2">✔ Деньги можно потратить на ремонт, технику и кружки.</li>
                     <li>✔ Ученики и район получают место для занятий рядом с домом.</li>
                 </ul>
@@ -238,6 +239,10 @@
                         <label class="form-label" for="bkDur">Сколько часов</label>
                         <select id="bkDur" class="form-select" style="max-width:220px"></select>
                     </div>
+                    <div class="mb-3" id="bkEquipBox">
+                        <div class="form-label">Оборудование <span class="text-muted small">(отметьте, что понадобится)</span></div>
+                        <div id="bkEquip"></div>
+                    </div>
                     <div class="row g-3 mb-3">
                         <div class="col-md-6"><label class="form-label" for="bkName">Ваше имя</label><input type="text" id="bkName" class="form-control" placeholder="Айбек"></div>
                         <div class="col-md-6"><label class="form-label" for="bkPhone">Телефон</label><input type="tel" id="bkPhone" class="form-control" placeholder="0555 123 456"></div>
@@ -305,6 +310,11 @@
         return n;
     }
 
+    function equipChips(space) {
+        return (space.equipment || []).map(x =>
+            `<span class="eq">${DB.esc(x.name)}${x.price ? ' <b>+' + x.price + '</b>' : ''}</span>`).join('');
+    }
+
     function renderCatalog() {
         const items = [];
         DB.schools().forEach(school => {
@@ -322,6 +332,7 @@
                         <div class="school">${DB.esc(school.name)} · ${DB.esc(school.district)}</div>
                         <h5 class="mb-0">${DB.esc(space.name)}</h5>
                         <div class="text-muted small">До ${space.capacity} человек</div>
+                        <div class="eq-list">${equipChips(space)}</div>
                         <div class="price">${space.price} сом / час</div>
                         <div class="free-now">Сегодня свободно: <b>${freeToday(space.id)} ч</b></div>
                         <button class="btn btn-ink mt-auto" data-book="${space.id}">Выбрать время</button>
@@ -356,6 +367,12 @@
         $('bkDate').min = DB.today();
         $('bkDate').value = DB.today();
         ['bkName', 'bkPhone', 'bkPurpose'].forEach(id => $(id).value = '');
+        $('bkEquip').innerHTML = (found.space.equipment || []).map((x, i) => `
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="eq${i}" data-i="${i}">
+                <label class="form-check-label" for="eq${i}">${DB.esc(x.name)} <span class="text-muted small">${x.price ? '+' + x.price + ' сом/час' : 'входит в цену'}</span></label>
+            </div>`).join('');
+        $('bkEquipBox').classList.toggle('d-none', !(found.space.equipment || []).length);
         $('bkError').classList.add('d-none');
         $('bookForm').classList.remove('d-none');
         $('bookDone').classList.add('d-none');
@@ -402,11 +419,18 @@
 
     function updateTotal() {
         if (cur.start === null) return;
-        $('bkTotal').textContent = (cur.space.price * (+$('bkDur').value)) + ' сом';
+        const perHour = cur.space.price + DB.equipmentPrice(selectedExtras());
+        $('bkTotal').textContent = (perHour * (+$('bkDur').value)) + ' сом';
+    }
+
+    function selectedExtras() {
+        const eq = cur.space.equipment || [];
+        return [...document.querySelectorAll('#bkEquip input:checked')].map(i => eq[+i.dataset.i]);
     }
 
     $('bkDate').addEventListener('change', renderSlots);
     $('bkDur').addEventListener('change', updateTotal);
+    $('bkEquip').addEventListener('change', updateTotal);
 
     $('bkSend').addEventListener('click', () => {
         const err = $('bkError');
@@ -418,7 +442,7 @@
         if (!name || !phone) return showErr('Укажите имя и телефон, чтобы директор мог связаться с вами.');
         const hours = +$('bkDur').value;
         const date = $('bkDate').value;
-        const res = DB.addBooking({ spaceId: cur.space.id, date, start: cur.start, hours, client: name, phone, purpose });
+        const res = DB.addBooking({ spaceId: cur.space.id, date, start: cur.start, hours, client: name, phone, purpose, extras: selectedExtras() });
         if (!res.ok) { showErr(res.error); renderSlots(); return; }
         $('bookDoneText').textContent = cur.space.name + ', ' + DB.fmtDate(date) + ', ' + cur.start + ':00–' + (cur.start + hours) + ':00';
         $('bookForm').classList.add('d-none');

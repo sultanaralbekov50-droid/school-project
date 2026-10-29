@@ -80,6 +80,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .free-now { font-size: .85rem; color: var(--muted); }
 .free-now b { color: var(--free); }
 
+.eq-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 2px; }
+.eq { font-size: .75rem; background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; color: var(--ink-2); }
+.eq b { color: var(--free); font-weight: 600; }
+
 /* Выгода */
 .calc { background: var(--ink); color: #fff; border-radius: 16px; padding: 28px; }
 .calc label { display: flex; justify-content: space-between; font-weight: 500; margin-bottom: 4px; }
