@@ -15,7 +15,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-sc sticky-top">
     <div class="container">
         <a class="navbar-brand" href="#hero">🏫 School Coworking</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Открыть меню">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -23,6 +23,7 @@
                 <li class="nav-item"><a class="nav-link" href="#how">Как это работает</a></li>
                 <li class="nav-item"><a class="nav-link" href="#spaces">Каталог</a></li>
                 <li class="nav-item"><a class="nav-link" href="#profit">Выгода школам</a></li>
+                <li class="nav-item"><a class="nav-link" href="#ai-helper">ИИ-Помощник</a></li>
                 <li class="nav-item"><a class="nav-link" href="#register">Подключить школу</a></li>
                 <li class="nav-item"><a class="nav-link" href="dashboard.html">Вход для школ</a></li>
                 <li class="nav-item"><a class="nav-link" href="admin.html">Админ</a></li>
@@ -31,7 +32,6 @@
     </div>
 </nav>
 
-<!-- Первый экран: живой календарь актового зала -->
 <section class="hero" id="hero">
     <div class="container">
         <div class="row align-items-center g-5">
@@ -61,73 +61,47 @@
     </div>
 </section>
 
-<!-- Как это работает -->
 <section class="section" id="how">
     <div class="container">
         <h2>Как это работает</h2>
-        <p class="sub">Три шага от пустого зала до первой аренды. Школе не нужно искать клиентов, а клиенту — договариваться по телефону.</p>
+        <p class="sub">Три шага от пустого зала до первой аренды.</p>
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="step">
-                    <div class="n">1</div>
-                    <h5>Школа подключается</h5>
-                    <p>Директор оставляет заявку, администратор выдаёт логин и пароль. Школа указывает, какие залы сдаёт, какое в них оборудование (проектор, звук, интерактивная доска), на какие часы и по какой цене.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="step">
-                    <div class="n">2</div>
-                    <h5>Клиент выбирает время</h5>
-                    <p>Репетитор, студия или организатор видит календарь, выбирает свободный час и отправляет заявку онлайн, без звонков и переписок.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="step">
-                    <div class="n">3</div>
-                    <h5>Директор подтверждает</h5>
-                    <p>Заявка приходит в личный кабинет. Директор подтверждает её одним нажатием, а школа получает доход от аренды.</p>
-                </div>
-            </div>
+            <div class="col-md-4"><div class="step"><div class="n">1</div><h5>Школа подключается</h5><p>Директор оставляет заявку, администратор выдаёт логин и пароль.</p></div></div>
+            <div class="col-md-4"><div class="step"><div class="n">2</div><h5>Клиент выбирает время</h5><p>Репетитор или организатор видит календарь и отправляет заявку онлайн.</p></div></div>
+            <div class="col-md-4"><div class="step"><div class="n">3</div><h5>Директор подтверждает</h5><p>Заявка приходит в личный кабинет. Директор подтверждает её одним нажатием.</p></div></div>
         </div>
     </div>
 </section>
 
-<!-- Каталог -->
 <section class="section section-alt" id="spaces">
     <div class="container">
         <h2>Каталог школ и залов</h2>
-        <p class="sub">Выберите пространство и сразу посмотрите, какие часы свободны.</p>
-
         <div id="schoolBanner" class="alert alert-info d-none d-flex justify-content-between align-items-center">
             <span>Вы смотрите пространства школы: <b id="schoolBannerName"></b></span>
             <a href="index.html#spaces" class="btn btn-sm btn-outline-dark">Показать все школы</a>
         </div>
-
         <div class="d-flex flex-wrap gap-2 mb-4" id="filters">
             <button class="chip on" data-type="all">Все</button>
             <button class="chip" data-type="hall">Актовые залы</button>
             <button class="chip" data-type="library">Библиотеки</button>
             <button class="chip" data-type="classroom">Классы</button>
         </div>
-
         <div class="row g-4" id="catalog"></div>
         <p id="catalogEmpty" class="text-muted d-none">В этой категории пока нет пространств.</p>
     </div>
 </section>
 
-<!-- Выгода для школ -->
 <section class="section" id="profit">
     <div class="container">
         <div class="row g-5 align-items-center">
             <div class="col-lg-6">
                 <h2>Сколько школа может заработать</h2>
-                <p class="sub">Подвигайте ползунки: цена за час и сколько часов в неделю зал занят арендаторами. Расчёт примерный, чтобы оценить масштаб.</p>
+                <p class="sub">Подвигайте ползунки, чтобы оценить масштаб.</p>
                 <ul class="list-unstyled text-muted mb-0">
-                    <li class="mb-2">✔ Зал, который пустует после уроков, начинает приносить деньги.</li>
-                    <li class="mb-2">✔ Директор сам решает, какие часы открыть для аренды.</li>
-                    <li class="mb-2">✔ Проектор, звук и интерактивная доска приносят дополнительный доход: за них можно брать доплату.</li>
-                    <li class="mb-2">✔ Деньги можно потратить на ремонт, технику и кружки.</li>
-                    <li>✔ Ученики и район получают место для занятий рядом с домом.</li>
+                    <li class="mb-2">✔ Зал начинает приносить деньги.</li>
+                    <li class="mb-2">✔ Директор сам решает, какие часы открыть.</li>
+                    <li class="mb-2">✔ Оборудование приносит доп. доход.</li>
+                    <li class="mb-2">✔ Деньги идут на ремонт и кружки.</li>
                 </ul>
             </div>
             <div class="col-lg-6">
@@ -139,70 +113,58 @@
                     <div class="small-note">Доход школы в месяц</div>
                     <div class="big"><span id="outMonth">0</span> сом</div>
                     <div class="mt-3">За учебный год (9 месяцев): <b id="outYear">0</b> сом</div>
-                    <div class="small-note mt-3">Пример модели: платформа берёт 15% с аренды, школа получает 85%. В месяце считаем 4 недели.</div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ЦУР ООН -->
-<section class="section section-alt" id="sdg">
+<section class="section section-alt" id="ai-helper">
     <div class="container">
-        <h2>Зачем это городу</h2>
-        <p class="sub">Проект работает на цели устойчивого развития ООН: использует то, что уже построено, и направляет деньги в образование.</p>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="sdg">
-                    <span class="tag" style="background:#c5192d">ЦУР 4</span>
-                    <h5>Качественное образование</h5>
-                    <p class="text-muted mb-0">Доход от аренды идёт на оборудование, ремонт и кружки. Репетиторы и студии получают доступное место для занятий.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="sdg">
-                    <span class="tag" style="background:#fd9d24">ЦУР 11</span>
-                    <h5>Устойчивые города</h5>
-                    <p class="text-muted mb-0">Школьные здания становятся общественными пространствами района, а не пустуют по вечерам и выходным.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="sdg">
-                    <span class="tag" style="background:#bf8b2e">ЦУР 12</span>
-                    <h5>Разумное использование ресурсов</h5>
-                    <p class="text-muted mb-0">Не нужно строить новые помещения: мы загружаем те, что уже есть.</p>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="panel shadow-lg" style="border: 2px solid var(--mark);">
+                    <div class="d-flex align-items-center mb-3">
+                        <div style="font-size: 2rem; margin-right: 15px;">🤖</div>
+                        <div>
+                            <h4 class="mb-0">ИИ-Помощник</h4>
+                            <p class="text-muted small mb-0">Опишите мероприятие, и я подберу зал.</p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted">Ключ OpenRouter (для демо):</label>
+                        <input type="password" id="apiKeyInput" class="form-control" placeholder="sk-or-v1-...">
+                    </div>
+                    <div id="chatBox" class="mb-3 p-3" style="background: var(--paper); border-radius: 10px; height: 250px; overflow-y: auto;">
+                        <div class="mb-2"><b>ИИ:</b> Здравствуйте! Вставьте ключ выше и напишите, что вы планируете провести.</div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="aiInput" class="form-control" placeholder="Напишите сообщение...">
+                        <button class="btn btn-ink" onclick="askAI()">Отправить</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Заявка от директора -->
 <section class="section" id="register">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="panel">
                     <h3 class="mb-1">Подключить школу</h3>
-                    <p class="text-muted">Оставьте заявку. Администратор свяжется с вами и выдаст логин и пароль для личного кабинета.</p>
+                    <p class="text-muted">Оставьте заявку, и администратор выдаст вам доступ.</p>
                     <form id="registerForm">
-                        <div class="mb-3">
-                            <label class="form-label" for="rSchool">Название школы</label>
-                            <input type="text" id="rSchool" class="form-control" placeholder="Школа №1 им. Пушкина" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="rDirector">ФИО директора</label>
-                            <input type="text" id="rDirector" class="form-control" placeholder="Иванов Иван Иванович" required>
-                        </div>
+                        <div class="mb-3"><label class="form-label" for="rSchool">Название школы</label><input type="text" id="rSchool" class="form-control" required></div>
+                        <div class="mb-3"><label class="form-label" for="rDirector">ФИО директора</label><input type="text" id="rDirector" class="form-control" required></div>
                         <div class="row g-3 mb-3">
-                            <div class="col-md-6"><label class="form-label" for="rPhone">Телефон</label><input type="tel" id="rPhone" class="form-control" placeholder="+996 555 123 456" required></div>
-                            <div class="col-md-6"><label class="form-label" for="rEmail">Email</label><input type="email" id="rEmail" class="form-control" placeholder="school@mail.com" required></div>
+                            <div class="col-md-6"><label class="form-label" for="rPhone">Телефон</label><input type="tel" id="rPhone" class="form-control" required></div>
+                            <div class="col-md-6"><label class="form-label" for="rEmail">Email</label><input type="email" id="rEmail" class="form-control" required></div>
                         </div>
                         <button type="submit" class="btn btn-ink w-100">Отправить заявку</button>
                     </form>
-                    <div id="registerSuccess" class="alert alert-success mt-3 d-none" role="status">
-                        <b>Заявка отправлена.</b> Администратор позвонит вам в ближайшее время.
-                    </div>
+                    <div id="registerSuccess" class="alert alert-success mt-3 d-none"><b>Заявка отправлена.</b></div>
                 </div>
             </div>
         </div>
@@ -216,51 +178,34 @@
     </div>
 </div>
 
-<!-- Окно бронирования -->
-<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookTitle" aria-hidden="true">
+<div class="modal fade" id="bookModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="bookTitle">Забронировать</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div id="bookForm">
                     <p class="text-muted mb-3" id="bookInfo"></p>
-                    <div class="mb-3">
-                        <label class="form-label" for="bkDate">Дата</label>
-                        <input type="date" id="bkDate" class="form-control" style="max-width:220px">
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">Время начала <span class="text-muted small">(серые часы заняты)</span></div>
-                        <div class="slots" id="slots"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="bkDur">Сколько часов</label>
-                        <select id="bkDur" class="form-select" style="max-width:220px"></select>
-                    </div>
-                    <div class="mb-3" id="bkEquipBox">
-                        <div class="form-label">Оборудование <span class="text-muted small">(отметьте, что понадобится)</span></div>
-                        <div id="bkEquip"></div>
-                    </div>
+                    <div class="mb-3"><label class="form-label" for="bkDate">Дата</label><input type="date" id="bkDate" class="form-control" style="max-width:220px"></div>
+                    <div class="mb-3"><div class="form-label">Время начала</div><div class="slots" id="slots"></div></div>
+                    <div class="mb-3"><label class="form-label" for="bkDur">Сколько часов</label><select id="bkDur" class="form-select" style="max-width:220px"></select></div>
+                    <div class="mb-3" id="bkEquipBox"><div class="form-label">Оборудование</div><div id="bkEquip"></div></div>
                     <div class="row g-3 mb-3">
-                        <div class="col-md-6"><label class="form-label" for="bkName">Ваше имя</label><input type="text" id="bkName" class="form-control" placeholder="Айбек"></div>
-                        <div class="col-md-6"><label class="form-label" for="bkPhone">Телефон</label><input type="tel" id="bkPhone" class="form-control" placeholder="0555 123 456"></div>
+                        <div class="col-md-6"><label class="form-label" for="bkName">Имя</label><input type="text" id="bkName" class="form-control" required></div>
+                        <div class="col-md-6"><label class="form-label" for="bkPhone">Телефон</label><input type="tel" id="bkPhone" class="form-control" required></div>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="bkPurpose">Что будете проводить</label>
-                        <input type="text" id="bkPurpose" class="form-control" placeholder="Мастер-класс, занятие, встреча">
-                    </div>
-                    <div id="bkError" class="alert alert-danger d-none" role="alert"></div>
+                    <div class="mb-3"><label class="form-label" for="bkPurpose">Мероприятие</label><input type="text" id="bkPurpose" class="form-control"></div>
+                    <div id="bkError" class="alert alert-danger d-none"></div>
                     <div class="d-flex justify-content-between align-items-center">
                         <div>Итого: <b id="bkTotal">—</b></div>
-                        <button type="button" class="btn btn-ink" id="bkSend">Отправить заявку</button>
+                        <button type="button" class="btn btn-ink" id="bkSend">Отправить</button>
                     </div>
                 </div>
                 <div id="bookDone" class="d-none text-center py-4">
                     <h4>Заявка отправлена</h4>
                     <p class="text-muted mb-1" id="bookDoneText"></p>
-                    <p class="text-muted">Директор школы подтвердит её в личном кабинете. Пока заявка подтверждается, это время показано как «ожидает».</p>
                     <button type="button" class="btn btn-ink" data-bs-dismiss="modal">Готово</button>
                 </div>
             </div>
@@ -274,20 +219,12 @@
 <script src="data.js"></script>
 <script>
     const $ = id => document.getElementById(id);
-    const IMG = {
-        hall: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80',
-        library: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80',
-        classroom: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80'
-    };
+    const IMG = { hall: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80', library: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80', classroom: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80' };
+    let typeFilter = 'all', schoolFilter = null;
 
-    let typeFilter = 'all';
-    let schoolFilter = null;
-
-    /* ---- Ссылка школы: ?school=school1 или старый вид ?school=Школа_1 ---- */
     function resolveSchool(param) {
         if (!param) return null;
-        const list = DB.schools();
-        const p = param.toLowerCase();
+        const list = DB.schools(), p = param.toLowerCase();
         let found = list.find(s => s.id.toLowerCase() === p);
         if (found) return found;
         const num = param.match(/\d+/);
@@ -295,7 +232,6 @@
         return found || null;
     }
 
-    /* ---- Первый экран: живой календарь ---- */
     function renderHero() {
         const first = DB.findSpace('s1-hall') || (DB.schools()[0] && { school: DB.schools()[0], space: DB.schools()[0].spaces[0] });
         if (!first) return;
@@ -303,27 +239,21 @@
         DB.renderWeek($('heroWeek'), first.space.id, DB.today(), { compact: true });
     }
 
-    /* ---- Каталог ---- */
     function freeToday(spaceId) {
-        const t = DB.today();
-        const now = new Date().getHours();
-        let n = 0;
+        const t = DB.today(), now = new Date().getHours(); let n = 0;
         for (let h = Math.max(DB.OPEN, now + 1); h < DB.CLOSE; h++) if (DB.isFree(spaceId, t, h, 1)) n++;
         return n;
     }
 
     function equipChips(space) {
-        return (space.equipment || []).map(x =>
-            `<span class="eq">${DB.esc(x.name)}${x.price ? ' <b>+' + x.price + '</b>' : ''}</span>`).join('');
+        return (space.equipment || []).map(x => `<span class="eq">${DB.esc(x.name)}${x.price ? ' <b>+' + x.price + '</b>' : ''}</span>`).join('');
     }
 
     function renderCatalog() {
         const items = [];
         DB.schools().forEach(school => {
             if (schoolFilter && school.id !== schoolFilter.id) return;
-            school.spaces.forEach(space => {
-                if (typeFilter === 'all' || space.type === typeFilter) items.push({ school, space });
-            });
+            school.spaces.forEach(space => { if (typeFilter === 'all' || space.type === typeFilter) items.push({ school, space }); });
         });
         $('catalogEmpty').classList.toggle('d-none', items.length > 0);
         $('catalog').innerHTML = items.map(({ school, space }) => `
@@ -345,42 +275,27 @@
     }
 
     $('filters').addEventListener('click', e => {
-        const btn = e.target.closest('.chip');
-        if (!btn) return;
+        const btn = e.target.closest('.chip'); if (!btn) return;
         typeFilter = btn.dataset.type;
         document.querySelectorAll('#filters .chip').forEach(c => c.classList.toggle('on', c === btn));
         renderCatalog();
     });
 
-    /* ---- Бронирование ---- */
-    let cur = null;
-    let modal = null;
-
-    function isPast(date, hour) {
-        return date === DB.today() && hour <= new Date().getHours();
-    }
+    let cur = null, modal = null;
+    function isPast(date, hour) { return date === DB.today() && hour <= new Date().getHours(); }
 
     function openBooking(spaceId) {
-        const found = DB.findSpace(spaceId);
-        if (!found) return;
+        const found = DB.findSpace(spaceId); if (!found) return;
         cur = { school: found.school, space: found.space, start: null };
         $('bookTitle').textContent = found.space.name + ' — ' + found.school.name;
         $('bookInfo').textContent = 'До ' + found.space.capacity + ' человек · ' + found.space.price + ' сом/час';
-        $('bkDate').min = DB.today();
-        $('bkDate').value = DB.today();
+        $('bkDate').min = DB.today(); $('bkDate').value = DB.today();
         ['bkName', 'bkPhone', 'bkPurpose'].forEach(id => $(id).value = '');
         $('bkEquip').innerHTML = (found.space.equipment || []).map((x, i) => `
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="eq${i}" data-i="${i}">
-                <label class="form-check-label" for="eq${i}">${DB.esc(x.name)} <span class="text-muted small">${x.price ? '+' + x.price + ' сом/час' : 'входит в цену'}</span></label>
-            </div>`).join('');
+            <div class="form-check"><input class="form-check-input" type="checkbox" id="eq${i}" data-i="${i}"><label class="form-check-label" for="eq${i}">${DB.esc(x.name)} <span class="text-muted small">${x.price ? '+' + x.price + ' сом/час' : 'входит в цену'}</span></label></div>`).join('');
         $('bkEquipBox').classList.toggle('d-none', !(found.space.equipment || []).length);
-        $('bkError').classList.add('d-none');
-        $('bookForm').classList.remove('d-none');
-        $('bookDone').classList.add('d-none');
-        renderSlots();
-        modal = modal || new bootstrap.Modal($('bookModal'));
-        modal.show();
+        $('bkError').classList.add('d-none'); $('bookForm').classList.remove('d-none'); $('bookDone').classList.add('d-none');
+        renderSlots(); modal = modal || new bootstrap.Modal($('bookModal')); modal.show();
     }
 
     function renderSlots() {
@@ -397,26 +312,11 @@
     }
 
     function updateDuration() {
-        const sel = $('bkDur');
-        const prev = +sel.value || 1;
-        if (cur.start === null) {
-            sel.innerHTML = '<option value="1">Сначала выберите время</option>';
-            sel.disabled = true;
-            $('bkTotal').textContent = '—';
-            return;
-        }
-        const date = $('bkDate').value;
-        let opts = '';
-        let max = 0;
-        for (let d = 1; d <= 4; d++) {
-            if (!DB.isFree(cur.space.id, date, cur.start, d)) break;
-            max = d;
-            opts += `<option value="${d}">${d} ч (${cur.start}:00–${cur.start + d}:00)</option>`;
-        }
-        sel.innerHTML = opts;
-        sel.disabled = false;
-        sel.value = String(Math.min(prev, max));
-        updateTotal();
+        const sel = $('bkDur'), prev = +sel.value || 1;
+        if (cur.start === null) { sel.innerHTML = '<option value="1">Сначала выберите время</option>'; sel.disabled = true; $('bkTotal').textContent = '—'; return; }
+        const date = $('bkDate').value; let opts = '', max = 0;
+        for (let d = 1; d <= 4; d++) { if (!DB.isFree(cur.space.id, date, cur.start, d)) break; max = d; opts += `<option value="${d}">${d} ч (${cur.start}:00–${cur.start + d}:00)</option>`; }
+        sel.innerHTML = opts; sel.disabled = false; sel.value = String(Math.min(prev, max)); updateTotal();
     }
 
     function updateTotal() {
@@ -435,71 +335,78 @@
     $('bkEquip').addEventListener('change', updateTotal);
 
     $('bkSend').addEventListener('click', async () => {
-        const err = $('bkError');
-        const name = $('bkName').value.trim();
-        const phone = $('bkPhone').value.trim();
-        const purpose = $('bkPurpose').value.trim() || 'Без описания';
+        const err = $('bkError'), name = $('bkName').value.trim(), phone = $('bkPhone').value.trim(), purpose = $('bkPurpose').value.trim() || 'Без описания';
         const showErr = msg => { err.textContent = msg; err.classList.remove('d-none'); };
         if (cur.start === null) return showErr('Выберите время начала.');
-        if (!name || !phone) return showErr('Укажите имя и телефон, чтобы директор мог связаться с вами.');
-        const hours = +$('bkDur').value;
-        const date = $('bkDate').value;
+        if (!name || !phone) return showErr('Укажите имя и телефон.');
+        const hours = +$('bkDur').value, date = $('bkDate').value;
         $('bkSend').disabled = true;
         const res = await DB.addBooking({ spaceId: cur.space.id, date, start: cur.start, hours, client: name, phone, purpose, extras: selectedExtras() });
         $('bkSend').disabled = false;
         if (!res.ok) { showErr(res.error); renderSlots(); return; }
         $('bookDoneText').textContent = cur.space.name + ', ' + DB.fmtDate(date) + ', ' + cur.start + ':00–' + (cur.start + hours) + ':00';
-        $('bookForm').classList.add('d-none');
-        $('bookDone').classList.remove('d-none');
-        renderHero();
-        renderCatalog();
+        $('bookForm').classList.add('d-none'); $('bookDone').classList.remove('d-none'); renderHero(); renderCatalog();
     });
 
-    /* ---- Калькулятор ---- */
     function calc() {
-        const price = +$('calcPrice').value;
-        const hours = +$('calcHours').value;
+        const price = +$('calcPrice').value, hours = +$('calcHours').value;
         const month = Math.round(price * hours * 4 * (1 - DB.COMMISSION));
-        $('vPrice').textContent = price;
-        $('vHours').textContent = hours;
-        $('outMonth').textContent = month.toLocaleString('ru-RU');
-        $('outYear').textContent = (month * 9).toLocaleString('ru-RU');
+        $('vPrice').textContent = price; $('vHours').textContent = hours;
+        $('outMonth').textContent = month.toLocaleString('ru-RU'); $('outYear').textContent = (month * 9).toLocaleString('ru-RU');
     }
-    $('calcPrice').addEventListener('input', calc);
-    $('calcHours').addEventListener('input', calc);
+    $('calcPrice').addEventListener('input', calc); $('calcHours').addEventListener('input', calc);
 
-    /* ---- Заявка школы ---- */
+    async function askAI() {
+        const input = $('aiInput'), chatBox = $('chatBox'), apiKey = $('apiKeyInput').value.trim(), text = input.value.trim();
+        if (!text) return;
+        if (!apiKey) { alert('Вставьте ключ OpenRouter.'); return; }
+        chatBox.innerHTML += `<div class="mb-2 text-end"><b>Вы:</b> ${text}</div>`;
+        input.value = ''; chatBox.scrollTop = chatBox.scrollHeight;
+        const loadingId = 'loading-' + Date.now();
+        chatBox.innerHTML += `<div class="mb-2" id="${loadingId}"><b>ИИ:</b> <i>думает...</i></div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+        try {
+            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    model: "meta-llama/llama-3-8b-instruct",
+                    messages: [
+                        { role: "system", content: "Ты — ИИ-помощник школьного коворкинга. Помогай подобрать зал (Актовый зал, Библиотека, Компьютерный класс) и отвечай на вопросы. Будь вежлив." },
+                        { role: "user", content: text }
+                    ]
+                })
+            });
+            const data = await response.json();
+            document.getElementById(loadingId).remove();
+            if (data.error) chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка:</b> ${data.error.message}</div>`;
+            else chatBox.innerHTML += `<div class="mb-2"><b>ИИ:</b> ${data.choices[0].message.content}</div>`;
+        } catch (err) {
+            document.getElementById(loadingId).remove();
+            chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка сети:</b> ${err.message}</div>`;
+        }
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    $('aiInput').addEventListener('keypress', e => { if (e.key === 'Enter') askAI(); });
+
     $('registerForm').addEventListener('submit', async function (e) {
         e.preventDefault();
-        const res = await DB.addApplication({
-            school: $('rSchool').value.trim(),
-            director: $('rDirector').value.trim(),
-            phone: $('rPhone').value.trim(),
-            email: $('rEmail').value.trim()
-        });
+        const res = await DB.addApplication({ school: $('rSchool').value.trim(), director: $('rDirector').value.trim(), phone: $('rPhone').value.trim(), email: $('rEmail').value.trim() });
         if (!res.ok) { alert(res.error); return; }
-        this.classList.add('d-none');
-        $('registerSuccess').classList.remove('d-none');
+        this.classList.add('d-none'); $('registerSuccess').classList.remove('d-none');
     });
 
-    /* ---- Старт ---- */
     calc();
     if (DB.mode === 'remote') $('demoNote').remove();
     DB.init().then(() => {
         schoolFilter = resolveSchool(new URLSearchParams(location.search).get('school'));
-        if (schoolFilter) {
-            $('schoolBanner').classList.remove('d-none');
-            $('schoolBannerName').textContent = schoolFilter.name;
-        }
-        renderHero();
-        renderCatalog();
+        if (schoolFilter) { $('schoolBanner').classList.remove('d-none'); $('schoolBannerName').textContent = schoolFilter.name; }
+        renderHero(); renderCatalog();
         if (schoolFilter) $('spaces').scrollIntoView();
     }).catch(err => {
         console.error(err);
-        $('catalog').innerHTML = '<div class="col-12"><div class="alert alert-danger">Не удалось загрузить данные. Проверьте интернет и настройки Supabase в config.js.</div></div>';
+        $('catalog').innerHTML = '<div class="col-12"><div class="alert alert-danger">Не удалось загрузить данные.</div></div>';
     });
-
-    // Демо-режим: подхватываем изменения из другой вкладки
     window.addEventListener('storage', () => DB.refresh().then(() => { renderHero(); renderCatalog(); }));
 </script>
 </body>
