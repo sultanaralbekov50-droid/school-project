@@ -23,7 +23,6 @@
                 <li class="nav-item"><a class="nav-link" href="#how">Как это работает</a></li>
                 <li class="nav-item"><a class="nav-link" href="#spaces">Каталог</a></li>
                 <li class="nav-item"><a class="nav-link" href="#profit">Выгода школам</a></li>
-                <li class="nav-item"><a class="nav-link" href="#ai-helper">ИИ-Помощник</a></li>
                 <li class="nav-item"><a class="nav-link" href="#register">Подключить школу</a></li>
                 <li class="nav-item"><a class="nav-link" href="dashboard.html">Вход для школ</a></li>
                 <li class="nav-item"><a class="nav-link" href="admin.html">Админ</a></li>
@@ -72,7 +71,7 @@
                 <div class="step">
                     <div class="n">1</div>
                     <h5>Школа подключается</h5>
-                    <p>Директор оставляет заявку, администратор выдаёт логин и пароль. Школа указывает, какие залы сдаёт, какое в них оборудование, на какие часы и по какой цене.</p>
+                    <p>Директор оставляет заявку, администратор выдаёт логин и пароль. Школа указывает, какие залы сдаёт, какое в них оборудование (проектор, звук, интерактивная доска), на какие часы и по какой цене.</p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -122,12 +121,13 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-6">
                 <h2>Сколько школа может заработать</h2>
-                <p class="sub">Подвигайте ползунки: цена за час и сколько часов в неделю зал занят арендаторами.</p>
+                <p class="sub">Подвигайте ползунки: цена за час и сколько часов в неделю зал занят арендаторами. Расчёт примерный, чтобы оценить масштаб.</p>
                 <ul class="list-unstyled text-muted mb-0">
                     <li class="mb-2">✔ Зал, который пустует после уроков, начинает приносить деньги.</li>
                     <li class="mb-2">✔ Директор сам решает, какие часы открыть для аренды.</li>
-                    <li class="mb-2">✔ Проектор и звук приносят дополнительный доход.</li>
+                    <li class="mb-2">✔ Проектор, звук и интерактивная доска приносят дополнительный доход: за них можно брать доплату.</li>
                     <li class="mb-2">✔ Деньги можно потратить на ремонт, технику и кружки.</li>
+                    <li>✔ Ученики и район получают место для занятий рядом с домом.</li>
                 </ul>
             </div>
             <div class="col-lg-6">
@@ -139,35 +139,7 @@
                     <div class="small-note">Доход школы в месяц</div>
                     <div class="big"><span id="outMonth">0</span> сом</div>
                     <div class="mt-3">За учебный год (9 месяцев): <b id="outYear">0</b> сом</div>
-                    <div class="small-note mt-3">Платформа берёт 15% с аренды, школа получает 85%. В месяце 4 недели.</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ИИ-ПОМОЩНИК -->
-<section class="section section-alt" id="ai-helper">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="panel shadow-lg" style="border: 2px solid var(--mark);">
-                    <div class="d-flex align-items-center mb-3">
-                        <div style="font-size: 2rem; margin-right: 15px;">🤖</div>
-                        <div>
-                            <h4 class="mb-0">ИИ-Помощник</h4>
-                            <p class="text-muted small mb-0">Опишите, что вы хотите провести, и я подберу идеальный зал.</p>
-                        </div>
-                    </div>
-                    
-                    <div id="chatBox" class="mb-3 p-3" style="background: var(--paper); border-radius: 10px; height: 250px; overflow-y: auto;">
-                        <div class="mb-2"><b>ИИ:</b> Здравствуйте! Что вы планируете провести? (например: "Мастер-класс на 20 человек с проектором")</div>
-                    </div>
-                    
-                    <div class="input-group">
-                        <input type="text" id="aiInput" class="form-control" placeholder="Напишите сообщение...">
-                        <button class="btn btn-ink" onclick="askAI()">Отправить</button>
-                    </div>
+                    <div class="small-note mt-3">Пример модели: платформа берёт 15% с аренды, школа получает 85%. В месяце считаем 4 недели.</div>
                 </div>
             </div>
         </div>
@@ -175,30 +147,30 @@
 </section>
 
 <!-- ЦУР ООН -->
-<section class="section" id="sdg">
+<section class="section section-alt" id="sdg">
     <div class="container">
         <h2>Зачем это городу</h2>
-        <p class="sub">Проект работает на цели устойчивого развития ООН.</p>
+        <p class="sub">Проект работает на цели устойчивого развития ООН: использует то, что уже построено, и направляет деньги в образование.</p>
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="sdg">
                     <span class="tag" style="background:#c5192d">ЦУР 4</span>
                     <h5>Качественное образование</h5>
-                    <p class="text-muted mb-0">Доход от аренды идёт на оборудование, ремонт и кружки.</p>
+                    <p class="text-muted mb-0">Доход от аренды идёт на оборудование, ремонт и кружки. Репетиторы и студии получают доступное место для занятий.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="sdg">
                     <span class="tag" style="background:#fd9d24">ЦУР 11</span>
                     <h5>Устойчивые города</h5>
-                    <p class="text-muted mb-0">Школьные здания становятся общественными пространствами района.</p>
+                    <p class="text-muted mb-0">Школьные здания становятся общественными пространствами района, а не пустуют по вечерам и выходным.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="sdg">
                     <span class="tag" style="background:#bf8b2e">ЦУР 12</span>
                     <h5>Разумное использование ресурсов</h5>
-                    <p class="text-muted mb-0">Мы загружаем те помещения, которые уже есть.</p>
+                    <p class="text-muted mb-0">Не нужно строить новые помещения: мы загружаем те, что уже есть.</p>
                 </div>
             </div>
         </div>
@@ -206,7 +178,7 @@
 </section>
 
 <!-- Заявка от директора -->
-<section class="section section-alt" id="register">
+<section class="section" id="register">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -288,7 +260,7 @@
                 <div id="bookDone" class="d-none text-center py-4">
                     <h4>Заявка отправлена</h4>
                     <p class="text-muted mb-1" id="bookDoneText"></p>
-                    <p class="text-muted">Директор школы подтвердит её в личном кабинете.</p>
+                    <p class="text-muted">Директор школы подтвердит её в личном кабинете. Пока заявка подтверждается, это время показано как «ожидает».</p>
                     <button type="button" class="btn btn-ink" data-bs-dismiss="modal">Готово</button>
                 </div>
             </div>
@@ -311,7 +283,7 @@
     let typeFilter = 'all';
     let schoolFilter = null;
 
-    /* ---- Ссылка школы ---- */
+    /* ---- Ссылка школы: ?school=school1 или старый вид ?school=Школа_1 ---- */
     function resolveSchool(param) {
         if (!param) return null;
         const list = DB.schools();
@@ -469,7 +441,7 @@
         const purpose = $('bkPurpose').value.trim() || 'Без описания';
         const showErr = msg => { err.textContent = msg; err.classList.remove('d-none'); };
         if (cur.start === null) return showErr('Выберите время начала.');
-        if (!name || !phone) return showErr('Укажите имя и телефон.');
+        if (!name || !phone) return showErr('Укажите имя и телефон, чтобы директор мог связаться с вами.');
         const hours = +$('bkDur').value;
         const date = $('bkDate').value;
         $('bkSend').disabled = true;
@@ -495,45 +467,6 @@
     }
     $('calcPrice').addEventListener('input', calc);
     $('calcHours').addEventListener('input', calc);
-
-    /* ---- ИИ-ПОМОЩНИК ---- */
-    function askAI() {
-        const input = document.getElementById('aiInput');
-        const chatBox = document.getElementById('chatBox');
-        const text = input.value.trim().toLowerCase();
-        
-        if (!text) return;
-
-        chatBox.innerHTML += `<div class="mb-2 text-end"><b>Вы:</b> ${input.value}</div>`;
-        input.value = '';
-        chatBox.scrollTop = chatBox.scrollHeight;
-
-        setTimeout(() => {
-            let reply = "Извините, я не совсем понял. Уточните, сколько человек и нужен ли проектор?";
-            if (text.includes('человек') || text.includes('чел') || text.includes('мастер') || text.includes('лекци')) {
-                let num = parseInt(text.match(/\d+/));
-                if (num && num > 30) {
-                    reply = "Для такого количества людей отлично подойдет <b>Актовый зал</b> (вмещает до 50-120 человек).";
-                } else if (text.includes('проектор') || text.includes('презентац')) {
-                    reply = "Вам нужен проектор. Рекомендую <b>Актовый зал</b> или <b>Компьютерный класс</b>.";
-                } else if (num && num < 20) {
-                    reply = "Для небольшой группы лучше всего подойдет <b>Библиотека</b>. Там тихо и есть Wi-Fi.";
-                } else {
-                    reply = "Рекомендую посмотреть <b>Актовый зал</b>. Он универсален.";
-                }
-            } else if (text.includes('цен') || text.includes('сколько') || text.includes('стоимость')) {
-                reply = "Цены: Библиотека — от 200 сом/час, Актовый зал — от 500 сом/час.";
-            } else if (text.includes('привет') || text.includes('здравствуй')) {
-                reply = "Здравствуйте! Я помогу подобрать зал. Сколько человек планируете пригласить?";
-            }
-            chatBox.innerHTML += `<div class="mb-2"><b>ИИ:</b> ${reply}</div>`;
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }, 800);
-    }
-
-    document.getElementById('aiInput').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') askAI();
-    });
 
     /* ---- Заявка школы ---- */
     $('registerForm').addEventListener('submit', async function (e) {
@@ -566,6 +499,7 @@
         $('catalog').innerHTML = '<div class="col-12"><div class="alert alert-danger">Не удалось загрузить данные. Проверьте интернет и настройки Supabase в config.js.</div></div>';
     });
 
+    // Демо-режим: подхватываем изменения из другой вкладки
     window.addEventListener('storage', () => DB.refresh().then(() => { renderHero(); renderCatalog(); }));
 </script>
 </body>
