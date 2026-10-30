@@ -30,18 +30,16 @@
                         <div style="font-size: 2rem; margin-right: 15px;">🤖</div>
                         <div>
                             <h4 class="mb-0">ИИ-Помощник</h4>
-                            <p class="text-muted small mb-0">Подберу зал под ваше мероприятие.</p>
+                            <p class="text-muted small mb-0">Отвечу на любые вопросы о коворкинге.</p>
                         </div>
                     </div>
                     
-                    <!-- Чат -->
                     <div id="chatBox" class="mb-3 p-3" style="background: var(--paper); border-radius: 10px; height: 400px; overflow-y: auto; border: 1px solid #ddd;">
-                        <div class="mb-2"><b>ИИ:</b> Здравствуйте! Я помогу подобрать зал под ваше мероприятие. Расскажите, что вы планируете провести, сколько будет человек и в каком вы районе?</div>
+                        <div class="mb-2"><b>ИИ:</b> Здравствуйте! Я — ИИ-помощник School Coworking. Я знаю всё о наших залах, ценах и правилах бронирования. Чем могу помочь?</div>
                     </div>
                     
-                    <!-- Поле ввода -->
                     <div class="input-group">
-                        <input type="text" id="aiInput" class="form-control" placeholder="Напишите сообщение...">
+                        <input type="text" id="aiInput" class="form-control" placeholder="Задайте любой вопрос...">
                         <button class="btn btn-ink" onclick="askAI()">Отправить</button>
                     </div>
                 </div>
@@ -50,7 +48,6 @@
     </div>
 </section>
 
-<!-- Подключаем data.js, чтобы ИИ знал о школах -->
 <script src="data.js"></script>
 <script>
     async function askAI() {
@@ -60,47 +57,44 @@
         
         if (!text) return;
 
-        // Добавляем сообщение пользователя
         chatBox.innerHTML += `<div class="mb-2 text-end"><b>Вы:</b> ${text}</div>`;
         input.value = '';
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // Индикатор загрузки
         const loadingId = 'loading-' + Date.now();
         chatBox.innerHTML += `<div class="mb-2" id="${loadingId}"><b>ИИ:</b> <i>думает...</i></div>`;
         chatBox.scrollTop = chatBox.scrollHeight;
 
         try {
-            // Получаем список школ из data.js
             let schoolsInfo = "";
             try {
                 await DB.init();
                 const schools = DB.schools();
                 schoolsInfo = schools.map(s => 
-                    `Школа: ${s.name}, Район: ${s.district}, Залы: ${s.spaces.map(sp => sp.name).join(', ')}`
+                    `Школа: ${s.name}, Район: ${s.district}, Залы: ${s.spaces.map(sp => sp.name + ' (' + sp.price + ' сом/час, до ' + sp.capacity + ' чел.)').join(', ')}`
                 ).join('\n');
             } catch (e) {
                 schoolsInfo = "Информация о школах временно недоступна.";
             }
 
-            // Системный промпт — "мозги" ИИ
-            const systemPrompt = `Ты — профессиональный ИИ-помощник школьного коворкинга 'School Coworking'. Твоя цель — помочь клиенту выбрать идеальное место для его мероприятия и рассказать о процессе бронирования.
+            const systemPrompt = `Ты — умный и вежливый ИИ-помощник сервиса 'School Coworking'. Твоя задача — консультировать клиентов по любым вопросам, связанным с арендой школьных помещений.
 
-Вот список доступных школ и залов:
+Вот полная информация о наших пространствах:
 ${schoolsInfo}
 
-Твои правила:
-1. Если клиент называет район, порекомендуй школу из этого района.
-2. Если клиент описывает мероприятие (например, "репетиторство по математике для 5 человек"), предложи подходящий зал:
-   - Актовый зал: для больших групп (от 20 человек), презентаций, концертов.
-   - Библиотека: для тихих занятий, чтения, небольших групп (до 10-15 человек).
-   - Класс: для репетиторства, кружков, групповых занятий (до 25 человек).
-3. Всегда уточняй количество человек, если это не указано.
-4. Расскажи про оборудование: проектор, интерактивная доска, звук. Уточни, что за него может быть доплата.
-5. Напомни, что для бронирования нужно зайти в раздел "Каталог", выбрать зал, дату и время.
-6. Отвечай вежливо, кратко и по делу. Не придумывай залы, которых нет в списке.`;
+Общие правила сервиса:
+- Мы сдаем актовые залы, библиотеки и классы после уроков.
+- Цена указана за час. Оборудование (проектор, звук) может стоить дополнительно.
+- Чтобы забронировать, клиенту нужно зайти в раздел "Каталог", выбрать зал, дату и время, а затем заполнить форму.
+- Бронь подтверждает директор школы.
 
-            // Запрос к локальному Ollama
+Твои правила:
+1. Отвечай на любые вопросы клиента: о цене, наличии залов, оборудовании, правилах бронирования, расположении школ.
+2. Если спрашивают про конкретную школу, используй данные из списка выше.
+3. Если клиент хочет забронировать, объясни, как это сделать (через каталог).
+4. Будь дружелюбным, отвечай развернуто, но без лишней воды.
+5. Если не знаешь ответа, скажи, что уточнишь у администратора.`;
+
             const response = await fetch("http://localhost:11434/api/chat", {
                 method: "POST",
                 headers: {
@@ -126,13 +120,12 @@ ${schoolsInfo}
             }
         } catch (err) {
             document.getElementById(loadingId).remove();
-            chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка сети:</b> Убедись, что Ollama запущена (команда ollama serve). ${err.message}</div>`;
+            chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка сети:</b> ${err.message}</div>`;
         }
         
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // Отправка по Enter
     document.getElementById('aiInput').addEventListener('keypress', e => { 
         if (e.key === 'Enter') askAI(); 
     });
