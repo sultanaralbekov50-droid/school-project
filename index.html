@@ -23,7 +23,6 @@
                 <li class="nav-item"><a class="nav-link" href="#how">Как это работает</a></li>
                 <li class="nav-item"><a class="nav-link" href="#spaces">Каталог</a></li>
                 <li class="nav-item"><a class="nav-link" href="#profit">Выгода школам</a></li>
-                <li class="nav-item"><a class="nav-link" href="#ai-helper">ИИ-Помощник</a></li>
                 <li class="nav-item"><a class="nav-link" href="#register">Подключить школу</a></li>
                 <li class="nav-item"><a class="nav-link" href="dashboard.html">Вход для школ</a></li>
                 <li class="nav-item"><a class="nav-link" href="admin.html">Админ</a></li>
@@ -113,35 +112,6 @@
                     <div class="small-note">Доход школы в месяц</div>
                     <div class="big"><span id="outMonth">0</span> сом</div>
                     <div class="mt-3">За учебный год (9 месяцев): <b id="outYear">0</b> сом</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="section section-alt" id="ai-helper">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="panel shadow-lg" style="border: 2px solid var(--mark);">
-                    <div class="d-flex align-items-center mb-3">
-                        <div style="font-size: 2rem; margin-right: 15px;">🤖</div>
-                        <div>
-                            <h4 class="mb-0">ИИ-Помощник</h4>
-                            <p class="text-muted small mb-0">Опишите мероприятие, и я подберу зал.</p>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small text-muted">Ключ OpenRouter (для демо):</label>
-                        <input type="password" id="apiKeyInput" class="form-control" placeholder="sk-or-v1-...">
-                    </div>
-                    <div id="chatBox" class="mb-3 p-3" style="background: var(--paper); border-radius: 10px; height: 250px; overflow-y: auto;">
-                        <div class="mb-2"><b>ИИ:</b> Здравствуйте! Вставьте ключ выше и напишите, что вы планируете провести.</div>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" id="aiInput" class="form-control" placeholder="Напишите сообщение...">
-                        <button class="btn btn-ink" onclick="askAI()">Отправить</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -355,39 +325,6 @@
         $('outMonth').textContent = month.toLocaleString('ru-RU'); $('outYear').textContent = (month * 9).toLocaleString('ru-RU');
     }
     $('calcPrice').addEventListener('input', calc); $('calcHours').addEventListener('input', calc);
-
-    async function askAI() {
-        const input = $('aiInput'), chatBox = $('chatBox'), apiKey = $('apiKeyInput').value.trim(), text = input.value.trim();
-        if (!text) return;
-        if (!apiKey) { alert('Вставьте ключ OpenRouter.'); return; }
-        chatBox.innerHTML += `<div class="mb-2 text-end"><b>Вы:</b> ${text}</div>`;
-        input.value = ''; chatBox.scrollTop = chatBox.scrollHeight;
-        const loadingId = 'loading-' + Date.now();
-        chatBox.innerHTML += `<div class="mb-2" id="${loadingId}"><b>ИИ:</b> <i>думает...</i></div>`;
-        chatBox.scrollTop = chatBox.scrollHeight;
-        try {
-            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                method: "POST",
-                headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    model: "meta-llama/llama-3-8b-instruct",
-                    messages: [
-                        { role: "system", content: "Ты — ИИ-помощник школьного коворкинга. Помогай подобрать зал (Актовый зал, Библиотека, Компьютерный класс) и отвечай на вопросы. Будь вежлив." },
-                        { role: "user", content: text }
-                    ]
-                })
-            });
-            const data = await response.json();
-            document.getElementById(loadingId).remove();
-            if (data.error) chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка:</b> ${data.error.message}</div>`;
-            else chatBox.innerHTML += `<div class="mb-2"><b>ИИ:</b> ${data.choices[0].message.content}</div>`;
-        } catch (err) {
-            document.getElementById(loadingId).remove();
-            chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка сети:</b> ${err.message}</div>`;
-        }
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-    $('aiInput').addEventListener('keypress', e => { if (e.key === 'Enter') askAI(); });
 
     $('registerForm').addEventListener('submit', async function (e) {
         e.preventDefault();
