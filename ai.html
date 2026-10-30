@@ -30,13 +30,13 @@
                         <div style="font-size: 2rem; margin-right: 15px;">🤖</div>
                         <div>
                             <h4 class="mb-0">ИИ-Помощник</h4>
-                            <p class="text-muted small mb-0">Опишите мероприятие, и я подберу зал.</p>
+                            <p class="text-muted small mb-0">Подберу зал под ваше мероприятие.</p>
                         </div>
                     </div>
                     
                     <!-- Чат -->
                     <div id="chatBox" class="mb-3 p-3" style="background: var(--paper); border-radius: 10px; height: 400px; overflow-y: auto; border: 1px solid #ddd;">
-                        <div class="mb-2"><b>ИИ:</b> Здравствуйте! Я помогу подобрать зал. Напишите, что вы планируете провести?</div>
+                        <div class="mb-2"><b>ИИ:</b> Здравствуйте! Я помогу подобрать зал под ваше мероприятие. Расскажите, что вы планируете провести, сколько будет человек и в каком вы районе?</div>
                     </div>
                     
                     <!-- Поле ввода -->
@@ -50,6 +50,8 @@
     </div>
 </section>
 
+<!-- Подключаем data.js, чтобы ИИ знал о школах -->
+<script src="data.js"></script>
 <script>
     async function askAI() {
         const input = document.getElementById('aiInput');
@@ -69,7 +71,36 @@
         chatBox.scrollTop = chatBox.scrollHeight;
 
         try {
-            // Обращаемся к локальному Ollama
+            // Получаем список школ из data.js
+            let schoolsInfo = "";
+            try {
+                await DB.init();
+                const schools = DB.schools();
+                schoolsInfo = schools.map(s => 
+                    `Школа: ${s.name}, Район: ${s.district}, Залы: ${s.spaces.map(sp => sp.name).join(', ')}`
+                ).join('\n');
+            } catch (e) {
+                schoolsInfo = "Информация о школах временно недоступна.";
+            }
+
+            // Системный промпт — "мозги" ИИ
+            const systemPrompt = `Ты — профессиональный ИИ-помощник школьного коворкинга 'School Coworking'. Твоя цель — помочь клиенту выбрать идеальное место для его мероприятия и рассказать о процессе бронирования.
+
+Вот список доступных школ и залов:
+${schoolsInfo}
+
+Твои правила:
+1. Если клиент называет район, порекомендуй школу из этого района.
+2. Если клиент описывает мероприятие (например, "репетиторство по математике для 5 человек"), предложи подходящий зал:
+   - Актовый зал: для больших групп (от 20 человек), презентаций, концертов.
+   - Библиотека: для тихих занятий, чтения, небольших групп (до 10-15 человек).
+   - Класс: для репетиторства, кружков, групповых занятий (до 25 человек).
+3. Всегда уточняй количество человек, если это не указано.
+4. Расскажи про оборудование: проектор, интерактивная доска, звук. Уточни, что за него может быть доплата.
+5. Напомни, что для бронирования нужно зайти в раздел "Каталог", выбрать зал, дату и время.
+6. Отвечай вежливо, кратко и по делу. Не придумывай залы, которых нет в списке.`;
+
+            // Запрос к локальному Ollama
             const response = await fetch("http://localhost:11434/api/chat", {
                 method: "POST",
                 headers: {
@@ -78,10 +109,7 @@
                 body: JSON.stringify({
                     model: "qwen2.5:3b",
                     messages: [
-                        { 
-                            role: "system", 
-                            content: "Ты — вежливый ИИ-помощник школьного коворкинга 'School Coworking'. Помогай клиентам подобрать зал (Актовый зал, Библиотека, Компьютерный класс) и отвечай на вопросы о бронировании." 
-                        },
+                        { role: "system", content: systemPrompt },
                         { role: "user", content: text }
                     ],
                     stream: false
@@ -92,8 +120,7 @@
             document.getElementById(loadingId).remove();
 
             if (data.message && data.message.content) {
-                const aiText = data.message.content;
-                chatBox.innerHTML += `<div class="mb-2"><b>ИИ:</b> ${aiText}</div>`;
+                chatBox.innerHTML += `<div class="mb-2"><b>ИИ:</b> ${data.message.content}</div>`;
             } else {
                 chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка:</b> Пустой ответ от ИИ.</div>`;
             }
