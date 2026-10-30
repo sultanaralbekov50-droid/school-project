@@ -102,7 +102,11 @@
     panel.classList.toggle('open');
     if (panel.classList.contains('open')) input.focus();
   });
-
+document.querySelector('a[href="#ai-helper"]')?.addEventListener('click', (event) => {
+  event.preventDefault();
+  panel.classList.add('open');
+  input.focus();
+});
   panel.querySelector('#ai-close').addEventListener('click', () => {
     panel.classList.remove('open');
   });
