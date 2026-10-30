@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ИИ-Помощник | School Coworking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-sc sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">🏫 School Coworking</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">На главную</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="section section-alt" style="min-height: 80vh; padding-top: 50px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="panel shadow-lg" style="border: 2px solid var(--mark);">
+                    <div class="d-flex align-items-center mb-3">
+                        <div style="font-size: 2rem; margin-right: 15px;">🤖</div>
+                        <div>
+                            <h4 class="mb-0">ИИ-Помощник</h4>
+                            <p class="text-muted small mb-0">Опишите мероприятие, и я подберу зал.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Чат -->
+                    <div id="chatBox" class="mb-3 p-3" style="background: var(--paper); border-radius: 10px; height: 400px; overflow-y: auto; border: 1px solid #ddd;">
+                        <div class="mb-2"><b>ИИ:</b> Здравствуйте! Я помогу подобрать зал. Напишите, что вы планируете провести?</div>
+                    </div>
+                    
+                    <!-- Поле ввода -->
+                    <div class="input-group">
+                        <input type="text" id="aiInput" class="form-control" placeholder="Напишите сообщение...">
+                        <button class="btn btn-ink" onclick="askAI()">Отправить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    async function askAI() {
+        const input = document.getElementById('aiInput');
+        const chatBox = document.getElementById('chatBox');
+        const text = input.value.trim();
+        
+        if (!text) return;
+
+        // Добавляем сообщение пользователя
+        chatBox.innerHTML += `<div class="mb-2 text-end"><b>Вы:</b> ${text}</div>`;
+        input.value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Индикатор загрузки
+        const loadingId = 'loading-' + Date.now();
+        chatBox.innerHTML += `<div class="mb-2" id="${loadingId}"><b>ИИ:</b> <i>думает...</i></div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        try {
+            // Обращаемся к локальному Ollama
+            const response = await fetch("http://localhost:11434/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    model: "qwen2.5:3b",
+                    messages: [
+                        { 
+                            role: "system", 
+                            content: "Ты — вежливый ИИ-помощник школьного коворкинга 'School Coworking'. Помогай клиентам подобрать зал (Актовый зал, Библиотека, Компьютерный класс) и отвечай на вопросы о бронировании." 
+                        },
+                        { role: "user", content: text }
+                    ],
+                    stream: false
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById(loadingId).remove();
+
+            if (data.message && data.message.content) {
+                const aiText = data.message.content;
+                chatBox.innerHTML += `<div class="mb-2"><b>ИИ:</b> ${aiText}</div>`;
+            } else {
+                chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка:</b> Пустой ответ от ИИ.</div>`;
+            }
+        } catch (err) {
+            document.getElementById(loadingId).remove();
+            chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка сети:</b> Убедись, что Ollama запущена (команда ollama serve). ${err.message}</div>`;
+        }
+        
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Отправка по Enter
+    document.getElementById('aiInput').addEventListener('keypress', e => { 
+        if (e.key === 'Enter') askAI(); 
+    });
+</script>
+
+</body>
+</html>
