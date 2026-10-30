@@ -1,0 +1,112 @@
+{
+  "currency": "KGS",
+  "price_unit": "hour",
+  "data_type": "demo",
+  "schools": [
+    {
+      "id": "school1",
+      "name": "Школа №1 им. Пушкина",
+      "district": "Первомайский район",
+      "rooms": [
+        {
+          "id": "s1-hall",
+          "name": "Актовый зал",
+          "type": "hall",
+          "capacity": 50,
+          "computers": null,
+          "price_per_hour": 500,
+          "equipment": [
+            "Проектор и экран",
+            "Звуковая система с 2 микрофонами (+100 сом/час)",
+            "Пианино (+150 сом/час)",
+            "Сцена и свет (+100 сом/час)",
+            "Wi-Fi"
+          ]
+        },
+        {
+          "id": "s1-lib",
+          "name": "Библиотека",
+          "type": "library",
+          "capacity": 15,
+          "computers": null,
+          "price_per_hour": 200,
+          "equipment": [
+            "Wi-Fi",
+            "Флипчарт",
+            "Проектор (+50 сом/час)",
+            "Кулер с водой"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "school2",
+      "name": "Гимназия №5",
+      "district": "Ленинский район",
+      "rooms": [
+        {
+          "id": "s2-hall",
+          "name": "Актовый зал",
+          "type": "hall",
+          "capacity": 80,
+          "computers": null,
+          "price_per_hour": 600,
+          "equipment": [
+            "Проектор и экран",
+            "Звуковая система (+120 сом/час)",
+            "Сцена и свет (+150 сом/час)",
+            "Wi-Fi"
+          ]
+        },
+        {
+          "id": "s2-class",
+          "name": "Кабинет информатики",
+          "type": "classroom",
+          "capacity": 20,
+          "computers": 15,
+          "price_per_hour": 300,
+          "equipment": [
+            "Интерактивная доска",
+            "15 компьютеров",
+            "Проектор",
+            "Wi-Fi"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "school3",
+      "name": "Лицей №61",
+      "district": "Октябрьский район",
+      "rooms": [
+        {
+          "id": "s3-hall",
+          "name": "Большой зал",
+          "type": "hall",
+          "capacity": 120,
+          "computers": null,
+          "price_per_hour": 700,
+          "equipment": [
+            "Проектор и экран",
+            "Музыкальная аппаратура (+200 сом/час)",
+            "Сцена и свет (+150 сом/час)",
+            "Кондиционер"
+          ]
+        },
+        {
+          "id": "s3-lib",
+          "name": "Читальный зал",
+          "type": "library",
+          "capacity": 20,
+          "computers": null,
+          "price_per_hour": 250,
+          "equipment": [
+            "Wi-Fi",
+            "Интерактивная доска (+80 сом/час)",
+            "Флипчарт"
+          ]
+        }
+      ]
+    }
+  ]
+}
