@@ -422,13 +422,16 @@
     window.addEventListener('storage', () => DB.refresh().then(() => { renderHero(); renderCatalog(); }));
 </script>
 
-<!-- ================= НОВЫЙ ИИ-ПОМОЩНИК (БЕЗ ОЛАМЫ) ================= -->
+<!-- ================= ИИ-ПОМОЩНИК (ИСПРАВЛЕННЫЙ) ================= -->
 <button id="open-ai-btn" style="position: fixed; bottom: 20px; right: 20px; padding: 15px 25px; background: #4F6BED; color: white; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1050; font-family: 'Onest', sans-serif; transition: 0.3s;">
   🤖 ИИ-помощник
 </button>
 
-<div id="ai-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 420px; height: 650px; max-height: 90vh; z-index: 1060; box-shadow: 0 10px 40px rgba(0,0,0,0.3); border-radius: 16px; overflow: hidden; background: #fff;">
-  <iframe src="ai.html" style="width: 100%; height: 100%; border: none;"></iframe>
+<!-- Окно чата теперь адаптивное -->
+<div id="ai-modal" style="display: none; position: fixed; inset: 0; z-index: 1060; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px);">
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; max-width: 420px; height: 100%; max-height: 800px; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+    <iframe src="ai.html" style="width: 100%; height: 100%; border: none;"></iframe>
+  </div>
 </div>
 
 <script>
@@ -437,12 +440,22 @@
   
   aiBtn.addEventListener('click', () => {
     aiModal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Блокируем прокрутку фона
   });
 
-  document.addEventListener('click', (e) => {
-    if (e.target === aiModal) {
-      aiModal.style.display = 'none';
-    }
+  function closeAi() {
+    aiModal.style.display = 'none';
+    document.body.style.overflow = ''; // Возвращаем прокрутку
+  }
+
+  // Клик по темному фону закрывает чат
+  aiModal.addEventListener('click', (e) => {
+    if (e.target === aiModal) closeAi();
+  });
+
+  // Ловим команду от крестика внутри чата
+  window.addEventListener('message', (e) => {
+    if (e.data === 'close-chat') closeAi();
   });
 </script>
 <!-- ================================================================ -->
