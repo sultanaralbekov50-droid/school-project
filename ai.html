@@ -1,134 +1,163 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ИИ-Помощник | School Coworking</title>
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ИИ-помощник</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, Segoe UI, Roboto, sans-serif;
+    background: #f8fafc;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh; padding: 20px;
+  }
+
+  #chat-widget {
+    width: 100%; max-width: 400px; background: #fff;
+    border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,.12);
+    overflow: hidden; display: flex; flex-direction: column;
+    height: 600px; max-height: 90vh;
+  }
+
+  #chat-header {
+    background: #2563eb; color: #fff; padding: 16px;
+    font-weight: 600; font-size: 16px; display: flex;
+    justify-content: space-between; align-items: center;
+  }
+  #chat-header small { font-weight: 400; opacity: .8; font-size: 12px; display: block; }
+
+  #chat-messages {
+    flex: 1; overflow-y: auto; padding: 16px;
+    display: flex; flex-direction: column; gap: 10px; background: #f8fafc;
+  }
+
+  .msg {
+    padding: 10px 14px; border-radius: 14px; max-width: 85%;
+    font-size: 14px; line-height: 1.45; word-wrap: break-word;
+    animation: fadeIn .2s ease;
+  }
+  .user { background: #2563eb; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+  .bot  { background: #fff; color: #1e293b; align-self: flex-start;
+          border: 1px solid #e2e8f0; border-bottom-left-radius: 4px; }
+
+  #chat-input-area {
+    display: flex; border-top: 1px solid #e2e8f0; background: #fff;
+  }
+  #chat-input {
+    flex: 1; border: none; padding: 16px; outline: none; font-size: 14px;
+  }
+  #chat-send {
+    border: none; background: #2563eb; color: #fff; padding: 0 20px;
+    cursor: pointer; font-size: 18px; transition: background .15s;
+  }
+  #chat-send:hover { background: #1d4ed8; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  @media (max-width: 480px) {
+    body { padding: 0; }
+    #chat-widget { max-width: 100%; height: 100vh; max-height: 100vh; border-radius: 0; }
+  }
+</style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark navbar-sc sticky-top">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">🏫 School Coworking</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html">На главную</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div id="chat-widget">
+  <div id="chat-header">
+    <div>🤖 ИИ-помощник <small>Отвечу на ваши вопросы</small></div>
+  </div>
 
-<section class="section section-alt" style="min-height: 80vh; padding-top: 50px;">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="panel shadow-lg" style="border: 2px solid var(--mark);">
-                    <div class="d-flex align-items-center mb-3">
-                        <div style="font-size: 2rem; margin-right: 15px;">🤖</div>
-                        <div>
-                            <h4 class="mb-0">ИИ-Помощник</h4>
-                            <p class="text-muted small mb-0">Отвечу на любые вопросы о коворкинге.</p>
-                        </div>
-                    </div>
-                    
-                    <div id="chatBox" class="mb-3 p-3" style="background: var(--paper); border-radius: 10px; height: 400px; overflow-y: auto; border: 1px solid #ddd;">
-                        <div class="mb-2"><b>ИИ:</b> Здравствуйте! Я — ИИ-помощник School Coworking. Я знаю всё о наших залах, ценах и правилах бронирования. Чем могу помочь?</div>
-                    </div>
-                    
-                    <div class="input-group">
-                        <input type="text" id="aiInput" class="form-control" placeholder="Задайте любой вопрос...">
-                        <button class="btn btn-ink" onclick="askAI()">Отправить</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+  <div id="chat-messages">
+    <div class="msg bot">Здравствуйте! 👋 Подскажу по залу и местам. Спросите, например: «какой у вас зал?», «где лучше сесть?», «сколько стоит?»</div>
+  </div>
 
-<script src="data.js"></script>
+  <div id="chat-input-area">
+    <input id="chat-input" placeholder="Ваш вопрос..." autocomplete="off" />
+    <button id="chat-send" aria-label="Отправить">➤</button>
+  </div>
+</div>
+
 <script>
-    async function askAI() {
-        const input = document.getElementById('aiInput');
-        const chatBox = document.getElementById('chatBox');
-        const text = input.value.trim();
-        
-        if (!text) return;
+/* ============================================================
+   НАСТРОЙКА ОТВЕТОВ — меняйте под себя
+   keys — слова-триггеры (ищем вхождение, регистр не важен)
+   answer — что ответит помощник
+   ============================================================ */
+const FAQ = [
+  {
+    keys: ["зал", "помещение", "комната", "залы"],
+    answer: "У нас два зала: большой (до 50 человек) — для мероприятий, и малый (до 15 человек) — для встреч и переговоров. Какой вам интереснее?"
+  },
+  {
+    keys: ["место", "места", "сесть", "посадить", "рассадк", "где лучше"],
+    answer: "Рекомендую места у окна — там светло и тихо. Если компанией — берите зону у сцены, оттуда всё видно. 👍"
+  },
+  {
+    keys: ["цена", "стоимость", "сколько", "прайс", "почём", "почем"],
+    answer: "Аренда большого зала — 5000 ₽/час, малого — 2000 ₽/час. Есть скидки при брони на весь день."
+  },
+  {
+    keys: ["бронь", "забронировать", "резерв", "записаться"],
+    answer: "Забронировать можно по телефону +7 999 123-45-67 или через форму на сайте. Бронь держим 24 часа."
+  },
+  {
+    keys: ["контакт", "телефон", "связ", "позвонить", "адрес", "где вы"],
+    answer: "Звоните: +7 999 123-45-67. Работаем ежедневно с 9:00 до 21:00. Адрес: г. Москва, ул. Примерная, 10."
+  },
+  {
+    keys: ["привет", "здравств", "добрый", "хай", "hello"],
+    answer: "Здравствуйте! 😊 Чем помочь? Могу рассказать про залы, места, цены и бронь."
+  },
+  {
+    keys: ["спасибо", "благодар", "спс"],
+    answer: "Пожалуйста! Если что-то ещё нужно — спрашивайте. 🙌"
+  },
+  {
+    keys: ["пока", "до свидан", "bye"],
+    answer: "До встречи! Будем рады видеть вас у нас. 👋"
+  }
+];
 
-        chatBox.innerHTML += `<div class="mb-2 text-end"><b>Вы:</b> ${text}</div>`;
-        input.value = '';
-        chatBox.scrollTop = chatBox.scrollHeight;
+const FALLBACK = "Пока не понял вопрос 🙂 Спросите про зал, места, цены или бронь — с радостью подскажу.";
 
-        const loadingId = 'loading-' + Date.now();
-        chatBox.innerHTML += `<div class="mb-2" id="${loadingId}"><b>ИИ:</b> <i>думает...</i></div>`;
-        chatBox.scrollTop = chatBox.scrollHeight;
+/* ============================================================
+   ЛОГИКА ЧАТА — трогать не нужно
+   ============================================================ */
+const messagesBox = document.getElementById('chat-messages');
+const input = document.getElementById('chat-input');
+const sendBtn = document.getElementById('chat-send');
 
-        try {
-            let schoolsInfo = "";
-            try {
-                await DB.init();
-                const schools = DB.schools();
-                schoolsInfo = schools.map(s => 
-                    `Школа: ${s.name}, Район: ${s.district}, Залы: ${s.spaces.map(sp => sp.name + ' (' + sp.price + ' сом/час, до ' + sp.capacity + ' чел.)').join(', ')}`
-                ).join('\n');
-            } catch (e) {
-                schoolsInfo = "Информация о школах временно недоступна.";
-            }
+function addMessage(text, cls) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + cls;
+  div.textContent = text;
+  messagesBox.appendChild(div);
+  messagesBox.scrollTop = messagesBox.scrollHeight;
+}
 
-            const systemPrompt = `Ты — умный и вежливый ИИ-помощник сервиса 'School Coworking'. Твоя задача — консультировать клиентов по любым вопросам, связанным с арендой школьных помещений.
+function getAnswer(userText) {
+  const lower = userText.toLowerCase().trim();
+  const found = FAQ.find(item => item.keys.some(k => lower.includes(k)));
+  return found ? found.answer : FALLBACK;
+}
 
-Вот полная информация о наших пространствах:
-${schoolsInfo}
+function sendMessage() {
+  const text = input.value.trim();
+  if (!text) return;
 
-Общие правила сервиса:
-- Мы сдаем актовые залы, библиотеки и классы после уроков.
-- Цена указана за час. Оборудование (проектор, звук) может стоить дополнительно.
-- Чтобы забронировать, клиенту нужно зайти в раздел "Каталог", выбрать зал, дату и время, а затем заполнить форму.
-- Бронь подтверждает директор школы.
+  addMessage(text, 'user');
+  input.value = '';
+  input.focus();
 
-Твои правила:
-1. Отвечай на любые вопросы клиента: о цене, наличии залов, оборудовании, правилах бронирования, расположении школ.
-2. Если спрашивают про конкретную школу, используй данные из списка выше.
-3. Если клиент хочет забронировать, объясни, как это сделать (через каталог).
-4. Будь дружелюбным, отвечай развернуто, но без лишней воды.
-5. Если не знаешь ответа, скажи, что уточнишь у администратора.`;
+  // небольшая задержка "как будто думает"
+  setTimeout(() => addMessage(getAnswer(text), 'bot'), 350);
+}
 
-            const response = await fetch("http://localhost:11434/api/chat", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    model: "qwen2.5:3b",
-                    messages: [
-                        { role: "system", content: systemPrompt },
-                        { role: "user", content: text }
-                    ],
-                    stream: false
-                })
-            });
-
-            const data = await response.json();
-            document.getElementById(loadingId).remove();
-
-            if (data.message && data.message.content) {
-                chatBox.innerHTML += `<div class="mb-2"><b>ИИ:</b> ${data.message.content}</div>`;
-            } else {
-                chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка:</b> Пустой ответ от ИИ.</div>`;
-            }
-        } catch (err) {
-            document.getElementById(loadingId).remove();
-            chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка сети:</b> ${err.message}</div>`;
-        }
-        
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
-    document.getElementById('aiInput').addEventListener('keypress', e => { 
-        if (e.key === 'Enter') askAI(); 
-    });
+sendBtn.addEventListener('click', sendMessage);
+input.addEventListener('keypress', e => {
+  if (e.key === 'Enter') sendMessage();
+});
 </script>
 
 </body>
