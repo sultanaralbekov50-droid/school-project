@@ -3,45 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Школьный Коворкинг | Пустые залы — в дело</title>
+    <title>OPEN CAMPUS | Пространство для больших идей</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+    <link href="style.css?v=3" rel="stylesheet">
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-sc sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="#hero">🏫 School Coworking</a>
+        <a class="navbar-brand" href="#hero">◈ OPEN CAMPUS</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-lg-center">
-                <li class="nav-item"><a class="nav-link" href="#how">Как это работает</a></li>
-                <li class="nav-item"><a class="nav-link" href="#spaces">Каталог</a></li>
-                <li class="nav-item"><a class="nav-link" href="#profit">Выгода школам</a></li>
-                <li class="nav-item"><a class="nav-link" href="#register">Подключить школу</a></li>
-                <li class="nav-item"><a class="nav-link" href="dashboard.html">Вход для школ</a></li>
-                <li class="nav-item"><a class="nav-link" href="admin.html">Админ</a></li>
+        
+<div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <li class="nav-item">
+            <a class="nav-link" href="#how">Как это работает</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#spaces">Пространства</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#profit">Для школ</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+                Ещё
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="school-finances.html">Финансы школ</a></li>
+                <li><a class="dropdown-item" href="#ai-helper">ИИ-помощник</a></li>
+                <li><a class="dropdown-item" href="#register">Подключить школу</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="admin.html">Админ-панель</a></li>
             </ul>
-        </div>
+        </li>
+        <li class="nav-item ms-lg-3">
+            <a class="btn btn-mark campus-nav-cta" href="dashboard.html">
+                Войти ↗
+            </a>
+        </li>
+        </ul>
+</div>
     </div>
 </nav>
 
 <section class="hero" id="hero">
     <div class="container">
         <div class="row align-items-center g-5">
+
             <div class="col-lg-6">
-                <h1>После уроков залы пустуют. Пусть зарабатывают.</h1>
-                <p class="lead mt-3">Школы сдают актовый зал, библиотеку и кабинеты репетиторам, студиям и организаторам мероприятий. Деньги идут на нужды школы.</p>
-                <div class="mt-4 d-flex flex-wrap gap-2">
-                    <a href="#spaces" class="btn btn-mark btn-lg">Найти свободное время</a>
-                    <a href="#register" class="btn btn-outline-light btn-lg">Подключить школу</a>
-                </div>
-            </div>
+
+    <div class="campus-label">
+        <span class="campus-dot"></span>
+        OPEN CAMPUS / 2026
+    </div>
+
+    <h1 class="campus-title">
+        Пространство
+        <span class="campus-highlight">для больших идей.</span>
+    </h1>
+
+    <p class="lead mt-4">
+        Школьные залы, библиотеки и кабинеты могут приносить пользу
+        даже после уроков. Находите свободные пространства,
+        бронируйте удобное время и помогайте школам развиваться.
+    </p>
+
+    <div class="mt-4 d-flex flex-wrap gap-3">
+        <a href="#spaces" class="btn btn-mark btn-lg">
+            Найти пространство ↗
+        </a>
+
+        <a href="#register" class="btn btn-outline-light btn-lg">
+            Подключить школу
+        </a>
+    </div>
+
+    <div class="campus-bottom-note">
+        <span>01 / ОТКРЫВАЕМ ВОЗМОЖНОСТИ</span>
+        <span>БИШКЕК · КЫРГЫЗСТАН</span>
+    </div>
+
+</div>
             <div class="col-lg-6">
                 <div class="week-card">
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
@@ -167,6 +216,19 @@
                         <div class="col-md-6"><label class="form-label" for="bkPhone">Телефон</label><input type="tel" id="bkPhone" class="form-control" required></div>
                     </div>
                     <div class="mb-3"><label class="form-label" for="bkPurpose">Мероприятие</label><input type="text" id="bkPurpose" class="form-control"></div>
+                    <div class="mb-3"><label class="form-label" for="bkAttendees">Количество участников</label>
+                      <input type="number" id="bkAttendees" class="form-control" min="1" step="1" required style="max-width:220px">
+                      <div id="bkCapacityHint" class="form-text"></div></div>
+                    <div class="alert alert-info small">
+                      <strong>Правила аренды школы:</strong> мероприятие не должно мешать урокам; вход только в согласованные помещения;
+                      нельзя превышать вместимость, перекрывать эвакуационные выходы или нарушать требования безопасности.
+                      Время аренды: будни 16:00–20:00, выходные 10:00–20:00 (предварительные ограничения).
+                      Заявка требует отдельного одобрения школы.
+                    </div>
+                    <div class="form-check mb-3">
+                      <input class="form-check-input" type="checkbox" id="bkTerms">
+                      <label class="form-check-label" for="bkTerms">Я ознакомился(-ась) с правилами и обязуюсь их соблюдать.</label>
+                    </div>
                     <div id="bkError" class="alert alert-danger d-none"></div>
                     <div class="d-flex justify-content-between align-items-center">
                         <div>Итого: <b id="bkTotal">—</b></div>
@@ -238,6 +300,7 @@
                         <div class="price">${space.price} сом / час</div>
                         <div class="free-now">Сегодня свободно: <b>${freeToday(space.id)} ч</b></div>
                         <button class="btn btn-ink mt-auto" data-book="${space.id}">Выбрать время</button>
+                        ${space.type === 'hall' ? `<a class="btn btn-outline-primary mt-2" href="school-tour.html?room=hall&school=${encodeURIComponent(school.id)}&space=${encodeURIComponent(space.id)}">◉ 3D-просмотр помещения</a>` : ''}
                     </div>
                 </div>
             </div>`).join('');
@@ -260,7 +323,10 @@
         $('bookTitle').textContent = found.space.name + ' — ' + found.school.name;
         $('bookInfo').textContent = 'До ' + found.space.capacity + ' человек · ' + found.space.price + ' сом/час';
         $('bkDate').min = DB.today(); $('bkDate').value = DB.today();
-        ['bkName', 'bkPhone', 'bkPurpose'].forEach(id => $(id).value = '');
+        ['bkName', 'bkPhone', 'bkPurpose', 'bkAttendees'].forEach(id => $(id).value = '');
+        $('bkAttendees').max = found.space.capacity;
+        $('bkCapacityHint').textContent = 'Максимум ' + found.space.capacity + ' человек.';
+        $('bkTerms').checked = false;
         $('bkEquip').innerHTML = (found.space.equipment || []).map((x, i) => `
             <div class="form-check"><input class="form-check-input" type="checkbox" id="eq${i}" data-i="${i}"><label class="form-check-label" for="eq${i}">${DB.esc(x.name)} <span class="text-muted small">${x.price ? '+' + x.price + ' сом/час' : 'входит в цену'}</span></label></div>`).join('');
         $('bkEquipBox').classList.toggle('d-none', !(found.space.equipment || []).length);
@@ -309,9 +375,14 @@
         const showErr = msg => { err.textContent = msg; err.classList.remove('d-none'); };
         if (cur.start === null) return showErr('Выберите время начала.');
         if (!name || !phone) return showErr('Укажите имя и телефон.');
+        const attendees = Number($('bkAttendees').value);
+        if (!Number.isInteger(attendees) || attendees < 1 || attendees > cur.space.capacity)
+            return showErr('Укажите число участников от 1 до ' + cur.space.capacity + '.');
+        if (!$('bkTerms').checked) return showErr('Подтвердите согласие с правилами аренды.');
+        if (!purpose || purpose === 'Без описания') return showErr('Опишите мероприятие.');
         const hours = +$('bkDur').value, date = $('bkDate').value;
         $('bkSend').disabled = true;
-        const res = await DB.addBooking({ spaceId: cur.space.id, date, start: cur.start, hours, client: name, phone, purpose, extras: selectedExtras() });
+        const res = await DB.addBooking({ spaceId: cur.space.id, date, start: cur.start, hours, client: name, phone, purpose, extras: selectedExtras(), attendees, termsAccepted: $('bkTerms').checked });
         $('bkSend').disabled = false;
         if (!res.ok) { showErr(res.error); renderSlots(); return; }
         $('bookDoneText').textContent = cur.space.name + ', ' + DB.fmtDate(date) + ', ' + cur.start + ':00–' + (cur.start + hours) + ':00';
@@ -339,6 +410,10 @@
         schoolFilter = resolveSchool(new URLSearchParams(location.search).get('school'));
         if (schoolFilter) { $('schoolBanner').classList.remove('d-none'); $('schoolBannerName').textContent = schoolFilter.name; }
         renderHero(); renderCatalog();
+        const bookingId = new URLSearchParams(location.search).get('book');
+        if (bookingId && DB.findSpace(bookingId)) {
+            openBooking(bookingId);
+        }
         if (schoolFilter) $('spaces').scrollIntoView();
     }).catch(err => {
         console.error(err);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кабинет директора | Школьный Коворкинг</title>
+    <title>Кабинет директора | OPEN CAMPUS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -71,7 +71,7 @@
         <div class="tab-pane fade show active" id="tabReq" role="tabpanel">
             <div class="panel table-responsive">
                 <table class="table align-middle mb-0">
-                    <thead><tr><th>Дата</th><th>Время</th><th>Зал</th><th>Клиент</th><th>Сумма</th><th>Статус</th><th></th></tr></thead>
+                    <thead><tr><th>Дата</th><th>Время</th><th>Зал</th><th>Клиент / мероприятие</th><th>Участники</th><th>Сумма</th><th>Статус</th><th></th></tr></thead>
                     <tbody id="reqBody"></tbody>
                 </table>
                 <p id="reqEmpty" class="text-muted mb-0 d-none">Заявок пока нет. Отправьте клиентам ссылку выше, и они появятся здесь.</p>
@@ -184,6 +184,7 @@
         $('reqEmpty').classList.toggle('d-none', list.length > 0);
         $('reqBody').innerHTML = list.map(b => {
             const sp = spaceOf(b.spaceId);
+            const overCapacity = Number.isInteger(b.attendees) && b.attendees > sp.capacity;
             const actions = b.status === 'pending'
                 ? `<button class="btn btn-sm btn-success me-1" data-act="approved" data-id="${b.id}">Подтвердить</button><button class="btn btn-sm btn-outline-danger" data-act="rejected" data-id="${b.id}">Отклонить</button>`
                 : b.status === 'approved'
@@ -196,12 +197,24 @@
                 <td>${b.start}:00–${b.start + b.hours}:00</td>
                 <td>${DB.esc(sp.name)}</td>
                 <td>${DB.esc(b.client)}<div class="text-muted small">${DB.esc(b.phone)} · ${DB.esc(b.purpose)}</div>${extras}</td>
+                <td>${b.attendees ? DB.esc(b.attendees) + ' / ' + DB.esc(sp.capacity || '—') : 'Не указано (старая заявка)'}</td>
                 <td>${DB.bookingTotal(b)} сом</td>
                 <td><span class="badge badge-${b.status}">${DB.statusLabel(b.status)}</span></td>
                 <td class="text-nowrap">${actions}</td></tr>`;
         }).join('');
         $('reqBody').querySelectorAll('[data-act]').forEach(btn => btn.onclick = async () => {
             btn.disabled = true;
+            if (btn.dataset.act === 'approved') {
+                const b = list.find(x => String(x.id) === btn.dataset.id);
+                if (b && (!Number.isInteger(b.attendees) || !b.termsAccepted)) {
+                    alert('Для старых заявок сначала проверьте число участников и согласие с правилами вне системы. Пока подтверждение заблокировано.');
+                    btn.disabled = false;
+                    return;
+                }
+                if (!confirm('Подтвердить, что мероприятие допустимо, расписание школы свободно и правила безопасности соблюдены?')) {
+                    btn.disabled = false; return;
+                }
+            }
             const res = await DB.setStatus(btn.dataset.id, btn.dataset.act);
             if (res && res.ok === false) alert(res.error);
             refresh();

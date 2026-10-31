@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Виртуальный тур 360° | OPEN CAMPUS</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.7/build/pannellum.css">
+
+  <style>
+    :root { color-scheme: light; --bg: #f0f3eb; --card: #fff; --border: #e1e7de; --accent: #c7f36b; --ink: #202622; --muted: #627064; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Onest', Arial, sans-serif; }
+    button, input, select { font: inherit; }
+    button { padding: 13px 22px; background: var(--ink); color: #fff; border: 0; border-radius: 11px; cursor: pointer; font-weight: 700; transition: background .2s, transform .2s; }
+    button:hover { background: #344b3c; transform: translateY(-1px); }
+    button:focus-visible, a:focus-visible { outline: 3px solid #87b638; outline-offset: 3px; }
+    .site-nav { background: #202622; border-bottom: 1px solid rgba(255,255,255,.12); }
+    .nav-inner { max-width: 1200px; margin: auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { color: #fff; text-decoration: none; font-weight: 800; font-size: 1.3rem; letter-spacing: -.045em; }
+    .back-home { color: #dce9d9; text-decoration: none; font-size: .9rem; font-weight: 600; }
+    .back-home:hover { color: var(--accent); }
+    .container { max-width: 1200px; margin: auto; min-height: calc(100vh - 72px); display: flex; flex-direction: column; align-items: center; text-align: center; padding: 60px 24px 90px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: #3b6448; font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; margin-bottom: 14px; }
+    .eyebrow::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #8cc63e; }
+    h1 { font-size: clamp(32px, 5vw, 58px); letter-spacing: -.06em; line-height: 1.08; margin: 0 0 16px; font-weight: 800; }
+    .intro { color: var(--muted); margin: 0 0 28px; line-height: 1.7; max-width: 650px; }
+    #startTour { background: var(--accent); color: var(--ink); }
+    #startTour:hover { background: #d9ff91; }
+    .rooms { display: none; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; width: 100%; margin-top: 30px; }
+    .room-card { background: var(--card); padding: 28px 18px; border: 1px solid var(--border); border-radius: 20px; color: var(--ink); cursor: pointer; min-height: 180px; text-align: left; box-shadow: 0 8px 28px rgba(32,38,34,.05); }
+    .room-card:hover { background: #f9fcf5; border-color: #a9c998; }
+    .room-card h2 { font-size: 22px; margin-top: 0; }
+    .room-card p { color: var(--muted); line-height: 1.5; font-weight: 400; }
+    #tourViewer { display: none; width: 100%; margin: 28px auto; }
+    #roomTitle { font-size: clamp(24px,3vw,32px); letter-spacing: -.04em; margin: 0 0 22px; }
+    #panorama { height: clamp(300px,52vw,560px); width: 100%; background: #29362e; border-radius: 22px; overflow: hidden; box-shadow: 0 18px 45px rgba(32,38,34,.12); }
+    .viewer-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 22px; }
+    #bookButton { background: var(--accent); color: var(--ink); }
+    #bookButton:hover { background: #d9ff91; }
+    .details, .booking { margin-top: 24px; background: var(--card); border: 1px solid var(--border); padding: 26px; border-radius: 18px; text-align: left; box-shadow: 0 6px 22px rgba(32,38,34,.04); }
+    .details h3, .booking h3 { margin-top: 0; }
+    .equipment { line-height: 1.9; }
+    .booking { display: none; }
+    .booking label { display: block; margin: 12px 0 6px; font-weight: 600; }
+    .booking input, .booking select { width: 100%; max-width: 350px; display: block; padding: 12px; border-radius: 10px; border: 1px solid #b7c4b6; background: #fff; color: var(--ink); }
+    .booking button { margin-top: 18px; }
+    #bookingMessage, #viewerMessage { color: #38664a; line-height: 1.6; }
+    #viewerMessage { margin: 16px 0; }
+    .muted { color: var(--muted); font-size: 14px; }
+    @media (max-width: 760px) { .rooms { grid-template-columns: 1fr; } .room-card { min-height: 140px; } .container { padding: 42px 16px 70px; } .nav-inner { padding: 16px; } .brand { font-size: 1.1rem; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+
+<body>
+  <header class="site-nav">
+    <nav class="nav-inner" aria-label="Основная навигация">
+      <a class="brand" href="index.html">◈ OPEN CAMPUS</a>
+      <a class="back-home" href="index.html#spaces">← К каталогу</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <div class="eyebrow">OPEN CAMPUS / 360°</div>
+    <h1>Посмотрите пространство изнутри</h1>
+
+    <p class="intro">
+      Выберите помещение и осмотрите его перед бронированием
+    </p>
+
+    <button id="startTour">
+      Выбрать помещение ↗
+    </button>
+
+    <section class="rooms" id="rooms">
+
+      <button class="room-card" data-room="hall">
+        <h2>🎭 Актовый зал</h2>
+        <p>150 мест · Сцена · Проектор</p>
+      </button>
+
+      <button class="room-card" data-room="computer">
+        <h2>💻 Компьютерный класс</h2>
+        <p>25 мест · Компьютеры · Wi-Fi</p>
+      </button>
+
+      <button class="room-card" data-room="sport">
+        <h2>🏀 Спортивный зал</h2>
+        <p>30 человек · Спортивное оборудование</p>
+      </button>
+
+    </section>
+
+    <section id="tourViewer">
+
+      <h2 id="roomTitle">Просмотр помещения 360°</h2>
+
+      <div id="panorama"></div>
+
+      <p id="viewerMessage"></p>
+
+      <div class="details">
+        <h3>Оборудование и возможности</h3>
+        <ul id="equipment" class="equipment"></ul>
+
+        <p class="muted">
+          Демонстрационный интерьер.
+          Характеристики помещений приведены для примера.
+        </p>
+      </div>
+
+      <div class="viewer-actions">
+        <button id="backToRooms">
+          ← Назад к помещениям
+        </button>
+
+        <button id="bookButton">
+          Забронировать
+        </button>
+      </div>
+
+      <form class="booking" id="bookingForm">
+
+        <h3>Выбор даты и времени</h3>
+
+        <label for="bookingDate">Дата</label>
+        <input id="bookingDate" type="date" required>
+
+        <label for="bookingTime">Время начала</label>
+
+        <select id="bookingTime" required>
+          <option value="">Выберите время</option>
+          <option>09:00</option>
+          <option>10:00</option>
+          <option>11:00</option>
+          <option>12:00</option>
+          <option>13:00</option>
+          <option>14:00</option>
+          <option>15:00</option>
+          <option>16:00</option>
+          <option>17:00</option>
+        </select>
+
+        <button type="submit">
+          Проверить выбор
+        </button>
+
+        <p id="bookingMessage"></p>
+
+        <p class="muted">
+          Это демонстрационная форма. Для бронирования используйте кнопку «Забронировать» выше.
+        </p>
+
+      </form>
+
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.7/build/pannellum.js"></script>
+
+  <script type="module">
+
+    const startButton = document.getElementById("startTour");
+    const rooms = document.getElementById("rooms");
+    const tourViewer = document.getElementById("tourViewer");
+    const panorama = document.getElementById("panorama");
+    const viewerMessage = document.getElementById("viewerMessage");
+    const backButton = document.getElementById("backToRooms");
+    const bookButton = document.getElementById("bookButton");
+    const bookingForm = document.getElementById("bookingForm");
+    const bookingMessage = document.getElementById("bookingMessage");
+    const equipment = document.getElementById("equipment");
+    const roomTitle = document.getElementById("roomTitle");
+    const bookingDate = document.getElementById("bookingDate");
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    let animate = null;
+    let stagger = null;
+
+    try {
+      const motion = await import("https://esm.sh/motion@12");
+      animate = motion.animate;
+      stagger = motion.stagger;
+    } catch (error) {
+      console.warn("Motion.js недоступен", error);
+    }
+
+    async function transition(target, keyframes, options = {}) {
+      if (!animate || reducedMotion) return;
+
+      try {
+        await animate(target, keyframes, options).finished;
+      } catch (error) {
+        console.warn("Ошибка анимации", error);
+      }
+    }
+
+    async function revealCards() {
+      rooms.style.display = "grid";
+
+      await transition(
+        ".room-card",
+        {
+          opacity: [0, 1],
+          y: [35, 0],
+          scale: [0.96, 1]
+        },
+        {
+          duration: 0.55,
+          delay: stagger ? stagger(0.12) : 0
+        }
+      );
+    }
+
+    const roomData = {
+      hall: {
+        title: "🎭 Актовый зал",
+        equipment: [
+          "Сцена",
+          "Проектор",
+          "Звуковая система",
+          "150 зрительских мест"
+        ]
+      },
+
+      computer: {
+        title: "💻 Компьютерный класс",
+        equipment: [
+          "Компьютеры",
+          "Wi-Fi",
+          "Рабочие столы",
+          "Проектор"
+        ]
+      },
+
+      sport: {
+        title: "🏀 Спортивный зал",
+        equipment: [
+          "Спортивный инвентарь",
+          "Игровая площадка",
+          "Раздевалка"
+        ]
+      }
+    };
+
+    const demoPanorama = "images/tour/hall-360.png";
+
+    let panoramaViewer = null;
+    let currentRoom = null;
+    let busy = false;
+
+    startButton.addEventListener("click", async () => {
+
+      startButton.disabled = true;
+
+      await transition(
+        startButton,
+        {
+          opacity: [1, 0],
+          scale: [1, 0.95]
+        },
+        { duration: 0.3 }
+      );
+
+      startButton.style.display = "none";
+
+      await revealCards();
+    });
+
+    async function openRoom(roomKey) {
+
+      if (busy || !roomData[roomKey]) return;
+
+      busy = true;
+      currentRoom = roomKey;
+
+      roomTitle.textContent = roomData[roomKey].title;
+
+      equipment.replaceChildren(
+        ...roomData[roomKey].equipment.map(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          return li;
+        })
+      );
+
+      bookingForm.style.display = "none";
+      bookingMessage.textContent = "";
+
+      panorama.style.display = "block";
+      viewerMessage.textContent = "Загрузка демонстрационной панорамы 360°...";
+
+      await transition(
+        ".room-card",
+        {
+          opacity: [1, 0],
+          scale: [1, 1.04]
+        },
+        { duration: 0.35 }
+      );
+
+      rooms.style.display = "none";
+      tourViewer.style.display = "block";
+
+      await transition(
+        tourViewer,
+        {
+          opacity: [0, 1],
+          scale: [0.97, 1]
+        },
+        { duration: 0.55 }
+      );
+
+      if (!window.pannellum) {
+
+        viewerMessage.textContent =
+          "Не удалось загрузить Pannellum.";
+
+      } else {
+
+        try {
+
+          if (!panoramaViewer) {
+
+            panoramaViewer = window.pannellum.viewer(
+              "panorama",
+              {
+                type: "equirectangular",
+                panorama: demoPanorama,
+                autoLoad: true,
+                showControls: true,
+                hotSpots: [
+                  { pitch: 0, yaw: 0, type: "info", text: "🎭 Сцена — для концертов, выступлений и мероприятий" },
+                  { pitch: 12, yaw: 0, type: "info", text: "📽️ Проектор — для презентаций и видеоматериалов" },
+                  { pitch: 5, yaw: 35, type: "info", text: "🔊 Звуковая система — колонки и микрофоны" }
+                ]
+              }
+            );
+
+            panoramaViewer.on("load", () => {
+              viewerMessage.textContent =
+                "Демонстрационная панорама 360°";
+            });
+
+            panoramaViewer.on("error", message => {
+              viewerMessage.textContent =
+                "Ошибка загрузки: " + message;
+            });
+
+          } else {
+
+            panoramaViewer.resize();
+          }
+
+        } catch (error) {
+
+          console.error(error);
+
+          viewerMessage.textContent =
+            "Ошибка запуска панорамы.";
+        }
+      }
+
+      busy = false;
+    }
+
+    document.querySelectorAll(".room-card").forEach(card => {
+
+      card.addEventListener("click", () => {
+        openRoom(card.dataset.room);
+      });
+
+    });
+    // Автоматическое открытие помещения из каталога
+const tourParams = new URLSearchParams(window.location.search);
+const requestedRoom = tourParams.get("room");
+
+if (requestedRoom && roomData[requestedRoom]) {
+  startButton.style.display = "none";
+  rooms.style.display = "none";
+  openRoom(requestedRoom);
+}
+    backButton.addEventListener("click", async () => {
+      if (new URLSearchParams(location.search).has("room")) {
+        location.href = "index.html#spaces";
+        return;
+      }
+
+      if (busy) return;
+
+      busy = true;
+
+      await transition(
+        tourViewer,
+        { opacity: [1, 0] },
+        { duration: 0.3 }
+      );
+
+      tourViewer.style.display = "none";
+
+      panorama.style.display = "block";
+
+      await revealCards();
+
+      busy = false;
+    });
+
+    bookButton.addEventListener("click", () => {
+      const bookingSpaceId = new URLSearchParams(location.search).get("space") || "s1-hall";
+      location.href = "index.html?book=" + encodeURIComponent(bookingSpaceId) + "#spaces";
+    });
+
+    const now = new Date();
+
+    const today =
+      now.getFullYear() + "-" +
+      String(now.getMonth() + 1).padStart(2, "0") + "-" +
+      String(now.getDate()).padStart(2, "0");
+
+    bookingDate.min = today;
+
+    bookingForm.addEventListener("submit", event => {
+
+      event.preventDefault();
+
+      if (!bookingForm.reportValidity()) return;
+
+      if (bookingDate.value < today) {
+        bookingMessage.textContent =
+          "Выберите сегодняшнюю или будущую дату.";
+        return;
+      }
+
+      const time =
+        document.getElementById("bookingTime").value;
+
+      bookingMessage.textContent =
+        `Вы выбрали ${roomData[currentRoom].title}: ` +
+        `${bookingDate.value} в ${time}. ` +
+        `Это предварительный выбор, не подтверждённая бронь.`;
+    });
+
+  </script>
+
+</body>
+</html>

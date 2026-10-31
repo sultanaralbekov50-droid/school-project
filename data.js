@@ -1,5 +1,5 @@
 /*
- * data.js — общий слой данных для сайта «Школьный Коворкинг».
+ * data.js — общий слой данных для сайта «OPEN CAMPUS».
  *
  * Два режима работы, страницы об этом не знают:
  *  - демо: данные в localStorage браузера (если config.js пустой);
@@ -104,7 +104,7 @@
   const toBooking = r => ({
     id: r.id, schoolId: r.school_id, spaceId: r.space_id, date: r.booking_date,
     start: r.start_hour, hours: r.hours, client: r.client || '', phone: r.phone || '',
-    purpose: r.purpose || '', extras: r.extras || [], status: r.status, created: r.created_at
+    purpose: r.purpose || '', extras: r.extras || [], attendees: r.attendees || null, termsAccepted: r.terms_accepted === true, status: r.status, created: r.created_at
   });
 
   async function loadState() {
@@ -264,21 +264,43 @@
     equipText: space => (space.equipment || []).map(x => esc(x.name) + (x.price ? ' (+' + x.price + ')' : '')).join(', ') || '—',
 
     isFree(spaceId, date, start, hours) {
-      if (start < OPEN || start + hours > CLOSE) return false;
+      const w = DB.rentalWindow(date);
+      if (start < w.open || start + hours > w.close) return false;
       return !data().bookings.some(x =>
         x.spaceId === spaceId && x.date === date && x.status !== 'rejected' &&
         start < x.start + x.hours && x.start < start + hours);
     },
 
+    rentalWindow(date) {
+      const day = new Date(date + 'T12:00:00').getDay();
+      return (day === 0 || day === 6) ? { open: 10, close: 20 } : { open: 16, close: 20 };
+    },
+    validateRental(o) {
+      const found = DB.findSpace(o.spaceId);
+      if (!found) return 'Помещение не найдено.';
+      const count = Number(o.attendees);
+      if (!Number.isInteger(count) || count < 1 || count > found.space.capacity)
+        return 'Количество участников должно быть от 1 до ' + found.space.capacity + '.';
+      if (!o.termsAccepted) return 'Подтвердите согласие с правилами школы.';
+      if (!o.purpose || !o.purpose.trim()) return 'Укажите цель мероприятия.';
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(o.date) || o.date < DB.today()) return 'Выберите актуальную дату.';
+      const w = DB.rentalWindow(o.date);
+      if (!Number.isInteger(o.start) || !Number.isInteger(o.hours) ||
+          o.start < w.open || o.start + o.hours > w.close)
+        return 'Аренда разрешена только в установленные часы: ' + w.open + ':00–' + w.close + ':00.';
+      return null;
+    },
     async addBooking(o) {
       const found = DB.findSpace(o.spaceId);
       if (!found) return { ok: false, error: 'Пространство не найдено' };
+      const rentalError = DB.validateRental(o);
+      if (rentalError) return { ok: false, error: rentalError };
       if (!DB.isFree(o.spaceId, o.date, o.start, o.hours)) return { ok: false, error: 'Это время уже занято. Выберите другое.' };
       if (REMOTE) {
         const { error } = await sb.from('bookings').insert({
           school_id: found.school.id, space_id: o.spaceId, booking_date: o.date,
           start_hour: o.start, hours: o.hours, client: o.client, phone: o.phone,
-          purpose: o.purpose || '', extras: o.extras || [], status: 'pending'
+          purpose: o.purpose || '', extras: o.extras || [], attendees: o.attendees, terms_accepted: true, status: 'pending'
         });
         if (error) {
           await DB.refresh();

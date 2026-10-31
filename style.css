@@ -117,3 +117,430 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .footer { background: var(--ink); color: #a9bccd; padding: 28px 0; }
 
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+/* ==========================================
+   OPEN CAMPUS — DESIGN SYSTEM 1.0
+   ========================================== */
+
+:root {
+  --ink: #202622;
+  --ink-2: #39463e;
+  --paper: #f2f0e9;
+  --mark: #c7f36b;
+  --free: #34785b;
+  --free-bg: #e3f2df;
+  --busy: #d96b5d;
+  --wait: #edbb59;
+  --line: #d9ddd3;
+  --muted: #68736b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Onest', sans-serif;
+}
+
+/* NAVIGATION */
+
+.navbar-sc {
+  background: rgba(32, 38, 34, 0.97);
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  backdrop-filter: blur(16px);
+  padding: 16px 0;
+}
+
+.navbar-sc .navbar-brand {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -.04em;
+}
+
+.navbar-sc .nav-link {
+  color: #d4dfd5;
+  font-size: .9rem;
+  transition: color .2s ease;
+}
+
+.navbar-sc .nav-link:hover {
+  color: var(--mark);
+}
+
+
+/* HERO */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(199,243,107,.17), transparent 35%),
+    linear-gradient(135deg, #202622, #344b3c);
+  color: #fff;
+  padding: 105px 0 110px;
+}
+
+.hero::before {
+  content: "OPEN CAMPUS";
+  position: absolute;
+  right: -30px;
+  bottom: -35px;
+  font-size: clamp(5rem, 15vw, 15rem);
+  font-weight: 800;
+  letter-spacing: -.08em;
+  white-space: nowrap;
+  color: rgba(255,255,255,.035);
+  pointer-events: none;
+}
+
+.hero h1 {
+  font-size: clamp(2.7rem, 5.5vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -.065em;
+  line-height: 1.02;
+}
+
+.hero .lead {
+  color: #d5e0d6;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-top: 22px;
+}
+
+/* BUTTONS */
+
+.btn-mark {
+  background: var(--mark);
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-weight: 800;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.btn-mark:hover {
+  background: #d9ff91;
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.btn-ink {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 10px;
+  padding: 12px 24px;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.btn-ink:hover {
+  background: #3b5041;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* SECTIONS */
+
+.section {
+  padding: 90px 0;
+}
+
+.section-alt {
+  background: #e8ece3;
+}
+
+.section h2 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -.055em;
+}
+
+.section .sub {
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* SPACE CARDS */
+
+.space-card {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(32,38,34,.045);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.space-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 55px rgba(32,38,34,.12);
+}
+
+.space-card .ph {
+  height: 220px;
+  background: linear-gradient(135deg, #6c9177, #202622);
+  overflow: hidden;
+}
+
+.space-card .ph img {
+  transition: transform .4s ease;
+}
+
+.space-card:hover .ph img {
+  transform: scale(1.04);
+}
+
+.space-card .body {
+  padding: 24px;
+  gap: 10px;
+}
+
+.space-card .price {
+  font-size: 1.35rem;
+  color: var(--free);
+}
+
+/* OPEN CAMPUS — SPACE CARD REFINEMENT */
+
+.space-card {
+  border-radius: 22px;
+  border: 1px solid #e4e9e1;
+  box-shadow: 0 6px 24px rgba(32, 38, 34, 0.05);
+}
+
+.space-card .ph {
+  height: 240px;
+  background: linear-gradient(135deg, #789780, #293e31);
+}
+
+.space-card .ph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.space-card .body {
+  padding: 24px;
+  gap: 12px;
+}
+
+.space-card .school {
+  color: #718076;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.space-card h5 {
+  color: #202622;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+.space-card .price {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #2d6845;
+}
+
+.space-card .btn-ink {
+  border-radius: 11px;
+  padding: 13px 18px;
+  font-weight: 700;
+}
+
+@media (max-width: 767.98px) {
+  .space-card .ph {
+    height: 210px;
+  }
+
+  .space-card .body {
+    padding: 20px;
+  }
+}
+
+/* FILTERS */
+
+.chip {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 18px;
+  transition: all .2s ease;
+}
+
+.chip:hover {
+  border-color: var(--free);
+}
+
+.chip.on {
+  background: var(--ink);
+  color: var(--mark);
+}
+
+/* WEEK CALENDAR */
+
+.week-card {
+  background: #fdfdf9;
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: 0 30px 70px rgba(0,0,0,.18);
+}
+
+.wk td.c {
+  border-radius: 6px;
+}
+
+/* PROCESS */
+
+.step {
+  border-left: 3px solid var(--free);
+  padding-left: 22px;
+}
+
+.step .n {
+  color: var(--mark);
+  -webkit-text-stroke: 1px var(--ink);
+}
+
+/* CALCULATOR */
+
+.calc {
+  background: linear-gradient(135deg, #202622, #385441);
+  border-radius: 22px;
+  padding: 36px;
+}
+
+.calc .big {
+  color: var(--mark);
+}
+
+/* DASHBOARDS */
+
+.panel,
+.stat,
+.sdg {
+  border-radius: 18px;
+  border-color: var(--line);
+  box-shadow: 0 6px 24px rgba(32,38,34,.04);
+}
+
+/* FOOTER */
+
+.footer {
+  background: #202622;
+  color: #c0cec1;
+  padding: 48px 0;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 70px 0;
+  }
+
+  .hero h1 {
+    font-size: 2.6rem;
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .space-card .ph {
+    height: 190px;
+  }
+
+  .week-card {
+    padding: 16px;
+  }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+/* ==========================================
+   OPEN CAMPUS — HERO IDENTITY
+   ========================================== */
+
+.campus-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 15px;
+  border: 1px solid rgba(199, 243, 107, 0.35);
+  border-radius: 100px;
+  color: var(--mark);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  margin-bottom: 30px;
+}
+
+.campus-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mark);
+  box-shadow: 0 0 15px rgba(199, 243, 107, 0.65);
+}
+
+.hero .campus-title {
+  font-size: clamp(3rem, 5.5vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.065em;
+  max-width: 12em;
+}
+
+.campus-highlight {
+  display: block;
+  color: var(--mark);
+}
+
+.campus-bottom-note {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 65px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  color: #aebdb1;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.hero .btn-outline-light {
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-weight: 600;
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.hero .btn-outline-light:hover {
+  background: #fff;
+  color: var(--ink);
+}
+
+@media (max-width: 768px) {
+  .hero .campus-title {
+    font-size: clamp(2.7rem, 10vw, 4rem);
+  }
+
+  .campus-bottom-note {
+    margin-top: 40px;
+  }
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Финансы школ — OPEN CAMPUS</title>
+<style>
+:root{font-family:system-ui,-apple-system,Arial,sans-serif;color:#152b3d;background:#f3f7fb}
+*{box-sizing:border-box}body{margin:0}header{background:#10283d;color:white;padding:22px max(20px,calc((100% - 1050px)/2))}
+header a{color:#a8e4ce;text-decoration:none}main{max-width:1050px;margin:38px auto;padding:0 20px}
+h1{font-size:clamp(27px,4vw,40px)}.muted{color:#61748a}.panel{background:white;padding:25px;border-radius:18px;box-shadow:0 8px 30px #14304712;margin:22px 0}
+select{width:100%;max-width:520px;padding:13px;border:1px solid #a9bacb;border-radius:9px;background:white;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.stat{background:#edf6f2;padding:20px;border-radius:14px}
+.stat b{display:block;font-size:24px;margin-top:9px}.badge{display:inline-block;background:#d8f5e7;color:#116b43;padding:6px 12px;border-radius:30px;font-weight:700}
+table{border-collapse:collapse;width:100%}th,td{text-align:left;border-bottom:1px solid #dce5ee;padding:12px}
+.notice{background:#fff7dd;padding:16px;border-radius:10px;color:#5c4b17}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<header><a href="index.html#spaces">← На главную</a><h2>🏫 OPEN CAMPUS</h2></header>
+<main><h1>Как аренда помогает моей школе</h1>
+<p class="muted">Открытая сводка подтверждённых доходов, расходов и улучшений. Выберите школу — регистрация не требуется.</p>
+<div class="panel"><label for="school"><b>Выберите школу</b></label><br><br>
+<select id="school"><option value="">Загрузка школ…</option></select>
+<p class="muted" id="schoolType"></p></div>
+<div id="report" hidden>
+<div class="grid">
+<div class="stat">Подтверждённые доходы<b id="income">—</b></div>
+<div class="stat">Подтверждённые расходы<b id="expenses">—</b></div>
+<div class="stat">Остаток по опубликованным операциям<b id="balance">—</b></div>
+</div>
+<div class="panel"><h2>Опубликованные операции</h2><p class="muted">Включаются только подтверждённые операции, разрешённые к публикации.</p>
+<div id="operations"></div></div>
+<div class="panel"><h2>Результаты для учеников</h2><div id="results"></div></div>
+</div>
+<div class="notice"><b>Важно:</b> пока это интерфейс для тестирования. Достоверные суммы появятся только после подключения проверяемого источника данных, подтверждения операций и определения законного порядка публикации. Отсутствие данных не означает нулевой доход.</div>
+</main>
+<script src="config.js"></script><script src="data.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+let reports=[];
+const money=n=>Number(n).toLocaleString('ru-RU')+' сом';
+function render(){
+ const id=$('school').value;
+ $('report').hidden=!id;
+ if(!id)return;
+ const school=DB.schools().find(s=>s.id===id);
+ $('schoolType').textContent='Школа: '+(school?.name||'')+'. Тип собственности и правила публикации требуют подтверждения.';
+ const ops=reports.filter(r=>r.schoolId===id&&r.status==='verified'&&r.public===true&&['income','expense'].includes(r.type)&&Number.isFinite(r.amount)&&r.amount>=0);
+ const income=ops.filter(r=>r.type==='income').reduce((s,r)=>s+r.amount,0);
+ const expenses=ops.filter(r=>r.type==='expense').reduce((s,r)=>s+r.amount,0);
+ const has=ops.length>0;
+ $('income').textContent=has?money(income):'Нет данных';
+ $('expenses').textContent=has?money(expenses):'Нет данных';
+ $('balance').textContent=has?money(income-expenses):'Нет данных';
+ const list=$('operations');list.replaceChildren();
+ if(!has){list.textContent='Подтверждённых публичных операций пока нет.';}
+ else {
+ const table=document.createElement('table');
+ const head=document.createElement('tr');
+ ['Дата','Назначение','Тип','Сумма'].forEach(t=>{const th=document.createElement('th');th.textContent=t;head.append(th)});
+ table.append(head);
+ ops.forEach(r=>{const tr=document.createElement('tr');[r.date||'—',r.description||'—',r.type==='income'?'Доход':'Расход',money(r.amount)].forEach(t=>{const td=document.createElement('td');td.textContent=t;tr.append(td)});table.append(tr)});
+ list.append(table);
+ }
+ const results=$('results');results.replaceChildren();
+ const projects=reports.filter(r=>r.schoolId===id&&r.status==='verified'&&r.public===true&&r.type==='result');
+ if(!projects.length){results.textContent='Подтверждённых результатов пока нет.';}
+ else projects.forEach(r=>{const item=document.createElement('p');item.textContent=(r.description||'Улучшение')+' ('+(r.date||'дата не указана')+')';results.append(item)});
+}
+async function init(){
+ try {
+ await DB.init();
+ const schools=DB.schools();
+ $('school').replaceChildren(new Option('Выберите школу',''));
+ schools.forEach(s=>$('school').add(new Option(s.name,s.id)));
+ $('school').addEventListener('change',render);
+ const response=await fetch('finance-reports.json',{cache:'no-store'});
+ if(!response.ok)throw new Error('Нет файла отчётов');
+ const data=await response.json();
+ reports=Array.isArray(data.reports)?data.reports:[];
+ }catch(err){
+ console.warn('Финансовые отчёты пока недоступны:',err);
+ if(!$('school').options.length)$('school').replaceChildren(new Option('Список школ недоступен',''));
+ }
+}
+init();
+</script></body></html>

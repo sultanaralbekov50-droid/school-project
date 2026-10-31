@@ -73,7 +73,7 @@
 
   panel.innerHTML = `
     <div id="ai-header">
-      <span>🤖 School Coworking AI</span>
+      <span>🤖 OPEN CAMPUS AI</span>
       <button id="ai-close" aria-label="Закрыть">×</button>
     </div>
     <div id="ai-messages" role="log" aria-live="polite"></div>
@@ -112,10 +112,10 @@ document.querySelector('a[href="#ai-helper"]')?.addEventListener('click', (event
   });
 
   addMessage(
-    'Здравствуйте! Я ИИ-консультант School Coworking. ' +
-    'Помогу узнать цены, вместимость и оборудование помещений.',
-    'bot'
-  );
+  'Привет! Я OPEN CAMPUS AI 🤖 — твой помощник по школьным пространствам. ' +
+  'Помогу найти подходящее помещение, узнать цены, вместимость и свободное время.',
+  'bot'
+);
 
   async function loadKnowledge() {
     if (knowledge) return knowledge;
