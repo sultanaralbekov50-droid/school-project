@@ -6,12 +6,11 @@
 <title>School Coworking AI</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-  body { background: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+  body { background: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 0; }
   
   .chat-container {
     width: 100%; max-width: 420px; background: #fff;
-    border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    display: flex; flex-direction: column; height: 650px; max-height: 90vh; overflow: hidden;
+    display: flex; flex-direction: column; height: 100vh; overflow: hidden;
   }
 
   .chat-header {
@@ -19,9 +18,10 @@
     display: flex; justify-content: space-between; align-items: center;
   }
   .chat-header h2 { font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  
   .chat-header .close-btn {
-    background: none; border: none; color: #fff; font-size: 20px;
-    cursor: pointer; opacity: 0.8; transition: 0.2s;
+    background: none; border: none; color: #fff; font-size: 24px;
+    cursor: pointer; opacity: 0.8; transition: 0.2s; padding: 0 5px;
   }
   .chat-header .close-btn:hover { opacity: 1; }
 
@@ -40,7 +40,7 @@
   .message-row.user .avatar { background: #4F6BED; color: white; font-weight: bold; font-size: 14px; }
 
   .bubble {
-    max-width: 75%; padding: 12px 16px; border-radius: 16px;
+    max-width: 80%; padding: 12px 16px; border-radius: 16px;
     font-size: 14px; line-height: 1.5; color: #1e293b;
   }
   .message-row.bot .bubble { background: #f1f5f9; border-bottom-left-radius: 4px; }
@@ -48,11 +48,11 @@
 
   .chat-input-area {
     padding: 16px; background: #fff; border-top: 1px solid #e2e8f0;
-    display: flex; gap: 10px;
+    display: flex; gap: 10px; padding-bottom: env(safe-area-inset-bottom, 16px);
   }
   .chat-input-area input {
     flex: 1; padding: 12px 16px; border: 1px solid #cbd5e1;
-    border-radius: 8px; outline: none; font-size: 14px; transition: 0.2s;
+    border-radius: 8px; outline: none; font-size: 16px;
   }
   .chat-input-area input:focus { border-color: #4F6BED; box-shadow: 0 0 0 3px rgba(79, 107, 237, 0.2); }
   
@@ -60,10 +60,6 @@
     background: #4F6BED; color: #fff; border: none; border-radius: 8px;
     padding: 0 20px; cursor: pointer; font-size: 18px; transition: 0.2s;
   }
-  .chat-input-area button:hover { background: #3b52c4; }
-
-  .chat-messages::-webkit-scrollbar { width: 6px; }
-  .chat-messages::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 </style>
 </head>
 <body>
@@ -71,13 +67,13 @@
 <div class="chat-container">
   <div class="chat-header">
     <h2>🤖 School Coworking AI</h2>
-    <button class="close-btn" onclick="window.close()">✕</button>
+    <button class="close-btn" onclick="window.parent.postMessage('close-chat', '*')">✕</button>
   </div>
 
   <div class="chat-messages" id="chat-messages">
     <div class="message-row bot">
       <div class="avatar">🤖</div>
-      <div class="bubble">Здравствуйте! Я ИИ-консультант School Coworking. Помогу подобрать зал под ваши задачи. Спросите меня про вечеринки, учебу, спорт или просто напишите, сколько вас человек.</div>
+      <div class="bubble">Здравствуйте! Я ИИ-консультант School Coworking. Помогу подобрать зал. Спросите меня про вечеринки, учебу, спорт или просто напишите, сколько вас человек.</div>
     </div>
   </div>
 
@@ -145,44 +141,8 @@
   function getAnswer(text) {
     const lower = text.toLowerCase().trim();
 
-    // Умный поиск по цифрам (например, "20 человек", "15 гостей")
-    const numbers = lower.match(/\d+/g);
-    if (numbers) {
-      const count = parseInt(numbers[0], 10);
-      if (count > 0 && count <= 15) {
-        return "Для компании из " + count + " человек отлично подойдет Библиотека (до 15 мест). Там уютно и тихо.";
-      } else if (count > 15 && count <= 50) {
-        return "Для " + count + " человек рекомендую Актовый зал (до 50 мест). Там достаточно места и есть проектор.";
-      } else if (count > 50) {
-        return "Для " + count + " человек лучше всего подойдет Большой актовый зал (до 120 мест) в Лицее №61.";
-      }
-    }
-
-    // Поиск по ключевым словам
+    // 1. Поиск по ключевым словам
     const found = FAQ.find(item => item.keys.some(k => lower.includes(k)));
     if (found) return found.answer;
 
-    return "Извините, я пока не знаю ответа на этот вопрос. Спросите про залы, вечеринки, учебу, цены или оборудование.";
-  }
-
-  function handleSend() {
-    const text = inputField.value.trim();
-    if (!text) return;
-
-    addMessage(text, 'user');
-    inputField.value = '';
-
-    setTimeout(() => {
-      const reply = getAnswer(text);
-      addMessage(reply, 'bot');
-    }, 500);
-  }
-
-  sendBtn.addEventListener('click', handleSend);
-  inputField.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') handleSend();
-  });
-</script>
-
-</body>
-</html>
+    // 2.
