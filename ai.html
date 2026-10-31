@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>School Coworking AI</title>
 <style>
-  /* Стили под твой скриншот */
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
   body { background: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
   
@@ -15,7 +14,6 @@
     display: flex; flex-direction: column; height: 650px; max-height: 90vh; overflow: hidden;
   }
 
-  /* Шапка */
   .chat-header {
     background: #4F6BED; color: #fff; padding: 16px 20px;
     display: flex; justify-content: space-between; align-items: center;
@@ -27,7 +25,6 @@
   }
   .chat-header .close-btn:hover { opacity: 1; }
 
-  /* Область сообщений */
   .chat-messages {
     flex: 1; padding: 20px; overflow-y: auto; background: #fff;
     display: flex; flex-direction: column; gap: 16px;
@@ -49,7 +46,6 @@
   .message-row.bot .bubble { background: #f1f5f9; border-bottom-left-radius: 4px; }
   .message-row.user .bubble { background: #4F6BED; color: #fff; border-bottom-right-radius: 4px; }
 
-  /* Поле ввода */
   .chat-input-area {
     padding: 16px; background: #fff; border-top: 1px solid #e2e8f0;
     display: flex; gap: 10px;
@@ -66,7 +62,6 @@
   }
   .chat-input-area button:hover { background: #3b52c4; }
 
-  /* Скроллбар */
   .chat-messages::-webkit-scrollbar { width: 6px; }
   .chat-messages::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 </style>
@@ -82,7 +77,7 @@
   <div class="chat-messages" id="chat-messages">
     <div class="message-row bot">
       <div class="avatar">🤖</div>
-      <div class="bubble">Здравствуйте! Я ИИ-консультант School Coworking. Помогу узнать цены, вместимость и оборудование помещений.</div>
+      <div class="bubble">Здравствуйте! Я ИИ-консультант School Coworking. Помогу подобрать зал под ваши задачи. Спросите меня про вечеринки, учебу, спорт или просто напишите, сколько вас человек.</div>
     </div>
   </div>
 
@@ -93,19 +88,22 @@
 </div>
 
 <script>
-  // --- База знаний (твои ответы) ---
   const FAQ = [
     { 
-      keys: ["зал", "помещение", "комната", "залы"], 
-      answer: "У нас есть два зала: Большой (до 50 человек) и Малый (до 15 человек). Большой подходит для мероприятий, Малый — для переговоров и тихой работы." 
+      keys: ["вечерин", "праздн", "днюх", "тусов", "дискотек", "концерт", "день рожден"], 
+      answer: "Для вечеринки или праздника лучше всего подойдет Актовый зал (до 50 человек). Там есть сцена, свет и хорошая звуковая система." 
     },
     { 
-      keys: ["место", "места", "сесть", "посадить", "где лучше", "окно", "сцена"], 
-      answer: "Рекомендую места у окна — там светло и тихо. Если вы компанией — лучше занять зону ближе к сцене." 
+      keys: ["спорт", "физкультур", "трениров", "играть", "мяч", "зал для спорт"], 
+      answer: "Для спортивных мероприятий и тренировок отлично подойдет спортивный зал. Он просторный, есть разметка и место для инвентаря." 
     },
     { 
-      keys: ["цена", "стоимость", "сколько", "прайс", "почём", "почем"], 
-      answer: "Аренда Большого зала — 5000 ₽/час, Малого — 2000 ₽/час. При бронировании на весь день действует скидка." 
+      keys: ["учеб", "урок", "занят", "репетитор", "лекци", "семинар", "читать", "тихо"], 
+      answer: "Для учебы, лекций или тихих занятий рекомендую Библиотеку или Читальный зал (до 15-20 человек). Там тихо, есть Wi-Fi и проектор." 
+    },
+    { 
+      keys: ["цена", "стоимость", "сколько стоит", "прайс", "почём", "почем"], 
+      answer: "Аренда Большого зала — 5000 сом/час, Библиотеки — 2000 сом/час. Точную стоимость можно посмотреть в карточке зала при бронировании." 
     },
     { 
       keys: ["оборудован", "проектор", "экран", "звук", "микрофон", "доска"], 
@@ -113,7 +111,11 @@
     },
     { 
       keys: ["бронь", "забронировать", "резерв", "записаться"], 
-      answer: "Забронировать помещение можно по телефону +7 999 123-45-67 или через форму на нашем сайте." 
+      answer: "Забронировать помещение можно прямо на нашем сайте: выберите зал в каталоге и нажмите «Выбрать время»." 
+    },
+    {
+      keys: ["привет", "здравств", "добрый", "хай"],
+      answer: "Здравствуйте! 😊 Напишите, для какого мероприятия ищете зал и сколько вас человек, я подскажу лучший вариант."
     }
   ];
 
@@ -121,7 +123,6 @@
   const inputField = document.getElementById('chat-input');
   const sendBtn = document.getElementById('chat-send');
 
-  // Функция добавления сообщения
   function addMessage(text, sender) {
     const row = document.createElement('div');
     row.className = `message-row ${sender}`;
@@ -138,18 +139,32 @@
     row.appendChild(bubble);
     messagesContainer.appendChild(row);
     
-    // Автоскролл вниз
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
 
-  // Логика поиска ответа
   function getAnswer(text) {
     const lower = text.toLowerCase().trim();
+
+    // Умный поиск по цифрам (например, "20 человек", "15 гостей")
+    const numbers = lower.match(/\d+/g);
+    if (numbers) {
+      const count = parseInt(numbers[0], 10);
+      if (count > 0 && count <= 15) {
+        return "Для компании из " + count + " человек отлично подойдет Библиотека (до 15 мест). Там уютно и тихо.";
+      } else if (count > 15 && count <= 50) {
+        return "Для " + count + " человек рекомендую Актовый зал (до 50 мест). Там достаточно места и есть проектор.";
+      } else if (count > 50) {
+        return "Для " + count + " человек лучше всего подойдет Большой актовый зал (до 120 мест) в Лицее №61.";
+      }
+    }
+
+    // Поиск по ключевым словам
     const found = FAQ.find(item => item.keys.some(k => lower.includes(k)));
-    return found ? found.answer : "Извините, я пока не знаю ответа на этот вопрос. Спросите про залы, места, цены или оборудование.";
+    if (found) return found.answer;
+
+    return "Извините, я пока не знаю ответа на этот вопрос. Спросите про залы, вечеринки, учебу, цены или оборудование.";
   }
 
-  // Отправка
   function handleSend() {
     const text = inputField.value.trim();
     if (!text) return;
@@ -157,14 +172,12 @@
     addMessage(text, 'user');
     inputField.value = '';
 
-    // Имитация задержки (печатает...)
     setTimeout(() => {
       const reply = getAnswer(text);
       addMessage(reply, 'bot');
     }, 500);
   }
 
-  // Слушатели событий
   sendBtn.addEventListener('click', handleSend);
   inputField.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') handleSend();
