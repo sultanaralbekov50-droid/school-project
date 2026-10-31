@@ -347,7 +347,7 @@
     window.addEventListener('storage', () => DB.refresh().then(() => { renderHero(); renderCatalog(); }));
 </script>
 
-<!-- ================= НОВЫЙ ИИ-ПОМОЩНИК (БЕЗ ОЛАМЫ) ================= -->
+<!-- ================= НОВЫЙ ИИ-ПОМОЩНИК ================= -->
 <button id="open-ai-btn" style="position: fixed; bottom: 20px; right: 20px; padding: 15px 25px; background: #4F6BED; color: white; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1050; font-family: 'Onest', sans-serif; transition: 0.3s;">
   🤖 ИИ-помощник
 </button>
@@ -360,12 +360,21 @@
   const aiBtn = document.getElementById('open-ai-btn');
   const aiModal = document.getElementById('ai-modal');
   
+  // Открываем чат
   aiBtn.addEventListener('click', () => {
     aiModal.style.display = 'block';
   });
 
+  // Закрываем по клику мимо окна
   document.addEventListener('click', (e) => {
     if (e.target === aiModal) {
+      aiModal.style.display = 'none';
+    }
+  });
+
+  // Ловим команду закрытия от крестика внутри самого чата
+  window.addEventListener('message', (e) => {
+    if (e.data === 'close-chat') {
       aiModal.style.display = 'none';
     }
   });
