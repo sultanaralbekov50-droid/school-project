@@ -1,134 +1,192 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ИИ-Помощник | OPEN CAMPUS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ИИ-помощник | OPEN CAMPUS</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+  body { background: #202622; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+  
+  .chat-container {
+    width: 100%; max-width: 420px; background: #fff;
+    border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    display: flex; flex-direction: column; height: 650px; max-height: 90vh; overflow: hidden;
+  }
+
+  .chat-header {
+    background: #344b3c; color: #fff; padding: 16px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .chat-header h2 { font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .chat-header .close-btn {
+    background: none; border: none; color: #fff; font-size: 20px;
+    cursor: pointer; opacity: 0.8; transition: 0.2s;
+  }
+  .chat-header .close-btn:hover { opacity: 1; }
+
+  .chat-messages {
+    flex: 1; padding: 20px; overflow-y: auto; background: #fff;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+
+  .message-row { display: flex; align-items: flex-end; gap: 10px; }
+  .message-row.user { flex-direction: row-reverse; }
+
+  .avatar {
+    width: 32px; height: 32px; border-radius: 50%; background: #e2e8f0;
+    display: flex; justify-content: center; align-items: center; font-size: 16px; flex-shrink: 0;
+  }
+  .message-row.user .avatar { background: #344b3c; color: white; font-weight: bold; font-size: 14px; }
+
+  .bubble {
+    max-width: 75%; padding: 12px 16px; border-radius: 16px;
+    font-size: 14px; line-height: 1.5; color: #1e293b;
+  }
+  .message-row.bot .bubble { background: #f1f5f9; border-bottom-left-radius: 4px; }
+  .message-row.user .bubble { background: #344b3c; color: #fff; border-bottom-right-radius: 4px; }
+
+  .chat-input-area {
+    padding: 16px; background: #fff; border-top: 1px solid #e2e8f0;
+    display: flex; gap: 10px;
+  }
+  .chat-input-area input {
+    flex: 1; padding: 12px 16px; border: 1px solid #cbd5e1;
+    border-radius: 8px; outline: none; font-size: 14px; transition: 0.2s;
+  }
+  .chat-input-area input:focus { border-color: #344b3c; box-shadow: 0 0 0 3px rgba(199, 243, 107, 0.25); }
+  
+  .chat-input-area button {
+    background: #344b3c; color: #fff; border: none; border-radius: 8px;
+    padding: 0 20px; cursor: pointer; font-size: 18px; transition: 0.2s;
+  }
+  .chat-input-area button:hover { background: #263a2e; }
+
+  .chat-messages::-webkit-scrollbar { width: 6px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+  .chat-header { background: linear-gradient(135deg, #202622, #344b3c); }
+  .chat-input-area button { background: #c7f36b; color: #202622; }
+  .chat-input-area button:hover { background: #b5e65a; }
+  .message-row.user .bubble { background: #344b3c; }
+</style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark navbar-sc sticky-top">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">🏫 OPEN CAMPUS</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html">На главную</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div class="chat-container">
+  <div class="chat-header">
+    <h2>🤖 OPEN CAMPUS AI</h2>
+    <button class="close-btn" onclick="window.close()">✕</button>
+  </div>
 
-<section class="section section-alt" style="min-height: 80vh; padding-top: 50px;">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="panel shadow-lg" style="border: 2px solid var(--mark);">
-                    <div class="d-flex align-items-center mb-3">
-                        <div style="font-size: 2rem; margin-right: 15px;">🤖</div>
-                        <div>
-                            <h4 class="mb-0">ИИ-Помощник</h4>
-                            <p class="text-muted small mb-0">Отвечу на любые вопросы о коворкинге.</p>
-                        </div>
-                    </div>
-                    
-                    <div id="chatBox" class="mb-3 p-3" style="background: var(--paper); border-radius: 10px; height: 400px; overflow-y: auto; border: 1px solid #ddd;">
-                        <div class="mb-2"><b>ИИ:</b> Здравствуйте! Я — ИИ-помощник OPEN CAMPUS. Я знаю всё о наших залах, ценах и правилах бронирования. Чем могу помочь?</div>
-                    </div>
-                    
-                    <div class="input-group">
-                        <input type="text" id="aiInput" class="form-control" placeholder="Задайте любой вопрос...">
-                        <button class="btn btn-ink" onclick="askAI()">Отправить</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="message-row bot">
+      <div class="avatar">🤖</div>
+      <div class="bubble">Здравствуйте! Я ИИ-консультант OPEN CAMPUS. Помогу подобрать зал под ваши задачи. Спросите меня про вечеринки, учебу, спорт или просто напишите, сколько вас человек.</div>
     </div>
-</section>
+  </div>
 
-<script src="data.js"></script>
+  <div class="chat-input-area">
+    <input type="text" id="chat-input" placeholder="Введите вопрос..." autocomplete="off">
+    <button id="chat-send">➤</button>
+  </div>
+</div>
+
 <script>
-    async function askAI() {
-        const input = document.getElementById('aiInput');
-        const chatBox = document.getElementById('chatBox');
-        const text = input.value.trim();
-        
-        if (!text) return;
+  const FAQ = [
+    { 
+      keys: ["вечерин", "праздн", "днюх", "тусов", "дискотек", "концерт", "день рожден"], 
+      answer: "Для вечеринки или праздника лучше всего подойдет Актовый зал (до 50 человек). Там есть сцена, свет и хорошая звуковая система." 
+    },
+    { 
+      keys: ["спорт", "физкультур", "трениров", "играть", "мяч", "зал для спорт"], 
+      answer: "Для спортивных мероприятий и тренировок отлично подойдет спортивный зал. Он просторный, есть разметка и место для инвентаря." 
+    },
+    { 
+      keys: ["учеб", "урок", "занят", "репетитор", "лекци", "семинар", "читать", "тихо"], 
+      answer: "Для учебы, лекций или тихих занятий рекомендую Библиотеку или Читальный зал (до 15-20 человек). Там тихо, есть Wi-Fi и проектор." 
+    },
+    { 
+      keys: ["цена", "стоимость", "сколько стоит", "прайс", "почём", "почем"], 
+      answer: "Аренда Большого зала — 5000 сом/час, Библиотеки — 2000 сом/час. Точную стоимость можно посмотреть в карточке зала при бронировании." 
+    },
+    { 
+      keys: ["оборудован", "проектор", "экран", "звук", "микрофон", "доска"], 
+      answer: "В залах есть проектор, экран, Wi-Fi и звук. По запросу выдаем микрофон и флипчарт." 
+    },
+    { 
+      keys: ["бронь", "забронировать", "резерв", "записаться"], 
+      answer: "Забронировать помещение можно прямо на нашем сайте: выберите зал в каталоге и нажмите «Выбрать время»." 
+    },
+    {
+      keys: ["привет", "здравств", "добрый", "хай"],
+      answer: "Здравствуйте! 😊 Напишите, для какого мероприятия ищете зал и сколько вас человек, я подскажу лучший вариант."
+    }
+  ];
 
-        chatBox.innerHTML += `<div class="mb-2 text-end"><b>Вы:</b> ${text}</div>`;
-        input.value = '';
-        chatBox.scrollTop = chatBox.scrollHeight;
+  const messagesContainer = document.getElementById('chat-messages');
+  const inputField = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
 
-        const loadingId = 'loading-' + Date.now();
-        chatBox.innerHTML += `<div class="mb-2" id="${loadingId}"><b>ИИ:</b> <i>думает...</i></div>`;
-        chatBox.scrollTop = chatBox.scrollHeight;
+  function addMessage(text, sender) {
+    const row = document.createElement('div');
+    row.className = `message-row ${sender}`;
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar';
+    avatar.textContent = sender === 'user' ? 'Я' : '🤖';
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = text;
 
-        try {
-            let schoolsInfo = "";
-            try {
-                await DB.init();
-                const schools = DB.schools();
-                schoolsInfo = schools.map(s => 
-                    `Школа: ${s.name}, Район: ${s.district}, Залы: ${s.spaces.map(sp => sp.name + ' (' + sp.price + ' сом/час, до ' + sp.capacity + ' чел.)').join(', ')}`
-                ).join('\n');
-            } catch (e) {
-                schoolsInfo = "Информация о школах временно недоступна.";
-            }
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    messagesContainer.appendChild(row);
+    
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
 
-            const systemPrompt = `Ты — умный и вежливый ИИ-помощник сервиса 'OPEN CAMPUS'. Твоя задача — консультировать клиентов по любым вопросам, связанным с арендой школьных помещений.
+  function getAnswer(text) {
+    const lower = text.toLowerCase().trim();
 
-Вот полная информация о наших пространствах:
-${schoolsInfo}
-
-Общие правила сервиса:
-- Мы сдаем актовые залы, библиотеки и классы после уроков.
-- Цена указана за час. Оборудование (проектор, звук) может стоить дополнительно.
-- Чтобы забронировать, клиенту нужно зайти в раздел "Каталог", выбрать зал, дату и время, а затем заполнить форму.
-- Бронь подтверждает директор школы.
-
-Твои правила:
-1. Отвечай на любые вопросы клиента: о цене, наличии залов, оборудовании, правилах бронирования, расположении школ.
-2. Если спрашивают про конкретную школу, используй данные из списка выше.
-3. Если клиент хочет забронировать, объясни, как это сделать (через каталог).
-4. Будь дружелюбным, отвечай развернуто, но без лишней воды.
-5. Если не знаешь ответа, скажи, что уточнишь у администратора.`;
-
-            const response = await fetch("http://localhost:11434/api/chat", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    model: "qwen2.5:3b",
-                    messages: [
-                        { role: "system", content: systemPrompt },
-                        { role: "user", content: text }
-                    ],
-                    stream: false
-                })
-            });
-
-            const data = await response.json();
-            document.getElementById(loadingId).remove();
-
-            if (data.message && data.message.content) {
-                chatBox.innerHTML += `<div class="mb-2"><b>ИИ:</b> ${data.message.content}</div>`;
-            } else {
-                chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка:</b> Пустой ответ от ИИ.</div>`;
-            }
-        } catch (err) {
-            document.getElementById(loadingId).remove();
-            chatBox.innerHTML += `<div class="mb-2 text-danger"><b>Ошибка сети:</b> ${err.message}</div>`;
-        }
-        
-        chatBox.scrollTop = chatBox.scrollHeight;
+    // Умный поиск по цифрам (например, "20 человек", "15 гостей")
+    const numbers = lower.match(/\d+/g);
+    if (numbers) {
+      const count = parseInt(numbers[0], 10);
+      if (count > 0 && count <= 15) {
+        return "Для компании из " + count + " человек отлично подойдет Библиотека (до 15 мест). Там уютно и тихо.";
+      } else if (count > 15 && count <= 50) {
+        return "Для " + count + " человек рекомендую Актовый зал (до 50 мест). Там достаточно места и есть проектор.";
+      } else if (count > 50) {
+        return "Для " + count + " человек лучше всего подойдет Большой актовый зал (до 120 мест) в Лицее №61.";
+      }
     }
 
-    document.getElementById('aiInput').addEventListener('keypress', e => { 
-        if (e.key === 'Enter') askAI(); 
-    });
+    // Поиск по ключевым словам
+    const found = FAQ.find(item => item.keys.some(k => lower.includes(k)));
+    if (found) return found.answer;
+
+    return "Извините, я пока не знаю ответа на этот вопрос. Спросите про залы, вечеринки, учебу, цены или оборудование.";
+  }
+
+  function handleSend() {
+    const text = inputField.value.trim();
+    if (!text) return;
+
+    addMessage(text, 'user');
+    inputField.value = '';
+
+    setTimeout(() => {
+      const reply = getAnswer(text);
+      addMessage(reply, 'bot');
+    }, 500);
+  }
+
+  sendBtn.addEventListener('click', handleSend);
+  inputField.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleSend();
+  });
 </script>
 
 </body>
